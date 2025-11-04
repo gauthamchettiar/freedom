@@ -1,0 +1,45 @@
+{{- /*
+  Flex Layout Wrapper
+  
+  Parameters:
+    - class (optional): Additional CSS classes for the flex container
+    - items (required): Array of HTML content to display in flex layout
+    - align (optional): Alignment (e.g., "center", "baseline", "flex-start")
+    - justify (optional): Justify content (e.g., "space-between", "flex-start")
+    - gap (optional): Gap between items (e.g., "sm", "md", "lg")
+    - wrap (optional): Enable flex-wrap (true/false, default: false)
+    - separator (optional): HTML separator between items
+  
+  Example:
+    {{ partial "layouts/flex.html" (dict "items" (slice $title $icon) "class" "header-flex" "align" "center" "gap" "sm") }}
+    {{ partial "layouts/flex.html" (dict "items" (slice $item1 $item2) "wrap" true "gap" "md") }}
+*/ -}}
+
+{{- $class := .class | default "" -}}
+{{- $items := .items | default (slice) -}}
+{{- $align := .align | default "center" -}}
+{{- $justify := .justify | default "flex-start" -}}
+{{- $gap := .gap | default "sm" -}}
+{{- $wrap := .wrap | default false -}}
+{{- $separator := .separator | default "" -}}
+
+{{- $wrapClass := cond $wrap "flex-wrap" "flex-nowrap" -}}
+{{- $flexClass := printf "flex %s flex-align-%s flex-justify-%s flex-gap-%s %s" $wrapClass $align $justify $gap $class -}}
+
+{{- $nonEmptyItems := slice -}}
+{{- range $items -}}
+  {{- $trimmed := trim . " \n\t" -}}
+  {{- if $trimmed -}}
+    {{- $nonEmptyItems = $nonEmptyItems | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if gt (len $nonEmptyItems) 0 -}}
+<div class="{{ $flexClass }}">
+  {{- $lastIndex := sub (len $nonEmptyItems) 1 -}}
+  {{- range $index, $item := $nonEmptyItems -}}
+    {{- $item | safeHTML -}}
+    {{- if and $separator (lt $index $lastIndex) -}}{{ $separator }}{{- end -}}
+  {{- end -}}
+</div>
+{{- end -}}

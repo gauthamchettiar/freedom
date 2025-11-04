@@ -1,0 +1,39 @@
+{{- /*
+  Read Time Widget
+  
+  Calculates and displays estimated reading time for a page.
+  
+  Parameters:
+    - page (required): Page context
+    - wordsPerMinute (optional): Reading speed in words per minute (default: 200)
+    - class (optional): Additional CSS classes
+    - showIcon (optional): Whether to show a clock icon (default: false)
+  
+  Example:
+    {{ partial "widgets/read-time.html" (dict "page" .) }}
+    {{ partial "widgets/read-time.html" (dict "page" . "wordsPerMinute" 250 "showIcon" true) }}
+*/ -}}
+
+{{- $page := .page -}}
+{{- $site := .site -}}
+{{- $key := .key | default "showReadTime" -}}
+{{- $class := .class | default "" -}}
+{{- $wordsPerMinute := .wordsPerMinute | default 200 -}}
+
+{{ $showReadTime := (partial "config.html" (dict "page" $page "site" $site "key" $key)) }}
+{{ $showReadTimeIcon := (partial "config.html" (dict "page" $page "site" $site "key" (print $key "Icon"))) }}
+
+{{- $wordCount := $page.WordCount -}}
+{{- $readTime := div $wordCount $wordsPerMinute -}}
+{{- if lt $readTime 1 -}}
+  {{- $readTime = 1 -}}
+{{- end -}}
+
+{{ if $showReadTime }}
+  <span class="read-time {{ $class }}">
+    {{- if $showReadTimeIcon -}}
+      {{ partial "widgets/icon.html" (dict "name" "clock" "style" "regular") }}&nbsp;&nbsp;
+    {{- end -}}
+    {{- $readTime }} min read
+  </span>
+{{ end }}

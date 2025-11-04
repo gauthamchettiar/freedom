@@ -12,3 +12,11 @@ a:has(.main-title) {
     text-decoration: none;
     color: var(--text-color);
 }
+
+.page-title {
+    margin: var(--spacing-xxs) 0;
+}
+
+.page-meta-row {
+    color: color-mix(in srgb, var(--text-color) 75%, transparent);
+}

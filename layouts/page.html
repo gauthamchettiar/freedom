@@ -1,9 +1,14 @@
 {{ define "main" }}
+  {{ partial "layouts/blank.html" (dict "tsize" "md") }}
+  {{ partial "widgets/breadcrumb.html" (dict "page" . "site" .Site) }}
   {{ partial "widgets/title.html" (dict "site" .Site "page" . "title" .Title "key" "showPageTitle" "class" "page-title") }}
+  
+  {{ $time := partial "widgets/meta/date.html" (dict "page" . "site" .Site "format" ":date_long") }}
+  {{ $readTime := partial "widgets/meta/read-time.html" (dict "page" . "site" .Site) }}
+  {{ $author := partial "widgets/meta/author.html" (dict "page" . "site" .Site) }}
 
-  {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
-  {{ $dateHuman := .Date | time.Format ":date_long" }}
-  <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+  {{ partial "layouts/flex.html" (dict "items" (slice $time $readTime $author) "class" "page-meta-row" "align" "center" "gap" "sm" "wrap" true "separator" "·") }}
+  {{ partial "layouts/blank.html" (dict "tsize" "lg") }}
 
   {{ partial "content/wrapper.html" .Content }}
 

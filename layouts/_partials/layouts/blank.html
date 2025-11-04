@@ -1,0 +1,15 @@
+{{- /*
+  Blank Line / Spacer
+  
+  Parameters:
+    - size (optional): Spacing size - "xs", "sm", "md", "lg", "xl" (default: "md")
+  
+  Example:
+    {{ partial "layout/blank.html" (dict "size" "lg") }}
+    {{ partial "layout/blank.html" . }}
+*/ -}}
+
+{{- $tsize := .tsize | default "" -}}
+{{- $bsize := .bsize | default "" -}}
+
+<div class="blank {{ if $tsize }} blank-top-{{ $tsize }}{{ end }}{{ if $bsize }} blank-bottom-{{ $bsize }}{{ end }}"></div>

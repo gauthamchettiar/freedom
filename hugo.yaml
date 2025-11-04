@@ -36,6 +36,15 @@ params:
   showTags: true
   showTagsCount: true
   showThemeToggle: true
+  kind:
+    page:
+      showBreadcrumbs: true
+      showAuthor: true
+      showAuthorIcon: true
+      showReadTime: true
+      showReadTimeIcon: true
+      showDate: true
+      showDateIcon: true
 
 markup:
   goldmark:

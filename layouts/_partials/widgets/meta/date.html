@@ -1,0 +1,45 @@
+{{- /*
+  Time Display Widget
+  
+  Parameters:
+    - page (required): Page context
+    - dateType (optional): Which date to display - "date", "publishdate", "lastmod", "expirydate" (default: "date")
+    - format (optional): Human-readable format (default: ":date_long")
+      Options: ":date_long", ":date_medium", ":date_short", ":date_full"
+      Or custom format like "January 2, 2006"
+    - class (optional): Additional CSS classes
+  
+  Example:
+    {{ partial "widgets/time.html" (dict "page" . "dateType" "lastmod" "format" ":date_medium") }}
+    {{ partial "widgets/time.html" (dict "page" . "format" "January 2, 2006") }}
+*/ -}}
+
+{{- $page := .page -}}
+{{- $site := .site -}}
+{{- $key := .key | default "showDate" -}}
+{{- $dateType := .dateType | default "date" -}}
+{{- $format := .format | default ":date_long" -}}
+{{- $class := .class | default "" -}}
+
+{{- $showDate := (partial "config.html" (dict "page" $page "site" $site "key" $key)) }}
+{{- $showDateIcon := (partial "config.html" (dict "page" $page "site" $site "key" (print $key "Icon"))) }}
+
+{{- $date := "" -}}
+{{- if eq $dateType "publishdate" -}}
+  {{- $date = $page.PublishDate -}}
+{{- else if eq $dateType "lastmod" -}}
+  {{- $date = $page.Lastmod -}}
+{{- else if eq $dateType "expirydate" -}}
+  {{- $date = $page.ExpiryDate -}}
+{{- else -}}
+  {{- $date = $page.Date -}}
+{{- end -}}
+
+{{- if and $date $showDate -}}
+  {{- if $showDateIcon -}}
+    {{ partial "widgets/icon.html" (dict "name" "calendar" "style" "regular") }}
+  {{- end -}}
+  {{- $dateMachine := $date | time.Format "2006-01-02T15:04:05-07:00" -}}
+  {{- $dateHuman := $date | time.Format $format -}}
+  <time datetime="{{ $dateMachine }}" class="time {{ $class }}">{{ $dateHuman }}</time>
+{{- end -}}

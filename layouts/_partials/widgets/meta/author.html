@@ -1,0 +1,43 @@
+{{- /*
+  Author Widget
+  
+  Displays the author name from page params or site params.
+  
+  Parameters:
+    - page (required): Page context
+    - site (required): Site context
+    - class (optional): Additional CSS classes
+    - showIcon (optional): Whether to show a user icon (default: false)
+    - prefix (optional): Text before author name (default: "By ")
+  
+  Example:
+    {{ partial "widgets/author.html" (dict "page" . "site" .Site) }}
+    {{ partial "widgets/author.html" (dict "page" . "site" .Site "showIcon" true "prefix" "Written by ") }}
+*/ -}}
+
+{{- $page := .page -}}
+{{- $site := .site -}}
+{{- $key := .key | default "showAuthor" -}}
+{{- $class := .class | default "" -}}
+{{- $prefix := .prefix | default "" -}}
+
+{{ $showAuthor := (partial "config.html" (dict "page" $page "site" $site "key" $key)) }}
+{{ $showAuthorIcon := (partial "config.html" (dict "page" $page "site" $site "key" (print $key "Icon"))) }}
+
+{{- $author := "" -}}
+{{- with $page.Params.author -}}
+  {{- $author = . -}}
+{{- else -}}
+  {{- with $site.Params.author -}}
+    {{- $author = . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if and $showAuthor $author -}}
+<span class="author {{ $class }}">
+  {{- if $showAuthorIcon -}}
+    {{ partial "widgets/icon.html" (dict "name" "user" "style" "regular") }}&nbsp;&nbsp;
+  {{- end -}}
+  {{ $prefix }}{{ $author }}
+</span>
+{{- end -}}
