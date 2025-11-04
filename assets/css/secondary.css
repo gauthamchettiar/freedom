@@ -4,8 +4,8 @@
 }
 
 .main-menu {
-    margin-top: var(--spacing-sm) !important;
-    margin-bottom: var(--spacing-sm) !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 a:has(.main-title) {

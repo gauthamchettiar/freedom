@@ -2,5 +2,6 @@
 {{- $footerText := partial "config.html" (dict "site" .Site "page" . "key" "footerText") -}}
 
 {{- if $showFooterText -}}
+    {{ partial "layouts/blank.html" (dict "tsize" "xl") }}
     <p>{{ $footerText | markdownify }}</p>
 {{- end -}}
