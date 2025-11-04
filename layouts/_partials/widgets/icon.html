@@ -1,0 +1,46 @@
+{{- /*
+  Fetches and displays Font Awesome SVG icons inline.
+  
+  Parameters:
+    - name (required): Icon name (e.g., "github", "heart", "envelope")
+    - style (optional): Icon style - "solid", "regular", or "brands" (default: "solid")
+    - class (optional): Additional CSS classes to add to the SVG
+    - ariaLabel (optional): Aria label for accessibility
+  
+  Examples:
+    {{ partial "shortcodes/icon.html" (dict "name" "github" "style" "brands") }}
+    {{ partial "shortcodes/icon.html" (dict "name" "heart") }}
+    {{ partial "shortcodes/icon.html" (dict "name" "envelope" "style" "regular" "class" "icon-lg") }}
+    {{ partial "shortcodes/icon.html" (dict "name" "twitter" "style" "brands" "ariaLabel" "Twitter Profile") }}
+*/ -}}
+
+{{- $name := .name -}}
+{{- $style := .style | default "solid" -}}
+{{- $class := .class | default "" -}}
+{{- $ariaLabel := .ariaLabel | default $name -}}
+
+{{- /* Normalize style to valid Font Awesome path */ -}}
+{{- $stylePath := cond (eq $style "brands") "brands" (cond (eq $style "regular") "regular" "solid") -}}
+
+{{- /* Construct the Font Awesome CDN URL */ -}}
+{{- $baseURL := "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/refs/heads/7.x/svgs" -}}
+{{- $iconURL := printf "%s/%s/%s.svg" $baseURL $stylePath $name -}}
+
+{{- /* Fetch the SVG content */ -}}
+{{- $svg := "" -}}
+{{- with try (resources.GetRemote $iconURL) -}}
+  {{- if .Value -}}
+    {{- $svg = .Value.Content -}}
+    {{- /* Add custom classes, aria-label, and role to the SVG */ -}}
+    {{- $svg = replaceRE `<svg` (printf `<svg class="icon icon-%s %s" aria-label="%s" role="img"` $name $class $ariaLabel) $svg 1 -}}
+  {{- else if .Err -}}
+    {{- warnf "Unable to fetch icon %s (%s) from %s: %s" $name $style $iconURL .Err -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Fallback if icon failed to load */ -}}
+{{- if not $svg -}}
+  {{- $svg = printf `<span class="icon-fallback" title="Icon not found: %s">[%s]</span>` $name $name -}}
+{{- end -}}
+
+{{- $svg | safeHTML -}}

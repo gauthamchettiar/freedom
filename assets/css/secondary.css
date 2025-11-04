@@ -1,0 +1,9 @@
+.all-tags {
+    margin-top: var(--paragraph-spacing-before) !important;
+    margin-bottom: var(--paragraph-spacing-after) !important;
+}
+
+.main-menu {
+    margin-top: var(--paragraph-spacing-before) !important;
+    margin-bottom: var(--paragraph-spacing-after) !important;
+}

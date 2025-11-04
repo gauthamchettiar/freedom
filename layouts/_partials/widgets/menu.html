@@ -1,4 +1,4 @@
-{{ /*
+{{- /*
 Renders a menu for the given menu ID.
 
 @context {page} page The current page.
@@ -24,7 +24,7 @@ Renders a menu for the given menu ID.
 
 {{- with index site.Menus $menuID }}
   <nav role="navigation" aria-label="{{ $menuID }} navigation">
-    <ul class="menu-{{ $menuID }} {{ $class }}">
+    <ul class="menu menu-{{ $menuID }} {{ $class }}">
       {{- if $withParentId }}
         {{- partial "inline/menu/walk-children.html" (dict "page" $page "menuEntries" . "parentId" $withParentId) }}
       {{- else }}
@@ -67,27 +67,7 @@ Renders a menu for the given menu ID.
   {{- range .menuEntries }}
     {{- if eq .Name $parentId }}
       {{- range .Children }}
-        {{- $childAttrs := dict "href" .URL }}
-        {{- if $page.IsMenuCurrent .Menu . }}
-          {{- $childAttrs = merge $childAttrs (dict "class" "active" "aria-current" "page") }}
-        {{- else if $page.HasMenuCurrent .Menu .}}
-          {{- $childAttrs = merge $childAttrs (dict "class" "ancestor" "aria-current" "true") }}
-        {{- end }}
-        {{- $childName := .Name }}
-        {{- with .Identifier }}
-          {{- with T . }}
-            {{- $childName = . }}
-          {{- end }}
-        {{- end }}
-        <li>
-          <a
-            {{- range $k, $v := $childAttrs }}
-              {{- with $v }}
-                {{- printf " %s=%q" $k $v | safeHTMLAttr }}
-              {{- end }}
-            {{- end -}}
-          >{{ $childName }}</a>
-        </li>
+        {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
       {{- end }}
     {{- end }}
   {{- end }}

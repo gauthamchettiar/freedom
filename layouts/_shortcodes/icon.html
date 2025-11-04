@@ -1,0 +1,63 @@
+{{- /*
+  Font Awesome Icon Shortcode
+  
+  Usage in markdown (positional):
+    {{< icon "github" >}}
+    {{< icon "heart" "solid" >}}
+    {{< icon "envelope" "regular" "custom-class" >}}
+  
+  Usage in markdown (named):
+    {{< icon name="github" style="brands" >}}
+    {{< icon name="heart" style="solid" class="text-lg" >}}
+    {{< icon name="twitter" style="brands" ariaLabel="Twitter Profile" >}}
+  
+  Parameters:
+    - Positional:
+      0: name (required) - Icon name
+      1: style (optional) - "solid", "regular", or "brands" (default: "solid")
+      2: class (optional) - Additional CSS classes
+    - Named:
+      - name (required): Icon name
+      - style (optional): Icon style
+      - class (optional): Additional CSS classes
+      - ariaLabel (optional): Aria label for accessibility
+  
+  Examples:
+    {{< icon "github" "brands" >}}
+    {{< icon "heart" >}}
+    {{< icon name="envelope" style="regular" >}}
+    {{< icon name="linkedin" style="brands" class="icon-lg" ariaLabel="LinkedIn" >}}
+*/ -}}
+
+{{- $name := "" -}}
+{{- $style := "solid" -}}
+{{- $class := "" -}}
+{{- $ariaLabel := "" -}}
+
+{{- /* Support both positional and named parameters */ -}}
+{{- if .IsNamedParams -}}
+  {{- $name = .Get "name" -}}
+  {{- $style = .Get "style" | default "solid" -}}
+  {{- $class = .Get "class" | default "" -}}
+  {{- $ariaLabel = .Get "ariaLabel" | default "" -}}
+{{- else -}}
+  {{- $name = .Get 0 -}}
+  {{- $style = .Get 1 | default "solid" -}}
+  {{- $class = .Get 2 | default "" -}}
+{{- end -}}
+
+{{- /* Validate that name is provided */ -}}
+{{- if not $name -}}
+  {{- errorf "Icon shortcode requires a 'name' parameter. Usage: {{< icon \"icon-name\" >}}" -}}
+{{- end -}}
+
+{{- /* Build the dict for the partial */ -}}
+{{- $params := dict "name" $name "style" $style -}}
+{{- if $class -}}
+  {{- $params = merge $params (dict "class" $class) -}}
+{{- end -}}
+{{- if $ariaLabel -}}
+  {{- $params = merge $params (dict "ariaLabel" $ariaLabel) -}}
+{{- end -}}
+
+{{- partial "widgets/icon.html" $params -}}

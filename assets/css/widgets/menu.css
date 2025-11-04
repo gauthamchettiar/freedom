@@ -1,5 +1,5 @@
 /* Vertical text menu with children below parents */
-nav ul {
+nav ul.menu {
   display: inline-flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -10,24 +10,24 @@ nav ul {
   row-gap: 0;
 }
 
-nav li {
+nav ul.menu  li {
   margin: 0;
   padding: 0;
 }
 
-nav a {
+nav ul.menu a {
   text-decoration: none;
   color: var(--link-color);
 }
 
-nav a:visited {
+nav ul.menu a:visited {
   color: var(--link-color);
 }
 
-nav a:hover {
+nav ul.menu a:hover {
   text-decoration: underline;
 }
 
-nav a.active {
+nav ul.menu a.active {
   font-weight: bold;
 }

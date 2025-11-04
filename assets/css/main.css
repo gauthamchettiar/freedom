@@ -23,14 +23,38 @@ body {
   font-family: var(--body-font);
   line-height: 1.5;
   margin: 0 auto;
-  max-width: 768px;
-  padding: 1rem;
+  max-width: var(--page-width);
+  padding: var(--paragraph-spacing);
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--header-font);
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: var(--heading-spacing-before);
+  margin-bottom: var(--heading-spacing-after);
+}
+
+h1 {
+  font-size: 1.75rem;
+}
+
+h2 {
+  font-size: 1.65rem;
+}
+
+h3 {
+  font-size: 1.55rem;
+}
+
+h4 {
+  font-size: 1.45rem;
+}
+
+h5 {
+  font-size: 1.35rem;
+}
+
+h6 {
+  font-size: 1.25rem;
 }
 
 a {
@@ -42,3 +66,54 @@ a:visited {
   color: var(--link-visited);
 }
 
+blockquote {
+  border-left: 4px solid var(--accent-color);
+  color: color-mix(in srgb, var(--text-color) 70%, transparent);
+  margin: 1rem 0;
+  padding: 0.15rem 2.5rem;
+  position: relative;
+}
+
+code {
+  font-family: var(--code-font);
+}
+
+.highlight pre {
+  padding: 1em;
+  overflow-x: auto !important; 
+  margin-block-end: 1em;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+table thead th {
+  background-color: color-mix(in srgb, var(--accent-color) 25%, transparent);
+  border: 0.5px solid var(--text-color);
+  padding: 0.25rem 0.5rem;
+  text-align: left;
+}
+
+table tbody td {
+  border: 0.5px solid var(--text-color);
+  padding: 0.25rem 0.5rem;
+}
+
+mark {
+  background-color: color-mix(in srgb, var(--accent-color) 40%, transparent);
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+  color: var(--text-color);
+}
+
+p, pre {
+  margin-block-start: var(--paragraph-spacing-before);
+  margin-block-end: var(--paragraph-spacing-after);
+}

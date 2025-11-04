@@ -10,6 +10,7 @@
   /* Font families */
   --body-font: 'Inter', 'Segoe UI', Arial, sans-serif;
   --header-font: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  --code-font: monospace;
   
   /* Dark theme palette */
   --dark-bg-color: #212121;
@@ -17,5 +18,14 @@
   --dark-accent-color: #4294cb;
   --dark-link-color: #6b9eff;
   --dark-link-visited: #b392ff;
+
+  /* Spacing */
+  --heading-spacing-before: 1rem;
+  --heading-spacing-after: 0.5rem;
+
+  --paragraph-spacing-before: 0.5rem;
+  --paragraph-spacing-after: 0.5rem;
+
+  --page-width: 768px;
 }
 

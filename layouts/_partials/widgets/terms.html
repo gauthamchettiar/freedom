@@ -36,7 +36,7 @@ For a given taxonomy, renders a list of terms assigned to the page.
         {{- end }}
         {{- $terms = $terms | append (dict "title" .LinkTitle "link" .RelPermalink "isActive" (eq $page.RelPermalink .RelPermalink) "count" $count) }}
       {{- end }}
-      {{- partial "inline/terms/render.html" (dict "terms" $terms "class" $class "showCount" $showTermsCount) }}
+      {{- partial "inline/terms/render.html" (dict "terms" $terms "class" $class "showCount" $showTermsCount "taxonomy" $taxonomy "taxonomyFrom" $taxonomyFrom) }}
     {{- end }}
   {{- end -}}
 
@@ -46,7 +46,7 @@ For a given taxonomy, renders a list of terms assigned to the page.
       {{- range . }}
         {{- $terms = $terms | append (dict "title" .Page.Title "link" .Page.Permalink "isActive" (and $page (eq $page.Permalink .Page.Permalink)) "count" .Count) }}
       {{- end }}
-      {{- partial "inline/terms/render.html" (dict "terms" $terms "class" $class "showCount" $showTermsCount) }}
+      {{- partial "inline/terms/render.html" (dict "terms" $terms "class" $class "showCount" $showTermsCount "taxonomy" $taxonomy "taxonomyFrom" $taxonomyFrom) }}
     {{- end }}
   {{- end }}
 {{- end -}}
@@ -55,8 +55,10 @@ For a given taxonomy, renders a list of terms assigned to the page.
   {{- $terms := .terms }}
   {{- $class := .class }}
   {{- $showCount := .showCount }}
-  <div class="terms-container {{ $class }}">
-    <ul class="terms-list">
+  {{- $taxonomy := .taxonomy }}
+  {{- $taxonomyFrom := .taxonomyFrom }}
+  <nav role="navigation" aria-label="{{ $taxonomy }} {{ $taxonomyFrom }} navigation">
+    <ul class="terms {{ $class }}">
       {{- range $terms }}
         {{- $attrs := dict "href" .link }}
         {{- if .isActive }}
@@ -73,7 +75,7 @@ For a given taxonomy, renders a list of terms assigned to the page.
         </li>
       {{- end }}
     </ul>
-  </div>
+  </nav>
 {{- end }}
 
 

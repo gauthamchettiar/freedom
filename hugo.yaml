@@ -1,5 +1,10 @@
 baseURL: https://example.org/
 languageCode: en-US
+module:
+  hugoVersion:
+    extended: false
+    min: 0.146.0
+title: Freedom
 
 menus:
   main:
@@ -34,8 +39,18 @@ params:
   showTags: true
   showTagsCount: true
 
-module:
-  hugoVersion:
-    extended: false
-    min: 0.146.0
-title: Freedom
+markup:
+  goldmark:
+    extensions:
+      strikethrough: false
+      extras:
+        delete: 
+          enable: true
+        insert: 
+          enable: true
+        mark: 
+          enable: true
+        subscript: 
+          enable: true
+        superscript: 
+          enable: true
