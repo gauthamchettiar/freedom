@@ -1,0 +1,4 @@
+{{ define "main" }}
+  {{ .Content }}
+  {{ partial "widgets/terms.html" (dict "taxonomy" "tags" "site" .Site "page" . "taxonomyFrom" "site" "class" "all-tags") }}
+{{ end }}

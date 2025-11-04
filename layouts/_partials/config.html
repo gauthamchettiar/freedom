@@ -1,0 +1,59 @@
+{{- /*
+Generic configuration resolver that checks multiple sources in priority order:
+1. Page frontmatter
+2. Page type specific config in site params
+3. Universal config in site params
+4. Default value (if provided)
+
+@context {page} page The current page (optional).
+@context {site} site The site object.
+@context {string} key The configuration key to resolve.
+@context {any} default The default value to use if no config is found (optional).
+
+@returns The resolved configuration value
+
+@example: {{ partial "config.html" (dict "page" . "site" .Site "key" "showTitle") }}
+@example: {{ partial "config.html" (dict "page" . "site" .Site "key" "showTitle" "default" true) }}
+@example: {{ partial "config.html" (dict "page" . "site" .Site "key" "theme" "default" "light") }}
+*/}}
+
+{{- $page := .page -}}
+{{- $site := .site -}}
+{{- $key := .key | lower -}}
+{{- $value := .default -}} {{/* Default value */}}
+
+{{- if isset $site.Params $key -}}
+  {{- $value = (index $site.Params $key) -}} {{/* Site Wide Params */}}
+{{- end -}}
+
+{{- $supportedPageFilters := (dict "kind" $page.Kind "section" $page.Section "type" $page.Type ) -}} {{/* Ordered from least to most granular, in order of application */}}
+
+{{- range $filter, $pageValue := $supportedPageFilters -}}
+  {{- if isset $site.Params $filter -}}
+    {{- if isset (index $site.Params $filter) $pageValue -}}
+      {{- if isset (index (index $site.Params $filter) $pageValue) $key -}}
+        {{- $value = (index (index (index $site.Params $filter) $pageValue) $key) -}} {{/* Site Wide Params, Page Filter Specific Config. Overrides above config. */}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $pageKind := $page.Kind -}}
+{{- if isset $site.Params $pageKind -}}
+  {{- if isset (index $site.Params $pageKind) $key -}}
+    {{- $value = (index (index $site.Params $pageKind) $key) -}} {{/* Site Wide Params, Page Kind Specific Config. Overrides above config. */}}
+  {{- end -}}
+{{- end -}}
+
+{{- $pageSection := $page.Section -}}
+{{- if isset $site.Params $pageSection -}}
+  {{- if isset (index $site.Params $pageSection) $key -}}
+    {{- $value = (index (index $site.Params $pageSection) $key) -}} {{/* Site Wide Params, Page Section Specific Config. Overrides above config. */}}
+  {{- end -}}
+{{- end -}}
+
+{{- if isset $page.Params $key -}}
+  {{- $value = (index $page.Params $key) -}} {{/* Page Params, from Front Matter. Overrides above config. */}}
+{{- end -}}
+
+{{- return $value -}}

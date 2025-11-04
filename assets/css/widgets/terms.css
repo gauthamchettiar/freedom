@@ -1,0 +1,49 @@
+/* Terms widget styling - similar to menu */
+.terms-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.terms-label {
+  color: var(--text-color);
+  font-weight: normal;
+}
+
+.terms-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  column-gap: 1em;
+  row-gap: 0;
+}
+
+.terms-list li {
+  margin: 0;
+  padding: 0;
+}
+
+.terms-list a {
+  text-decoration: none;
+  color: var(--link-color);
+}
+
+.terms-list a:visited {
+  color: var(--link-color);
+}
+
+.terms-list a:hover {
+  text-decoration: underline;
+}
+
+.terms-list a.active {
+  font-weight: bold;
+}
+
+.all-tags {
+  margin-top: 1rem;
+}

@@ -1,0 +1,20 @@
+{{- $themeFile := resources.Get "css/theme.css" -}}
+{{- $mainFile := resources.Get "css/main.css" -}}
+{{- $widgetFiles := slice }}
+{{- range (resources.Match "css/widgets/*.css") }}
+  {{- $widgetFiles = $widgetFiles | append . }}
+{{- end }}
+{{- $overrideFile := resources.Get "css/override.css" -}}
+
+{{- $cssFiles := slice $themeFile $mainFile | append $widgetFiles | append $overrideFile -}}
+{{- $cssBundle := $cssFiles | resources.Concat "css/bundle.css" -}}
+
+{{- with $cssBundle }}
+  {{- if hugo.IsDevelopment }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{- else }}
+    {{- with . | minify | fingerprint }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+    {{- end }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,6 @@
+{{- $showFooterText := partial "config.html" (dict "site" .Site "page" . "key" "showFooterText") -}}
+{{- $footerText := partial "config.html" (dict "site" .Site "page" . "key" "footerText") -}}
+
+{{- if $showFooterText -}}
+    <p>{{ $footerText | markdownify }}</p>
+{{- end -}}

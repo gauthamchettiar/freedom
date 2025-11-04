@@ -1,0 +1,41 @@
+baseURL: https://example.org/
+languageCode: en-US
+
+menus:
+  main:
+  - name: Home
+    pageRef: /
+    weight: 10
+  - name: Shortcodes
+    pageRef: /shortcodes
+    weight: 20
+  - name: Usage
+    pageRef: /usage
+    weight: 25
+  - name: Basic
+    pageRef: /usage/basic
+    weight: 26
+    parent: Usage
+  - name: Advanced
+    pageRef: /usage/advanced
+    weight: 27
+    parent: Usage
+  - name: Tags
+    pageRef: /tags
+    weight: 30
+
+params:
+  showTitle: true
+  showPageTitle: true
+  showMenu: true
+  showFooterText: true
+  footerText: Made with ❤️ using [hugo](https://gohugo.io/) & [freedom](https://github.com/gauthamchettiar/freedom)
+  showPosts: true
+  showTags: true
+  showTagsCount: true
+
+module:
+  hugoVersion:
+    extended: false
+    min: 0.146.0
+title: Freedom

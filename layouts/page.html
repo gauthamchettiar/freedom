@@ -1,0 +1,11 @@
+{{ define "main" }}
+  {{ partial "widgets/title.html" (dict "site" .Site "page" . "title" .Title "key" "showPageTitle") }}
+
+  {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+  {{ $dateHuman := .Date | time.Format ":date_long" }}
+  <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+
+  {{ .Content }}
+
+  {{ partial "widgets/terms.html" (dict "taxonomy" "tags" "page" . "site" .Site "taxonomyFrom" "page") }}
+{{ end }}

@@ -1,0 +1,11 @@
+{{- $page := .page -}}
+{{- $site := .site -}}
+{{- $key := .key | default "showTitle" -}}
+{{- $title := .title | default $page.Title -}}
+{{- $class := .class | default "" -}}
+
+{{- $showTitle := partial "config.html" (dict "site" $site "page" $page "key" $key) -}}
+
+{{- if $showTitle -}}
+    <h1 class="title {{ $class }}">{{ $title }}</h1>
+{{- end -}}

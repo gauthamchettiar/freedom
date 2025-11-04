@@ -1,0 +1,79 @@
+{{- /*
+For a given taxonomy, renders a list of terms assigned to the page.
+
+@context {page} page The current page (optional).
+@context {site} site The site object (optional).
+@context {string} taxonomy The taxonomy.
+
+@example: {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
+@example: {{ partial "terms.html" (dict "taxonomy" "tags" "site" .Site) }}
+*/}}
+
+{{- $page := .page }}
+{{- $site := .site }}
+{{- $taxonomy := .taxonomy }}
+{{- $key := .key | default (printf "%s%s" "show" $taxonomy) -}}
+{{- $taxonomyFrom := .taxonomyFrom | default "page" -}}
+{{- $class := .class | default "" -}}
+
+{{- $showTerms := partial "config.html" (dict "site" $site "page" $page "key" $key) -}}
+{{- $showTermsCount := partial "config.html" (dict "site" $site "page" $page "key" (printf "%s%s" $key "Count")) -}}
+{{- $showTermsSortBy := partial "config.html" (dict "site" $site "page" $page "key" (printf "%s%s" $key "SortBy")) -}}
+
+{{- if $showTerms -}}
+  {{- if and $page (eq $taxonomyFrom "page") -}}
+    {{- with $page.GetTerms $taxonomy }}
+      {{- $terms := slice }}
+      {{- range . }}
+        {{- $termKey := .LinkTitle | urlize }}
+        {{- $count := 0 }}
+        {{- with $site }}
+          {{- with index .Taxonomies $taxonomy }}
+            {{- with index . $termKey }}
+              {{- $count = .Count }}
+            {{- end }}
+          {{- end }}
+        {{- end }}
+        {{- $terms = $terms | append (dict "title" .LinkTitle "link" .RelPermalink "isActive" (eq $page.RelPermalink .RelPermalink) "count" $count) }}
+      {{- end }}
+      {{- partial "inline/terms/render.html" (dict "terms" $terms "class" $class "showCount" $showTermsCount) }}
+    {{- end }}
+  {{- end -}}
+
+  {{- if and $site (eq $taxonomyFrom "site") -}}
+    {{- with index $site.Taxonomies $taxonomy }}
+      {{- $terms := slice }}
+      {{- range . }}
+        {{- $terms = $terms | append (dict "title" .Page.Title "link" .Page.Permalink "isActive" (and $page (eq $page.Permalink .Page.Permalink)) "count" .Count) }}
+      {{- end }}
+      {{- partial "inline/terms/render.html" (dict "terms" $terms "class" $class "showCount" $showTermsCount) }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+
+{{- define "_partials/inline/terms/render.html" }}
+  {{- $terms := .terms }}
+  {{- $class := .class }}
+  {{- $showCount := .showCount }}
+  <div class="terms-container {{ $class }}">
+    <ul class="terms-list">
+      {{- range $terms }}
+        {{- $attrs := dict "href" .link }}
+        {{- if .isActive }}
+          {{- $attrs = merge $attrs (dict "class" "active") }}
+        {{- end }}
+        <li>
+          <a
+            {{- range $k, $v := $attrs }}
+              {{- with $v }}
+                {{- printf " %s=%q" $k $v | safeHTMLAttr }}
+              {{- end }}
+            {{- end -}}
+          >#{{ .title | lower }}{{- if $showCount -}}{{- with .count }} ({{ . }}){{- end -}}{{- end -}}</a>
+        </li>
+      {{- end }}
+    </ul>
+  </div>
+{{- end }}
+
+

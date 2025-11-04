@@ -1,0 +1,21 @@
+/* Theme colors */
+:root {
+  /* Light theme (default) */
+  --bg-color: #ffffff;
+  --text-color: #222222;
+  --accent-color: #007acc;
+  --link-color: #0000ee;
+  --link-visited: #551a8b;
+
+  /* Font families */
+  --body-font: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --header-font: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  
+  /* Dark theme palette */
+  --dark-bg-color: #212121;
+  --dark-text-color: #F0F0F0;
+  --dark-accent-color: #4294cb;
+  --dark-link-color: #6b9eff;
+  --dark-link-visited: #b392ff;
+}
+
