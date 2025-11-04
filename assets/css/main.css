@@ -140,3 +140,11 @@ ul > li > input[type="checkbox"] {
   padding-inline-start: var(--spacing-md);
   pointer-events: none;
 }
+
+::-moz-selection { 
+  background: color-mix(in srgb, var(--accent-color) 40%, transparent);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent-color) 40%, transparent);
+}
