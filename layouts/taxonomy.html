@@ -1,4 +1,4 @@
 {{ define "main" }}
-  {{ .Content }}
+  {{ partial "content/wrapper.html" .Content }}
   {{ partial "widgets/terms.html" (dict "taxonomy" "tags" "site" .Site "page" . "taxonomyFrom" "site" "class" "all-tags") }}
 {{ end }}

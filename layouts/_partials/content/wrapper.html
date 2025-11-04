@@ -1,0 +1,11 @@
+{{/* 
+  Removes disabled attribute from checkbox inputs to enable interaction
+  
+  Usage:
+    {{ partial "content/wrapper.html" .Content }}
+*/}}
+
+{{ $content := . }}
+{{ $content = replace $content `<input disabled="" type="checkbox"` `<input type="checkbox"` }}
+{{ $content = replace $content `<input checked="" disabled="" type="checkbox"` `<input checked type="checkbox"` }}
+{{ $content | safeHTML }}

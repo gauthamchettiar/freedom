@@ -1,5 +1,5 @@
 {{ define "main" }}
-  {{ .Content }}
+  {{ partial "content/wrapper.html" .Content }}
   {{ range .Pages }}
     <section>
       <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>

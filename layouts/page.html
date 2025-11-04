@@ -5,7 +5,7 @@
   {{ $dateHuman := .Date | time.Format ":date_long" }}
   <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
 
-  {{ .Content }}
+  {{ partial "content/wrapper.html" .Content }}
 
   {{ partial "widgets/terms.html" (dict "taxonomy" "tags" "page" . "site" .Site "taxonomyFrom" "page") }}
 {{ end }}

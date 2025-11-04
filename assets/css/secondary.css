@@ -1,9 +1,9 @@
 .all-tags {
-    margin-top: var(--paragraph-spacing-before) !important;
-    margin-bottom: var(--paragraph-spacing-after) !important;
+    margin-top: var(--spacing-sm) !important;
+    margin-bottom: var(--spacing-sm) !important;
 }
 
 .main-menu {
-    margin-top: var(--paragraph-spacing-before) !important;
-    margin-bottom: var(--paragraph-spacing-after) !important;
+    margin-top: var(--spacing-sm) !important;
+    margin-bottom: var(--spacing-sm) !important;
 }

@@ -24,13 +24,13 @@ body {
   line-height: 1.5;
   margin: 0 auto;
   max-width: var(--page-width);
-  padding: var(--paragraph-spacing);
+  padding: var(--spacing-md);
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--header-font);
-  margin-top: var(--heading-spacing-before);
-  margin-bottom: var(--heading-spacing-after);
+  margin-block-start: var(--spacing-lg);
+  margin-block-end: var(--spacing-sm);
 }
 
 h1 {
@@ -66,11 +66,32 @@ a:visited {
   color: var(--link-visited);
 }
 
+p {
+  margin-block-start: var(--spacing-sm);
+  margin-block-end: var(--spacing-sm);
+}
+
+blockquote, pre, table, dl, ol, ul {
+  margin-block-start: var(--spacing-md);
+  margin-block-end: var(--spacing-md);
+}
+
+dd {
+  margin-inline-start: var(--spacing-lg);
+}
+
+ol, ul {
+  padding-inline-start: var(--spacing-md);
+}
+
+ul ul, ol ol, ul ol, ol ul {
+  margin-block-start: var(--spacing-xxs);
+  padding-inline-start: var(--spacing-md);
+}
+
 blockquote {
   border-left: 4px solid var(--accent-color);
-  color: color-mix(in srgb, var(--text-color) 70%, transparent);
-  margin: 1rem 0;
-  padding: 0.15rem 2.5rem;
+  padding: var(--spacing-xs) var(--spacing-xl);
   position: relative;
 }
 
@@ -81,7 +102,6 @@ code {
 .highlight pre {
   padding: 1em;
   overflow-x: auto !important; 
-  margin-block-end: 1em;
 }
 
 img {
@@ -91,29 +111,32 @@ img {
 
 table {
   border-collapse: collapse;
-  margin: 1rem 0;
 }
 
 table thead th {
   background-color: color-mix(in srgb, var(--accent-color) 25%, transparent);
   border: 0.5px solid var(--text-color);
-  padding: 0.25rem 0.5rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
   text-align: left;
 }
 
 table tbody td {
   border: 0.5px solid var(--text-color);
-  padding: 0.25rem 0.5rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
 }
 
 mark {
   background-color: color-mix(in srgb, var(--accent-color) 40%, transparent);
-  padding: 0.1rem 0.2rem;
+  padding: var(--spacing-xxs) var(--spacing-xs);
   border-radius: 3px;
   color: var(--text-color);
 }
 
-p, pre {
-  margin-block-start: var(--paragraph-spacing-before);
-  margin-block-end: var(--paragraph-spacing-after);
+ul:has(> li > input[type="checkbox"]) {
+  list-style: none;
+}
+
+ul > li > input[type="checkbox"] {
+  padding-inline-start: var(--spacing-md);
+  pointer-events: none;
 }
