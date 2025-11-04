@@ -1,3 +1,14 @@
+{{- /*
+  Site Header
+  
+  Renders the site header with title, theme toggle, and main navigation menu.
+  
+  Context:
+    Standard page context (.)
+  
+  Example:
+    {{ partial "header.html" . }}
+*/ -}}
 
 {{- $title := printf `<a href="%s">%s</a>` .Site.BaseURL  (partial "widgets/title.html" (dict "site" .Site "page" . "title" .Site.Title "key" "showTitle" "class" "main-title")) -}}
 {{- $themeToggle := partial "widgets/theme-toggle.html" (dict "site" .Site "page" .) -}}

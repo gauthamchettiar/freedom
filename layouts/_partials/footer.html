@@ -1,3 +1,19 @@
+{{- /*
+  Site Footer
+  
+  Renders the site footer with optional footer text from config.
+  
+  Context:
+    Standard page context (.)
+  
+  Config:
+    - showFooterText (bool): Whether to display footer text
+    - footerText (string): Footer text content (supports markdown)
+  
+  Example:
+    {{ partial "footer.html" . }}
+*/ -}}
+
 {{- $showFooterText := partial "config.html" (dict "site" .Site "page" . "key" "showFooterText") -}}
 {{- $footerText := partial "config.html" (dict "site" .Site "page" . "key" "footerText") -}}
 

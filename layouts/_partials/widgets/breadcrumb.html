@@ -1,3 +1,21 @@
+{{- /*
+  Breadcrumb Navigation Widget
+  
+  Displays breadcrumb navigation based on page ancestors.
+  First ancestor is always labeled "Home".
+  
+  Parameters:
+    - page (required): Page context
+    - site (required): Site context
+    - separator (optional): Separator between items (default: " » ")
+    - class (optional): Additional CSS classes
+    - key (optional): Config key for visibility (default: "showBreadcrumbs")
+  
+  Example:
+    {{ partial "widgets/breadcrumb.html" (dict "page" . "site" .Site) }}
+    {{ partial "widgets/breadcrumb.html" (dict "page" . "site" .Site "separator" " / ") }}
+*/ -}}
+
 {{- $page := .page }}
 {{- $site := .site }}
 {{- $separator := " » " -}}

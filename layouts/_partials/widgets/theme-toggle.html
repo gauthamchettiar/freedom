@@ -2,6 +2,15 @@
   Dark Mode Theme Toggle
   
   Simple theme switcher that displays sun/moon icon based on current theme.
+  
+  Parameters:
+    - page (required): Page context
+    - site (required): Site context
+    - class (optional): Additional CSS classes
+    - key (optional): Config key for visibility (default: "showThemeToggle")
+  
+  Example:
+    {{ partial "widgets/theme-toggle.html" (dict "page" . "site" .Site) }}
 */ -}}
 {{- $page := .page }}
 {{- $site := .site }}

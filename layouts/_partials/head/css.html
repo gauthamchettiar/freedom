@@ -1,3 +1,16 @@
+{{- /*
+  CSS Bundle Builder
+  
+  Concatenates all CSS files from theme, main, secondary, widgets, layouts, and override.
+  Minifies and fingerprints in production mode.
+  
+  Context:
+    Standard page context (.)
+  
+  Example:
+    {{ partialCached "head/css.html" . }}
+*/ -}}
+
 {{- $themeFile := resources.Get "css/theme.css" -}}
 {{- $mainFile := resources.Get "css/main.css" -}}
 {{- $secondaryFile := resources.Get "css/secondary.css" -}}

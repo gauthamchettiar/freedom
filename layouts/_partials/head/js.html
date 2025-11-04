@@ -1,3 +1,16 @@
+{{- /*
+  JavaScript Bundle Builder
+  
+  Builds main.js with esbuild, minifies in production, includes source maps in development.
+  Adds integrity hash for production builds.
+  
+  Context:
+    Standard page context (.)
+  
+  Example:
+    {{ partialCached "head/js.html" . }}
+*/ -}}
+
 {{- with resources.Get "js/main.js" }}
   {{- $opts := dict
     "minify" (not hugo.IsDevelopment)

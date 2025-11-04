@@ -3,15 +3,17 @@
   
   Parameters:
     - page (required): Page context
+    - site (required): Site context
     - dateType (optional): Which date to display - "date", "publishdate", "lastmod", "expirydate" (default: "date")
     - format (optional): Human-readable format (default: ":date_long")
       Options: ":date_long", ":date_medium", ":date_short", ":date_full"
       Or custom format like "January 2, 2006"
     - class (optional): Additional CSS classes
+    - key (optional): Config key for visibility (default: "showDate")
   
   Example:
-    {{ partial "widgets/time.html" (dict "page" . "dateType" "lastmod" "format" ":date_medium") }}
-    {{ partial "widgets/time.html" (dict "page" . "format" "January 2, 2006") }}
+    {{ partial "widgets/meta/date.html" (dict "page" . "site" .Site "dateType" "lastmod" "format" ":date_medium") }}
+    {{ partial "widgets/meta/date.html" (dict "page" . "site" .Site "format" "January 2, 2006") }}
 */ -}}
 
 {{- $page := .page -}}

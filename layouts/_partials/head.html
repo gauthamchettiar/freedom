@@ -1,3 +1,16 @@
+{{- /*
+  HTML Head Section
+  
+  Renders meta tags, page title, theme initialization script, CSS and JS bundles.
+  Includes inline script to prevent FOUC (Flash of Unstyled Content) for dark mode.
+  
+  Context:
+    Standard page context (.)
+  
+  Example:
+    {{ partial "head.html" . }}
+*/ -}}
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>

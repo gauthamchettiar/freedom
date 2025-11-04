@@ -7,12 +7,12 @@
     - page (required): Page context
     - site (required): Site context
     - class (optional): Additional CSS classes
-    - showIcon (optional): Whether to show a user icon (default: false)
-    - prefix (optional): Text before author name (default: "By ")
+    - prefix (optional): Text before author name (default: "")
+    - key (optional): Config key for visibility (default: "showAuthor")
   
   Example:
-    {{ partial "widgets/author.html" (dict "page" . "site" .Site) }}
-    {{ partial "widgets/author.html" (dict "page" . "site" .Site "showIcon" true "prefix" "Written by ") }}
+    {{ partial "widgets/meta/author.html" (dict "page" . "site" .Site) }}
+    {{ partial "widgets/meta/author.html" (dict "page" . "site" .Site "prefix" "Written by ") }}
 */ -}}
 
 {{- $page := .page -}}

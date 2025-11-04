@@ -1,3 +1,19 @@
+{{- /*
+  Title Widget
+  
+  Displays a page or site title as an h1 element.
+  
+  Parameters:
+    - page (required): Page context
+    - site (required): Site context
+    - title (optional): Override title text (default: page.Title)
+    - class (optional): Additional CSS classes
+    - key (optional): Config key for visibility (default: "showTitle")
+  
+  Example:
+    {{ partial "widgets/title.html" (dict "site" .Site "page" . "title" .Site.Title "class" "main-title") }}
+*/ -}}
+
 {{- $page := .page -}}
 {{- $site := .site -}}
 {{- $key := .key | default "showTitle" -}}

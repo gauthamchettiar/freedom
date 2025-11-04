@@ -5,13 +5,14 @@
   
   Parameters:
     - page (required): Page context
+    - site (required): Site context
     - wordsPerMinute (optional): Reading speed in words per minute (default: 200)
     - class (optional): Additional CSS classes
-    - showIcon (optional): Whether to show a clock icon (default: false)
+    - key (optional): Config key for visibility (default: "showReadTime")
   
   Example:
-    {{ partial "widgets/read-time.html" (dict "page" .) }}
-    {{ partial "widgets/read-time.html" (dict "page" . "wordsPerMinute" 250 "showIcon" true) }}
+    {{ partial "widgets/meta/read-time.html" (dict "page" . "site" .Site) }}
+    {{ partial "widgets/meta/read-time.html" (dict "page" . "site" .Site "wordsPerMinute" 250) }}
 */ -}}
 
 {{- $page := .page -}}
