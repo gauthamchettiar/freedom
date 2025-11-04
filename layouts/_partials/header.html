@@ -15,14 +15,3 @@
 
 {{ partial "layouts/flex.html" (dict "items" (slice $title $themeToggle) "class" "header-title-row" "align" "baseline" "gap" "md") }}
 {{ partial "widgets/menu.html" (dict "menuID" "main" "site" .Site "page" . "key" "showMenu" "class" "main-menu") }}
-{{ partial "layouts/blank.html" (dict "tsize" "xl") }}
-
-{{/*  {{ $page := . }}
-{{ $currentMenuItem := "" }}
-{{ range .Site.Menus.main }}
-    {{- if or ($page.IsMenuCurrent .Menu .) ($page.HasMenuCurrent .Menu .)  }}
-        {{ $currentMenuItem = .Name }}
-    {{ end }}
-{{ end }}
-
-{{ partial "widgets/menu.html" (dict "menuID" "main" "site" .Site "page" . "key" "showMenu" "withParentId" $currentMenuItem) }}  */}}

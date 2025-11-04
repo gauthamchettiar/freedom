@@ -45,6 +45,13 @@ params:
       showReadTimeIcon: true
       showDate: true
       showDateIcon: true
+    section:
+      showPostList: true
+      showPostListDate: true
+    term:
+      showPostList: true
+      showPostListDate: true
+  
 
 markup:
   goldmark:

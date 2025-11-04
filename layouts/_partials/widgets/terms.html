@@ -71,7 +71,7 @@ For a given taxonomy, renders a list of terms assigned to the page.
                 {{- printf " %s=%q" $k $v | safeHTMLAttr }}
               {{- end }}
             {{- end -}}
-          >#{{ .title | lower }}{{- if $showCount -}}{{- with .count }} ({{ . }}){{- end -}}{{- end -}}</a>
+          >#{{ .title | lower }}{{- if $showCount -}}{{- with .count }} <sup>{{ . }}</sup>{{- end -}}{{- end -}}</a>
         </li>
       {{- end }}
     </ul>

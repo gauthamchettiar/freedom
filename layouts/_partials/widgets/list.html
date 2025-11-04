@@ -1,12 +1,47 @@
 {{- /*
   List Widget
   
-  Placeholder for page list rendering (currently empty).
-  To be implemented for displaying page listings.
+  Renders a list of pageList as an unordered list with links.
   
   Parameters:
-    TBD
+    - pageList (required): Slice of pageList to render
+    - page (required): Page context
+    - site (required): Site context
+    - class (optional): Additional CSS classes for the ul element
+    - listStyle (optional): CSS list-style-type value (default: "none")
+    - dateFormat (optional): Date format (default: ":date_medium")
+    - key (optional): Config key for visibility (default: "showPostList")
   
   Example:
-    {{ partial "widgets/list.html" . }}
+    {{ partial "widgets/list.html" (dict "page" . "site" .Site "pageList" .Pages) }}
+    {{ partial "widgets/list.html" (dict "page" . "site" .Site "pageList" .Pages "listStyle" "disc") }}
+    {{ partial "widgets/list.html" (dict "page" . "site" .Site "pageList" .Pages "class" "post-list" "listStyle" "circle") }}
 */ -}}
+
+{{- $page := .page -}}
+{{- $site := .site -}}
+{{- $pageList := .pageList -}}
+{{- $key := .key | default "showPostList" -}}
+{{- $class := .class | default "" -}}
+{{- $listStyle := .listStyle | default "none" -}}
+{{- $dateFormat := .dateFormat | default ":date_medium" -}}
+
+{{- $showPostList := (partial "config.html" (dict "page" $page "site" $site "key" $key)) -}}
+{{- $showPostListDate := (partial "config.html" (dict "page" $page "site" $site "key" (print $key "Date"))) -}}
+
+{{- if and $pageList $showPostList -}}
+{{- $paddingLeft := cond (eq $listStyle "none") "0" "" -}}
+<ul class="page-list {{ $class }}" style="list-style-type: {{ $listStyle }};{{ if $paddingLeft }} padding-left: {{ $paddingLeft }};{{ end }}">
+  {{- range $pageList -}}
+    <li class="page-list-item">
+      {{- if $showPostListDate -}}
+        {{- with .Date -}}
+          <span class="page-list-date">{{ . | time.Format $dateFormat }} » </span>
+        {{- end -}}
+      {{- end -}}
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </li>
+  {{- end -}}
+</ul>
+{{- end -}}
+

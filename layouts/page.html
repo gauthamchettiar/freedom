@@ -1,4 +1,5 @@
 {{ define "main" }}
+  {{ partial "layouts/blank.html" (dict "tsize" "xl") }}
   {{ partial "widgets/breadcrumb.html" (dict "page" . "site" .Site) }}
   {{ partial "widgets/title.html" (dict "site" .Site "page" . "title" .Title "key" "showPageTitle" "class" "page-title") }}
   

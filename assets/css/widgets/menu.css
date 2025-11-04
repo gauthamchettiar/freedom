@@ -30,4 +30,5 @@ nav ul.menu a:hover {
 
 nav ul.menu a.active {
   font-weight: bold;
+  text-decoration: underline;
 }

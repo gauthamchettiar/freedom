@@ -1,9 +1,5 @@
 {{ define "main" }}
+  {{ partial "layouts/blank.html" (dict "tsize" "xl") }}
   {{ partial "content/wrapper.html" .Content }}
-  {{ range .Pages }}
-    <section>
-      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-      {{ .Summary }}
-    </section>
-  {{ end }}
+  {{ partial "widgets/list.html" (dict "page" . "site" .Site "pageList" .Pages ) }}
 {{ end }}
