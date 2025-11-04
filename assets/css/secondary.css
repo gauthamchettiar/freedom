@@ -7,3 +7,8 @@
     margin-top: var(--spacing-sm) !important;
     margin-bottom: var(--spacing-sm) !important;
 }
+
+a:has(.main-title) {
+    text-decoration: none;
+    color: var(--text-color);
+}

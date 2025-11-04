@@ -8,26 +8,23 @@ title: Freedom
 
 menus:
   main:
-  - name: Home
-    pageRef: /
-    weight: 10
   - name: Shortcodes
     pageRef: /shortcodes
-    weight: 20
+    weight: 10
   - name: Usage
     pageRef: /usage
-    weight: 25
+    weight: 15
   - name: Basic
     pageRef: /usage/basic
-    weight: 26
+    weight: 16
     parent: Usage
   - name: Advanced
     pageRef: /usage/advanced
-    weight: 27
+    weight: 17
     parent: Usage
   - name: Tags
     pageRef: /tags
-    weight: 30
+    weight: 20
 
 params:
   showTitle: true
