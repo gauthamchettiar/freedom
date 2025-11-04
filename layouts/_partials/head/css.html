@@ -1,13 +1,20 @@
 {{- $themeFile := resources.Get "css/theme.css" -}}
 {{- $mainFile := resources.Get "css/main.css" -}}
 {{- $secondaryFile := resources.Get "css/secondary.css" -}}
+
 {{- $widgetFiles := slice }}
 {{- range (resources.Match "css/widgets/*.css") }}
   {{- $widgetFiles = $widgetFiles | append . }}
 {{- end }}
+
+{{- $layoutFiles := slice }}
+{{- range (resources.Match "css/layouts/*.css") }}
+  {{- $layoutFiles = $layoutFiles | append . }}
+{{- end }}
+
 {{- $overrideFile := resources.Get "css/override.css" -}}
 
-{{- $cssFiles := slice $themeFile $mainFile $secondaryFile | append $widgetFiles | append $overrideFile -}}
+{{- $cssFiles := slice $themeFile $mainFile $secondaryFile | append $widgetFiles | append $layoutFiles | append $overrideFile -}}
 {{- $cssBundle := $cssFiles | resources.Concat "css/bundle.css" -}}
 
 {{- with $cssBundle }}

@@ -1,0 +1,21 @@
+{{- /*
+  Dark Mode Theme Toggle
+  
+  Simple theme switcher that displays sun/moon icon based on current theme.
+*/ -}}
+{{- $page := .page }}
+{{- $site := .site }}
+{{- $key := .key | default "showThemeToggle" -}}
+{{- $class := .class | default "" -}}
+
+{{- $showThemeToggle := partial "config.html" (dict "site" $site "page" $page "key" $key) -}}
+
+{{- if $showThemeToggle -}}
+    {{- $iconSun := partial "widgets/icon.html" (dict "name" "sun" "style" "solid") -}}
+    {{- $iconMoon := partial "widgets/icon.html" (dict "name" "moon" "style" "solid") -}}
+
+    <span id="theme-toggle" class="theme-toggle" role="button" aria-label="Toggle dark mode" title="Toggle dark mode" tabindex="0">
+    <span class="theme-icon theme-icon-light">{{ $iconSun }}</span>
+    <span class="theme-icon theme-icon-dark">{{ $iconMoon }}</span>
+    </span>
+{{- end -}}

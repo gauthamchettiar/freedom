@@ -1,0 +1,27 @@
+{{- /*
+  Flex Layout Wrapper
+  
+  Parameters:
+    - class (optional): Additional CSS classes for the flex container
+    - items (required): Array of HTML content to display in flex layout
+    - align (optional): Alignment (e.g., "center", "baseline", "flex-start")
+    - justify (optional): Justify content (e.g., "space-between", "flex-start")
+    - gap (optional): Gap between items (e.g., "sm", "md", "lg")
+  
+  Example:
+    {{ partial "widgets/flex.html" (dict "items" (slice $title $icon) "class" "header-flex" "align" "center" "gap" "sm") }}
+*/ -}}
+
+{{- $class := .class | default "" -}}
+{{- $items := .items | default (slice) -}}
+{{- $align := .align | default "center" -}}
+{{- $justify := .justify | default "flex-start" -}}
+{{- $gap := .gap | default "sm" -}}
+
+{{- $flexClass := printf "flex flex-align-%s flex-justify-%s flex-gap-%s %s" $align $justify $gap $class -}}
+
+<div class="{{ $flexClass }}">
+  {{- range $items -}}
+    {{- . | safeHTML -}}
+  {{- end -}}
+</div>

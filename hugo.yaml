@@ -35,6 +35,7 @@ params:
   showPosts: true
   showTags: true
   showTagsCount: true
+  showThemeToggle: true
 
 markup:
   goldmark:

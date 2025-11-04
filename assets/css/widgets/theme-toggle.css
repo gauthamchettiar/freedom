@@ -1,0 +1,23 @@
+/* Dark mode toggle */
+.theme-toggle {
+  cursor: pointer;
+}
+
+.theme-icon {
+  display: none;
+  line-height: 1;
+}
+
+.theme-icon .icon {
+  display: block;
+}
+
+/* Show sun in dark mode, moon in light mode */
+:root[data-theme="dark"] .theme-icon-light {
+  display: inline-flex;
+}
+
+:root[data-theme="light"] .theme-icon-dark,
+:root:not([data-theme]) .theme-icon-dark {
+  display: inline-flex;
+}

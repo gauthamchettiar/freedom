@@ -1,5 +1,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
+<script>
+  (function() {
+    const theme = localStorage.getItem('theme-preference') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
 {{ partialCached "head/css.html" . }}
 {{ partialCached "head/js.html" . }}
