@@ -20,3 +20,30 @@ a:has(.main-title) {
 .page-meta-row {
     color: color-mix(in srgb, var(--text-color) 75%, transparent);
 }
+
+/* Heading anchor links */
+.heading-anchor {
+    color: color-mix(in srgb, var(--text-color) 40%, transparent);
+    text-decoration: underline;
+    font-size: 0.85em;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    font-weight: normal;
+}
+
+.heading-anchor:visited {
+    color: color-mix(in srgb, var(--text-color) 40%, transparent);
+}
+
+h1:hover .heading-anchor,
+h2:hover .heading-anchor,
+h3:hover .heading-anchor,
+h4:hover .heading-anchor,
+h5:hover .heading-anchor,
+h6:hover .heading-anchor {
+    opacity: 1;
+}
+
+.heading-anchor:hover {
+    opacity: 1 !important;
+}

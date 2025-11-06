@@ -50,3 +50,7 @@ markup:
           enable: true
         superscript: 
           enable: true
+  tableOfContents:
+    startLevel: 1
+    endLevel: 6
+    ordered: false
