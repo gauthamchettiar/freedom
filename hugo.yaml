@@ -6,26 +6,6 @@ module:
     min: 0.146.0
 title: Freedom
 
-menus:
-  main:
-  - name: Shortcodes
-    pageRef: /shortcodes
-    weight: 10
-  - name: Usage
-    pageRef: /usage
-    weight: 15
-  - name: Basic
-    pageRef: /usage/basic
-    weight: 16
-    parent: Usage
-  - name: Advanced
-    pageRef: /usage/advanced
-    weight: 17
-    parent: Usage
-  - name: Tags
-    pageRef: /tags
-    weight: 20
-
 params:
   showTitle: true
   showPageTitle: true
@@ -45,6 +25,7 @@ params:
       showReadTimeIcon: true
       showDate: true
       showDateIcon: true
+      showToc: true
     section:
       showPostList: true
       showPostListDate: true

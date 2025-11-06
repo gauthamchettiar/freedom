@@ -94,6 +94,7 @@ ol, ul {
 
 ul ul, ol ol, ul ol, ol ul {
   margin-block-start: var(--spacing-xxs);
+  margin-block-end: var(--spacing-xxs);
   padding-inline-start: var(--spacing-md);
 }
 
