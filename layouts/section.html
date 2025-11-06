@@ -1,5 +1,4 @@
 {{ define "main" }}
-  {{ partial "layouts/blank.html" (dict "tsize" "xl") }}
   {{ partial "content/wrapper.html" .Content }}
   {{ partial "widgets/list.html" (dict "page" . "site" .Site "pageList" .Pages ) }}
 {{ end }}

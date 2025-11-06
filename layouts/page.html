@@ -1,5 +1,4 @@
 {{ define "main" }}
-  {{ partial "layouts/blank.html" (dict "tsize" "xl") }}
   {{ partial "widgets/breadcrumb.html" (dict "page" . "site" .Site) }}
   {{ partial "widgets/title.html" (dict "site" .Site "page" . "title" .Title "key" "showPageTitle" "class" "page-title") }}
   
@@ -10,6 +9,11 @@
   {{ partial "layouts/flex.html" (dict "items" (slice $time $readTime $author) "class" "page-meta-row" "align" "center" "gap" "sm" "wrap" true "separator" "·") }}
   {{ partial "layouts/blank.html" (dict "tsize" "lg") }}
 
+  {{ $toc := partial "widgets/meta/toc.html" (dict "page" . "site" .Site ) }}
+  {{ if $toc }}
+    {{ partial "widgets/expand.html" (dict "title" "Table Of Contents" "content" $toc "class" "page-toc") }}
+    {{ partial "layouts/blank.html" (dict "tsize" "lg") }}
+  {{ end }}
   {{ partial "content/wrapper.html" .Content }}
 
   {{ partial "widgets/terms.html" (dict "taxonomy" "tags" "page" . "site" .Site "taxonomyFrom" "page") }}
