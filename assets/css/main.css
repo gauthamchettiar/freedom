@@ -101,8 +101,21 @@ ul ul, ol ol, ul ol, ol ul {
 
 blockquote {
   border-left: 4px solid var(--accent-color);
-  padding: var(--spacing-xs) var(--spacing-xl);
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  background-color: color-mix(in srgb, var(--accent-color) 8%, transparent);
+  border-radius: 0 4px 4px 0;
   position: relative;
+  font-style: italic;
+}
+
+blockquote p:first-child {
+  margin-block-start: 0;
+}
+
+blockquote p:last-child {
+  margin-block-end: 0;
 }
 
 code {
