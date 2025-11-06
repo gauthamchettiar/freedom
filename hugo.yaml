@@ -16,6 +16,7 @@ params:
   showTags: true
   showTagsCount: true
   showThemeToggle: true
+  showHeadingAnchor: true
   kind:
     page:
       showBreadcrumbs: true

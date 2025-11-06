@@ -1,4 +1,7 @@
+{{- $showHeadingAnchor := partial "config.html" (dict "page" .Page "site" .Page.Site "key" "showHeadingAnchor") -}}
 <h{{ .Level }} id="{{ .Anchor }}"{{- with .Attributes.class }} class="{{ . }}"{{- end }}>
   {{ .Text | safeHTML }}
+  {{ if $showHeadingAnchor }}
   <a class="heading-anchor" href="#{{ .Anchor }}" aria-label="Link to this section">#</a>
+  {{ end }}
 </h{{ .Level }}>
