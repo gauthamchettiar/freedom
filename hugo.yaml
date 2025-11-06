@@ -26,6 +26,7 @@ params:
       showDate: true
       showDateIcon: true
       showToc: true
+      showTagsCount: false
     section:
       showPostList: true
       showPostListDate: true

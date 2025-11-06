@@ -124,13 +124,13 @@ table {
 
 table thead th {
   background-color: color-mix(in srgb, var(--accent-color) 25%, transparent);
-  border: 0.5px solid var(--text-color);
+  border: 1px solid var(--text-color);
   padding: var(--spacing-xs) var(--spacing-sm);
   text-align: left;
 }
 
 table tbody td {
-  border: 0.5px solid var(--text-color);
+  border: 1px solid var(--text-color);
   padding: var(--spacing-xs) var(--spacing-sm);
 }
 
