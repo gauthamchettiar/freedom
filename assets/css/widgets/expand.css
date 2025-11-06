@@ -1,0 +1,78 @@
+/* Expand Widget */
+
+.expand {
+  border: 1px solid var(--text-color);
+  border-radius: 0.25rem;
+  margin: var(--spacing-md) 0;
+  overflow: hidden;
+}
+
+.expand-title {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  padding: var(--spacing-md);
+  font-weight: 600;
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.expand-title:hover {
+  opacity: 0.8;
+}
+
+/* Remove default marker */
+.expand-title::-webkit-details-marker {
+  display: none;
+}
+
+.expand-title::marker {
+  content: '';
+}
+
+/* Custom arrow indicator */
+.expand-title::before {
+  content: '▶';
+  display: inline-block;
+  margin-right: var(--spacing-sm);
+  font-size: 0.75em;
+}
+
+.expand[open] .expand-title::before {
+  transform: rotate(90deg);
+}
+
+.expand-content {
+  padding: var(--spacing-md);
+  background-color: var(--bg-color);
+  border-top: 1px solid var(--text-color);
+}
+
+.expand-content > *:first-child {
+  margin-top: 0;
+}
+
+.expand-content > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Compact variant */
+.expand.compact .expand-title {
+  padding: var(--spacing-sm);
+  font-size: 0.875rem;
+}
+
+.expand.compact .expand-content {
+  padding: var(--spacing-sm);
+}
+
+/* No border variant */
+.expand.borderless {
+  border: none;
+}
+
+.expand.borderless .expand-content {
+  border-top: none;
+}

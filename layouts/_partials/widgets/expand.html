@@ -1,0 +1,30 @@
+{{- /*
+  Expand Widget
+  
+  Displays collapsible/expandable content using HTML details/summary elements.
+  Content is hidden by default and expands when clicked.
+  
+  Parameters:
+    - title (required): Summary/heading text shown when collapsed
+    - content (required): Content to display when expanded (supports HTML)
+    - open (optional): Start in expanded state (default: false)
+    - class (optional): Additional CSS classes
+  
+  Example:
+    {{ partial "widgets/expand.html" (dict "title" "Click to expand" "content" "Hidden content here") }}
+    {{ partial "widgets/expand.html" (dict "title" "More details" "content" .Inner "open" true) }}
+*/ -}}
+
+{{- $title := .title -}}
+{{- $content := .content -}}
+{{- $open := .open | default false -}}
+{{- $class := .class | default "" -}}
+
+{{- if and $title $content -}}
+<details class="expand {{ $class }}"{{- if $open }} open{{- end -}}>
+  <summary class="expand-title">{{ $title }}</summary>
+  <div class="expand-content">
+    {{ $content | safeHTML }}
+  </div>
+</details>
+{{- end -}}
