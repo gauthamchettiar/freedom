@@ -1,19 +1,16 @@
 {{- /*
   Blank Line / Spacer
   
-  Creates vertical spacing with configurable padding on top and/or bottom.
+  Creates vertical spacing with configurable height.
   
   Parameters:
-    - tsize (optional): Top spacing size - "xs", "sm", "md", "lg", "xl", "xxl"
-    - bsize (optional): Bottom spacing size - "xs", "sm", "md", "lg", "xl", "xxl"
+    - size (optional): Spacing size - "xs", "sm", "md", "lg", "xl", "xxl" (default: "md")
   
   Example:
-    {{ partial "layouts/blank.html" (dict "tsize" "lg") }}
-    {{ partial "layouts/blank.html" (dict "bsize" "md") }}
-    {{ partial "layouts/blank.html" (dict "tsize" "xl" "bsize" "sm") }}
+    {{ partial "layouts/blank.html" (dict "size" "lg") }}
+    {{ partial "layouts/blank.html" (dict "size" "xl") }}
 */ -}}
 
-{{- $tsize := .tsize | default "" -}}
-{{- $bsize := .bsize | default "" -}}
+{{- $size := .size | default "md" -}}
 
-<div class="blank {{ if $tsize }} blank-top-{{ $tsize }}{{ end }}{{ if $bsize }} blank-bottom-{{ $bsize }}{{ end }}"></div>
+<div class="blank blank-{{ $size }}"></div>

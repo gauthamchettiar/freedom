@@ -1,5 +1,5 @@
 {{ define "main" }}
   {{ partial "widgets/terms.html" (dict "taxonomy" "tags" "site" .Site "page" . "taxonomyFrom" "site"  "class" "all-tags") }}
-  {{ partial "layouts/blank.html" (dict "tsize" "xl") }}
+  {{ partial "layouts/blank.html" (dict "size" "xl") }}
   {{ partial "widgets/list.html" (dict "page" . "site" .Site "pageList" .Pages ) }}
 {{ end }}
