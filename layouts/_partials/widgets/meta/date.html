@@ -19,10 +19,10 @@
 {{- $key := .key | default "Date" -}}
 {{- $class := .class | default "" -}}
 
-{{- $showDate := (partial "utils/config.html" (dict "key" (print "show" $key))) -}}
-{{- $showDateIcon := (partial "utils/config.html" (dict "key" (print "show" $key "Icon"))) -}}
+{{- $showDate := (partial "utils/config.html" (dict "key" (print "show" $key) "default" true)) -}}
+{{- $showDateIcon := (partial "utils/config.html" (dict "key" (print "show" $key "Icon") "default" true)) -}}
 {{- $dateType := (partial "utils/config.html" (dict "key" (print $key "Type") "default" (.dateType | default "date"))) -}}
-{{- $dateFormat := (partial "utils/config.html" (dict "key" (print $key "Format") "default" (.format | default ":date_long"))) -}}
+{{- $dateFormat := (partial "utils/config.html" (dict "key" (print $key "Format") "default" (.dateFormat | default ":date_long"))) -}}
 
 {{- $date := "" -}}
 {{- if eq $dateType "publishdate" -}}

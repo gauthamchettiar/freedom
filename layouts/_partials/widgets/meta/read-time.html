@@ -15,17 +15,17 @@
     {{ partial "widgets/meta/read-time.html" (dict "page" . "site" .Site "wordsPerMinute" 250) }}
 */ -}}
 
-{{- $page := .page -}}
-{{- $site := .site -}}
-{{- $key := .key | default "showReadTime" -}}
+
+{{- $key := .key | default "ReadTime" -}}
 {{- $class := .class | default "" -}}
-{{- $wordsPerMinute := .wordsPerMinute | default 200 -}}
 
-{{ $showReadTime := (partial "config.html" (dict "page" $page "site" $site "key" $key)) }}
-{{ $showReadTimeIcon := (partial "config.html" (dict "page" $page "site" $site "key" (print $key "Icon"))) }}
+{{ $showReadTime := (partial "utils/config.html" (dict "key" (print "show" $key) "default" true)) }}
+{{ $showReadTimeIcon := (partial "utils/config.html" (dict "key" (print "show" $key "Icon") "default" true)) }}
+{{ $readTimeWordsPerMinute := (partial "utils/config.html" (dict "key" (print $key "WordsPerMinute") "default" (.wordsPerMinute | default 200))) -}}
 
-{{- $wordCount := $page.WordCount -}}
-{{- $readTime := div $wordCount $wordsPerMinute -}}
+
+{{- $wordCount := page.WordCount -}}
+{{- $readTime := div $wordCount $readTimeWordsPerMinute -}}
 {{- if lt $readTime 1 -}}
   {{- $readTime = 1 -}}
 {{- end -}}

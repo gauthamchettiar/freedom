@@ -19,8 +19,8 @@
 {{- $key := .key | default "Author" -}}
 {{- $class := .class | default "" -}}
 
-{{ $showAuthor := (partial "utils/config.html" (dict "key" (print "show" $key))) }}
-{{ $showAuthorIcon := (partial "utils/config.html" (dict "key" (print "show" $key "Icon"))) }}
+{{ $showAuthor := (partial "utils/config.html" (dict "key" (print "show" $key) "default" true)) }}
+{{ $showAuthorIcon := (partial "utils/config.html" (dict "key" (print "show" $key "Icon") "default" true)) }}
 
 {{- $author := "" -}}
 {{- with page.Params.author -}}

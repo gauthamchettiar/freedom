@@ -17,20 +17,15 @@
     {{ partial "widgets/meta/toc.html" (dict "page" . "site" .Site "title" "On This Page") }}
 */ -}}
 
-{{- $page := .page -}}
-{{- $site := .site -}}
-{{- $key := .key | default "showToc" -}}
-{{- $title := .title | default "" -}}
+
+{{- $key := .key | default "Toc" -}}
 {{- $class := .class | default "" -}}
 
-{{- $showToc := partial "config.html" (dict "page" $page "site" $site "key" $key) -}}
+{{- $showToc := partial "utils/config.html" (dict "key" (print "show" $key) "default" true) -}}
 
-{{- if and $showToc $page.TableOfContents -}}
+{{- if and $showToc page.TableOfContents -}}
 <nav class="toc {{ $class }}" aria-label="Table of Contents">
-  {{- if $title -}}
-  <h4 class="toc-title">{{ $title }}</h4>
-  {{- end -}}
-  {{- $page.TableOfContents | safeHTML -}}
+  {{- page.TableOfContents | safeHTML -}}
 </nav>
 {{- end -}}
 
