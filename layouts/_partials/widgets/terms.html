@@ -46,19 +46,20 @@ For a given taxonomy, renders a list of terms assigned to the page.
       {{- range . }}
         {{- $terms = $terms | append (dict "title" .Page.Title "link" .Page.Permalink "isActive" (and $page (eq $page.Permalink .Page.Permalink)) "count" .Count) }}
       {{- end }}
-      {{- partial "inline/terms/render.html" (dict "terms" $terms "class" $class "showCount" $showTermsCount "taxonomy" $taxonomy "taxonomyFrom" $taxonomyFrom) }}
+      {{- partial "inline/terms/render.html" (dict "page" $page "terms" $terms "class" $class "showCount" $showTermsCount "taxonomy" $taxonomy "taxonomyFrom" $taxonomyFrom) }}
     {{- end }}
   {{- end }}
 {{- end -}}
 
 {{- define "_partials/inline/terms/render.html" }}
+  {{- $page := .page }}
   {{- $terms := .terms }}
   {{- $class := .class }}
   {{- $showCount := .showCount }}
   {{- $taxonomy := .taxonomy }}
   {{- $taxonomyFrom := .taxonomyFrom }}
   <nav role="navigation" aria-label="{{ $taxonomy }} {{ $taxonomyFrom }} navigation">
-    <ul class="terms {{ $class }}">
+    <ul class="terms  kind-{{ $page.Kind }} section-{{ $page.Section }} type-{{ $page.Type }} {{- $class -}}">
       {{- range $terms }}
         {{- $attrs := dict "href" .link }}
         {{- if .isActive }}

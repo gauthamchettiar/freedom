@@ -24,7 +24,7 @@
 {{ $showBreadcrumbs := (partial "config.html" (dict "page" $page "site" $site "key" $key)) }}
 
 {{- if $showBreadcrumbs -}}
-<div class="breadcrumbs {{ $class }}">
+<div class="breadcrumbs kind-{{ $page.Kind }} section-{{ $page.Section }} type-{{ $page.Type }} {{- $class -}}">
     {{- with $page.Ancestors.Reverse -}}
         {{- $lastIndex := sub (len .) 1 -}}
         {{- range $index, $ancestor := . -}}

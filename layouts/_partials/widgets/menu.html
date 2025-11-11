@@ -24,7 +24,7 @@ Renders a menu for the given menu ID.
 
 {{- with index site.Menus $menuID }}
   <nav role="navigation" aria-label="{{ $menuID }} navigation">
-    <ul class="menu menu-{{ $menuID }} {{ $class }}">
+    <ul class="menu menu-{{ $menuID }} kind-{{ $page.Kind }} section-{{ $page.Section }} type-{{ $page.Type }} {{- $class -}}">
       {{- if $withParentId }}
         {{- partial "inline/menu/walk-children.html" (dict "page" $page "menuEntries" . "parentId" $withParentId) }}
       {{- else }}

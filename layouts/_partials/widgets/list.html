@@ -31,7 +31,7 @@
 
 {{- if and $pageList $showPostList -}}
 {{- $paddingLeft := cond (eq $listStyle "none") "0" "" -}}
-<ul class="page-list {{ $class }}" style="list-style-type: {{ $listStyle }};{{ if $paddingLeft }} padding-left: {{ $paddingLeft }};{{ end }}">
+<ul class="page-list kind-{{ $page.Kind }} section-{{ $page.Section }} type-{{ $page.Type }} {{- $class -}}" style="list-style-type: {{ $listStyle }};{{ if $paddingLeft }} padding-left: {{ $paddingLeft }};{{ end }}">
   {{- range $pageList -}}
     <li class="page-list-item">
       {{- if $showPostListDate -}}
