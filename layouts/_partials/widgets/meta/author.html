@@ -15,20 +15,18 @@
     {{ partial "widgets/meta/author.html" (dict "page" . "site" .Site "prefix" "Written by ") }}
 */ -}}
 
-{{- $page := .page -}}
-{{- $site := .site -}}
-{{- $key := .key | default "showAuthor" -}}
-{{- $class := .class | default "" -}}
-{{- $prefix := .prefix | default "" -}}
 
-{{ $showAuthor := (partial "config.html" (dict "page" $page "site" $site "key" $key)) }}
-{{ $showAuthorIcon := (partial "config.html" (dict "page" $page "site" $site "key" (print $key "Icon"))) }}
+{{- $key := .key | default "Author" -}}
+{{- $class := .class | default "" -}}
+
+{{ $showAuthor := (partial "utils/config.html" (dict "key" (print "show" $key))) }}
+{{ $showAuthorIcon := (partial "utils/config.html" (dict "key" (print "show" $key "Icon"))) }}
 
 {{- $author := "" -}}
-{{- with $page.Params.author -}}
+{{- with page.Params.author -}}
   {{- $author = . -}}
 {{- else -}}
-  {{- with $site.Params.author -}}
+  {{- with site.Params.author -}}
     {{- $author = . -}}
   {{- end -}}
 {{- end -}}
@@ -38,6 +36,6 @@
   {{- if $showAuthorIcon -}}
     {{ partialCached "widgets/icon.html" (dict "name" "user" "style" "regular") "user" "regular" }}&nbsp;&nbsp;
   {{- end -}}
-  {{ $prefix }}{{ $author }}
+  {{ $author }}
 </span>
 {{- end -}}

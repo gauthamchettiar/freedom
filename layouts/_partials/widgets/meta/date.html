@@ -16,25 +16,23 @@
     {{ partial "widgets/meta/date.html" (dict "page" . "site" .Site "format" "January 2, 2006") }}
 */ -}}
 
-{{- $page := .page -}}
-{{- $site := .site -}}
-{{- $key := .key | default "showDate" -}}
-{{- $dateType := .dateType | default "date" -}}
-{{- $format := .format | default ":date_long" -}}
+{{- $key := .key | default "Date" -}}
 {{- $class := .class | default "" -}}
 
-{{- $showDate := (partial "config.html" (dict "page" $page "site" $site "key" $key)) }}
-{{- $showDateIcon := (partial "config.html" (dict "page" $page "site" $site "key" (print $key "Icon"))) }}
+{{- $showDate := (partial "utils/config.html" (dict "key" (print "show" $key))) -}}
+{{- $showDateIcon := (partial "utils/config.html" (dict "key" (print "show" $key "Icon"))) -}}
+{{- $dateType := (partial "utils/config.html" (dict "key" (print $key "Type") "default" (.dateType | default "date"))) -}}
+{{- $dateFormat := (partial "utils/config.html" (dict "key" (print $key "Format") "default" (.format | default ":date_long"))) -}}
 
 {{- $date := "" -}}
 {{- if eq $dateType "publishdate" -}}
-  {{- $date = $page.PublishDate -}}
+  {{- $date = page.PublishDate -}}
 {{- else if eq $dateType "lastmod" -}}
-  {{- $date = $page.Lastmod -}}
+  {{- $date = page.Lastmod -}}
 {{- else if eq $dateType "expirydate" -}}
-  {{- $date = $page.ExpiryDate -}}
+  {{- $date = page.ExpiryDate -}}
 {{- else -}}
-  {{- $date = $page.Date -}}
+  {{- $date = page.Date -}}
 {{- end -}}
 
 {{- if and $date $showDate -}}
@@ -42,6 +40,6 @@
     {{ partialCached "widgets/icon.html" (dict "name" "calendar" "style" "regular") "calendar" "regular" }}
   {{- end -}}
   {{- $dateMachine := $date | time.Format "2006-01-02T15:04:05-07:00" -}}
-  {{- $dateHuman := $date | time.Format $format -}}
+  {{- $dateHuman := $date | time.Format $dateFormat -}}
   <time datetime="{{ $dateMachine }}" class="time {{ $class }}">{{ $dateHuman }}</time>
 {{- end -}}
