@@ -36,7 +36,7 @@
 {{- if and $showAuthor $author -}}
 <span class="author {{ $class }}">
   {{- if $showAuthorIcon -}}
-    {{ partial "widgets/icon.html" (dict "name" "user" "style" "regular") }}&nbsp;&nbsp;
+    {{ partialCached "widgets/icon.html" (dict "name" "user" "style" "regular") "user" "regular" }}&nbsp;&nbsp;
   {{- end -}}
   {{ $prefix }}{{ $author }}
 </span>

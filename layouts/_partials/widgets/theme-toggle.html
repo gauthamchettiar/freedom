@@ -20,8 +20,8 @@
 {{- $showThemeToggle := partial "config.html" (dict "site" $site "page" $page "key" $key) -}}
 
 {{- if $showThemeToggle -}}
-    {{- $iconSun := partial "widgets/icon.html" (dict "name" "sun" "style" "solid") -}}
-    {{- $iconMoon := partial "widgets/icon.html" (dict "name" "moon" "style" "solid") -}}
+    {{- $iconSun := partialCached "widgets/icon.html" (dict "name" "sun" "style" "solid") "sun" "solid" -}}
+    {{- $iconMoon := partialCached "widgets/icon.html" (dict "name" "moon" "style" "solid") "moon" "solid" -}}
 
     <span id="theme-toggle" class="theme-toggle" role="button" aria-label="Toggle dark mode" title="Toggle dark mode" tabindex="0">
     <span class="theme-icon theme-icon-light">{{ $iconSun }}</span>

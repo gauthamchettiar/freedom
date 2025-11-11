@@ -33,7 +33,7 @@
 {{ if $showReadTime }}
   <span class="read-time {{ $class }}">
     {{- if $showReadTimeIcon -}}
-      {{ partial "widgets/icon.html" (dict "name" "clock" "style" "regular") }}&nbsp;&nbsp;
+      {{ partialCached "widgets/icon.html" (dict "name" "clock" "style" "regular") "clock" "regular" }}&nbsp;&nbsp;
     {{- end -}}
     {{- $readTime }} min
   </span>
