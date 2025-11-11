@@ -36,7 +36,7 @@
     <li class="page-list-item">
       {{- if $showPostListDate -}}
         {{- with .Date -}}
-          <span class="page-list-date">{{ . | time.Format $dateFormat }} » </span>
+          <code class="page-list-date">{{ . | time.Format $dateFormat }} » </code>
         {{- end -}}
       {{- end -}}
       <a href="{{ .RelPermalink }}">{{ .Title }}</a>

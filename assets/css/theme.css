@@ -10,7 +10,7 @@
   /* Font families */
   --body-font: 'Inter', 'Segoe UI', Arial, sans-serif;
   --header-font: 'Montserrat', 'Segoe UI', Arial, sans-serif;
-  --code-font: monospace;
+  --code-font: 'Menlo', 'monospace';
   
   /* Dark theme palette */
   --dark-bg-color: #212121;
