@@ -8,7 +8,6 @@
 }
 
 .expand-title {
-  background-color: var(--bg-color);
   color: var(--text-color);
   cursor: pointer;
   padding: var(--spacing-md);
@@ -46,7 +45,6 @@
 
 .expand-content {
   padding: 0 var(--spacing-md);
-  background-color: var(--bg-color);
   border-top: 1px solid var(--text-color);
 }
 
