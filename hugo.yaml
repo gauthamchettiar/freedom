@@ -34,6 +34,39 @@ params:
     term:
       showPostList: true
       showPostListDate: true
+  # Theme customization
+  # Uncomment and modify any variables you want to override
+  # theme:
+  #   # Light theme colors
+  #   bgColor: "#ffffff"
+  #   textColor: "#222222"
+  #   accentColor: "#007acc"
+  #   linkColor: "#0000ee"
+  #   linkVisited: "#551a8b"
+  #   
+  #   # Font families (wrap in single quotes)
+  #   bodyFont: "'Inter', 'Segoe UI', Arial, sans-serif"
+  #   headerFont: "'Montserrat', 'Segoe UI', Arial, sans-serif"
+  #   codeFont: "monospace"
+  #   
+  #   # Dark theme colors
+  #   darkBgColor: "#212121"
+  #   darkTextColor: "#F0F0F0"
+  #   darkAccentColor: "#2b89c8"
+  #   darkLinkColor: "#6b9eff"
+  #   darkLinkVisited: "#b392ff"
+  #   
+  #   # Spacing values
+  #   spacingXxs: "0.125rem"
+  #   spacingXs: "0.25rem"
+  #   spacingSm: "0.5rem"
+  #   spacingMd: "1rem"
+  #   spacingLg: "1.5rem"
+  #   spacingXl: "2rem"
+  #   spacingXxl: "2.5rem"
+  #   
+  #   # Layout
+  #   pageWidth: "768px"
   
 
 markup:

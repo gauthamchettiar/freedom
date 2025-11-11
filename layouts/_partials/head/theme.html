@@ -1,0 +1,99 @@
+{{- /*
+  Theme Variables Generator
+  
+  Generates inline CSS with theme variable overrides from hugo.yaml configuration.
+  Falls back to theme.css defaults for any unconfigured variables.
+  
+  Configuration in hugo.yaml:
+    params:
+      theme:
+        # Light theme
+        bgColor: "#ffffff"
+        textColor: "#222222"
+        accentColor: "#007acc"
+        linkColor: "#0000ee"
+        linkVisited: "#551a8b"
+        # Fonts
+        bodyFont: "'Inter', 'Segoe UI', Arial, sans-serif"
+        headerFont: "'Montserrat', 'Segoe UI', Arial, sans-serif"
+        codeFont: "monospace"
+        # Dark theme
+        darkBgColor: "#212121"
+        darkTextColor: "#F0F0F0"
+        darkAccentColor: "#2b89c8"
+        darkLinkColor: "#6b9eff"
+        darkLinkVisited: "#b392ff"
+        # Spacing
+        spacingXxs: "0.125rem"
+        spacingXs: "0.25rem"
+        spacingSm: "0.5rem"
+        spacingMd: "1rem"
+        spacingLg: "1.5rem"
+        spacingXl: "2rem"
+        spacingXxl: "2.5rem"
+        # Layout
+        pageWidth: "768px"
+  
+  Context:
+    Standard page context (.)
+  
+  Example:
+    {{ partial "head/theme-vars.html" . }}
+*/ -}}
+
+{{- $page := . -}}
+{{- $site := .Site -}}
+
+{{- /* Build map of theme variables to check */ -}}
+{{- $themeVars := dict
+  "bgColor" "--bg-color"
+  "textColor" "--text-color"
+  "accentColor" "--accent-color"
+  "linkColor" "--link-color"
+  "linkVisited" "--link-visited"
+  "bodyFont" "--body-font"
+  "headerFont" "--header-font"
+  "codeFont" "--code-font"
+  "darkBgColor" "--dark-bg-color"
+  "darkTextColor" "--dark-text-color"
+  "darkAccentColor" "--dark-accent-color"
+  "darkLinkColor" "--dark-link-color"
+  "darkLinkVisited" "--dark-link-visited"
+  "spacingXxs" "--spacing-xxs"
+  "spacingXs" "--spacing-xs"
+  "spacingSm" "--spacing-sm"
+  "spacingMd" "--spacing-md"
+  "spacingLg" "--spacing-lg"
+  "spacingXl" "--spacing-xl"
+  "spacingXxl" "--spacing-xxl"
+  "pageWidth" "--page-width"
+-}}
+
+{{- /* Collect configured theme variables using config.html for hierarchical resolution */ -}}
+{{- $configuredVars := slice -}}
+
+{{- range $configKey, $cssVar := $themeVars -}}
+  {{- /* Use config.html to resolve theme.configKey with proper hierarchy */ -}}
+  {{- $themeConfig := partial "config.html" (dict "page" $page "site" $site "key" "theme") -}}
+  {{- $value := "" -}}
+  
+  {{- if $themeConfig -}}
+    {{- $value = index $themeConfig $configKey -}}
+  {{- end -}}
+  
+  {{- /* Add to configured vars if we found a value */ -}}
+  {{- if $value -}}
+    {{- $configuredVars = $configuredVars | append (dict "var" $cssVar "value" $value) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Output inline style if any variables are configured */ -}}
+{{- if $configuredVars -}}
+<style>
+:root {
+{{- range $configuredVars }}
+  {{ .var | safeCSS }}: {{ .value | safeCSS }};
+{{- end }}
+}
+</style>
+{{- end -}}
