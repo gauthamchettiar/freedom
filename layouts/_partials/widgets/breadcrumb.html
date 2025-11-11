@@ -24,7 +24,7 @@
 {{ $breadcrumbSeparator := (partial "utils/config.html" (dict "key" (print $key "Separator") "default" (.separator | default " » "))) }}
 
 {{- if $showBreadcrumb -}}
-<div class="breadcrumbs kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{- $class -}}">
+<div class="breadcrumbs kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}">
     {{- with page.Ancestors.Reverse -}}
         {{- $lastIndex := sub (len .) 1 -}}
         {{- range $index, $ancestor := . -}}

@@ -9,14 +9,13 @@ Renders a menu for the given menu ID.
 @example: {{ partial "menu.html" (dict "menuID" "main" "page" . "withParentId" "Documentation") }}
 */}}
 
-{{ $page := .page }}
-{{ $site := .site }}
+
 {{ $menuID := .menuID }}
 {{ $withParentId := .withParentId | default "" }}
-{{ $key := .key | default "showMenu" }}
+{{ $key := .key | default "Menu" }}
 {{ $class := .class | default "" }}
 
-{{ $showMenu := (partial "config.html" (dict "page" $page "site" $site "key" $key)) }}
+{{ $showMenu := (partial "utils/config.html" (dict  "key" (print "show" $key))) }}
 
 {{- if not $showMenu -}}
   {{- return -}}
@@ -24,32 +23,31 @@ Renders a menu for the given menu ID.
 
 {{- with index site.Menus $menuID }}
   <nav role="navigation" aria-label="{{ $menuID }} navigation">
-    <ul class="menu menu-{{ $menuID }} kind-{{ $page.Kind }} section-{{ $page.Section }} type-{{ $page.Type }} {{- $class -}}">
+    <ul class="menu menu-{{ $menuID }} kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{- $class -}}">
       {{- if $withParentId }}
-        {{- partial "inline/menu/walk-children.html" (dict "page" $page "menuEntries" . "parentId" $withParentId) }}
+        {{- partial "inline/menu/walk-children.html" (dict "menuEntries" . "parentId" $withParentId) }}
       {{- else }}
-        {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
+        {{- partial "inline/menu/walk.html" (dict "menuEntries" .) }}
       {{- end }}
     </ul>
   </nav>
 {{- end }}
 
 {{- define "_partials/inline/menu/walk.html" }}
-  {{- $page := .page }}
   {{- range .menuEntries }}
     {{- $attrs := dict "href" .URL }}
     {{- $isActive := false }}
     
     {{- /* Check if this is the current page or menu item */}}
-    {{- if $page.IsMenuCurrent .Menu . }}
+    {{- if page.IsMenuCurrent .Menu . }}
       {{- $isActive = true }}
-    {{- else if $page.HasMenuCurrent .Menu . }}
+    {{- else if page.HasMenuCurrent .Menu . }}
       {{- $isActive = true }}
     {{- else }}
       {{- /* Also check if current section/type matches the menu URL */}}
       {{- $menuPath := .URL | strings.TrimSuffix "/" }}
-      {{- $currentSection := printf "/%s" $page.Section }}
-      {{- $currentType := printf "/%s" $page.Type }}
+      {{- $currentSection := printf "/%s" page.Section }}
+      {{- $currentType := printf "/%s" page.Type }}
       {{- if or (eq $menuPath $currentSection) (eq $menuPath $currentType) }}
         {{- $isActive = true }}
       {{- end }}
@@ -78,12 +76,11 @@ Renders a menu for the given menu ID.
 {{- end }}
 
 {{- define "_partials/inline/menu/walk-children.html" }}
-  {{- $page := .page }}
   {{- $parentId := .parentId }}
   {{- range .menuEntries }}
     {{- if eq .Name $parentId }}
       {{- range .Children }}
-        {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
+        {{- partial "inline/menu/walk.html" (dict "menuEntries" .) }}
       {{- end }}
     {{- end }}
   {{- end }}

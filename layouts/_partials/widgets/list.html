@@ -18,30 +18,29 @@
     {{ partial "widgets/list.html" (dict "page" . "site" .Site "pageList" .Pages "class" "post-list" "listStyle" "circle") }}
 */ -}}
 
-{{- $page := .page -}}
-{{- $site := .site -}}
-{{- $pageList := .pageList -}}
-{{- $key := .key | default "showPostList" -}}
-{{- $class := .class | default "" -}}
-{{- $listStyle := .listStyle | default "none" -}}
-{{- $dateFormat := .dateFormat | default ":date_medium" -}}
 
-{{- $showPostList := (partial "config.html" (dict "page" $page "site" $site "key" $key)) -}}
-{{- $showPostListDate := (partial "config.html" (dict "page" $page "site" $site "key" (print $key "Date"))) -}}
+{{- $pageList := .pageList -}}
+{{- $key := .key | default "PostList" -}}
+{{- $class := .class | default "" -}}
+
+{{- $showPostList := (partial "utils/config.html" (dict "key" (print "show" $key) "default" true)) -}}
+{{- $showPostListDate := (partial "utils/config.html" (dict "key" (print "show" $key "Date") "default" true)) -}}
+{{- $postListStyle := (partial "utils/config.html" (dict "key" (print $key "Style") "default" (.listStyle | default "none"))) -}}
+{{- $postListDateFormat := (partial "utils/config.html" (dict "key" (print $key "DateFormat") "default" (.dateFormat | default ":date_medium"))) -}}
 
 {{- if and $pageList $showPostList -}}
-{{- $paddingLeft := cond (eq $listStyle "none") "0" "" -}}
-<ul class="page-list kind-{{ $page.Kind }} section-{{ $page.Section }} type-{{ $page.Type }} {{- $class -}}" style="list-style-type: {{ $listStyle }};{{ if $paddingLeft }} padding-left: {{ $paddingLeft }};{{ end }}">
-  {{- range $pageList -}}
-    <li class="page-list-item">
-      {{- if $showPostListDate -}}
-        {{- with .Date -}}
-          <code class="page-list-date">{{ . | time.Format $dateFormat }} » </code>
+  {{- $paddingLeft := cond (eq $postListStyle "none") "0" "" -}}
+  <ul class="page-list kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}" style="list-style-type: {{ $postListStyle }};{{ if $paddingLeft }} padding-left: {{ $paddingLeft }};{{ end }}">
+    {{- range $pageList -}}
+      <li class="page-list-item">
+        {{- if $showPostListDate -}}
+          {{- with .Date -}}
+            <code class="page-list-date">{{ . | time.Format $postListDateFormat }} » </code>
+          {{- end -}}
         {{- end -}}
-      {{- end -}}
-      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-    </li>
-  {{- end -}}
-</ul>
+        <a class="page-list-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+      </li>
+    {{- end -}}
+  </ul>
 {{- end -}}
 
