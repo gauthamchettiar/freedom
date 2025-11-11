@@ -10,7 +10,7 @@
     {{ partial "header.html" . }}
 */ -}}
 
-{{- $title := printf `<a href="%s">%s</a>` .Site.BaseURL  (partial "widgets/title.html" (dict "site" .Site "page" . "title" .Site.Title "key" "showTitle" "class" "main-title")) -}}
+{{- $title := printf `<a href="%s">%s</a>` .Site.BaseURL  (partial "widgets/title.html" (dict "titleFrom" "site" "key" "Title" "class" "main-title")) -}}
 {{- $themeToggle := partial "widgets/theme-toggle.html" (dict "site" .Site "page" .) -}}
 
 {{ partial "layouts/flex.html" (dict "items" (slice $title $themeToggle) "class" "header-title-row" "align" "baseline" "gap" "md") }}

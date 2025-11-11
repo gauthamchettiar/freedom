@@ -12,12 +12,11 @@
   Example:
     {{ partial "widgets/theme-toggle.html" (dict "page" . "site" .Site) }}
 */ -}}
-{{- $page := .page }}
-{{- $site := .site }}
-{{- $key := .key | default "showThemeToggle" -}}
+
+{{- $key := .key | default "ThemeToggle" -}}
 {{- $class := .class | default "" -}}
 
-{{- $showThemeToggle := partial "config.html" (dict "site" $site "page" $page "key" $key) -}}
+{{- $showThemeToggle := partial "utils/config.html" (dict "key" (print "show" $key) "default" true) -}}
 
 {{- if $showThemeToggle -}}
     {{- $iconSun := partialCached "icon.html" (dict "name" "sun" "style" "solid") "sun" "solid" -}}

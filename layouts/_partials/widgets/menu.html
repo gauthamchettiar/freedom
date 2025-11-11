@@ -15,7 +15,7 @@ Renders a menu for the given menu ID.
 {{ $key := .key | default "Menu" }}
 {{ $class := .class | default "" }}
 
-{{ $showMenu := (partial "utils/config.html" (dict  "key" (print "show" $key))) }}
+{{ $showMenu := (partial "utils/config.html" (dict  "key" (print "show" $key) "default" true)) }}
 
 {{- if not $showMenu -}}
   {{- return -}}

@@ -14,13 +14,18 @@
     {{ partial "widgets/title.html" (dict "site" .Site "page" . "title" .Site.Title "class" "main-title") }}
 */ -}}
 
-{{- $page := .page -}}
-{{- $site := .site -}}
-{{- $key := .key | default "showTitle" -}}
-{{- $title := .title | default $page.Title -}}
+{{- $titleFrom := .titleFrom | default "page" -}}
+{{- $key := .key | default "Title" -}}
 {{- $class := .class | default "" -}}
 
-{{- $showTitle := partial "config.html" (dict "site" $site "page" $page "key" $key) -}}
+{{- $showTitle := partial "utils/config.html" (dict "key" (print "show" $key) "default" true) -}}
+
+{{- $title := "" -}}
+{{- if eq $titleFrom "site" -}}
+    {{- $title = site.Title -}}
+{{- else -}}
+    {{- $title = page.Title -}}
+{{- end -}}
 
 {{- if $showTitle -}}
     <h1 class="title {{ $class }}">{{ $title }}</h1>
