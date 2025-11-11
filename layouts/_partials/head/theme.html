@@ -33,6 +33,14 @@
         spacingXxl: "2.5rem"
         # Layout
         pageWidth: "768px"
+        # Background image
+        bgImage: "path/to/image.jpg"           # Used for light mode
+        darkBgImage: "path/to/dark-image.jpg"  # Used for dark mode (falls back to bgImage if not set)
+        bgOverlayOpacity: "0.92"
+        bgImageSize: "cover"
+        bgImagePosition: "center"
+        bgImageAttachment: "fixed"
+        bgImageRepeat: "no-repeat"
   
   Context:
     Standard page context (.)
@@ -67,22 +75,71 @@
   "spacingXl" "--spacing-xl"
   "spacingXxl" "--spacing-xxl"
   "pageWidth" "--page-width"
+  "bgImage" "--bg-image"
+  "darkBgImage" "--dark-bg-image"
+  "bgOverlayOpacity" "--bg-overlay-opacity"
+  "bgImageSize" "--bg-image-size"
+  "bgImagePosition" "--bg-image-position"
+  "bgImageAttachment" "--bg-image-attachment"
+  "bgImageRepeat" "--bg-image-repeat"
 -}}
 
 {{- /* Collect configured theme variables using config.html for hierarchical resolution */ -}}
 {{- $configuredVars := slice -}}
+{{- $themeConfig := partial "config.html" (dict "page" $page "site" $site "key" "theme") -}}
+
+{{- /* Get background image values with fallback logic */ -}}
+{{- $bgImage := "" -}}
+{{- $darkBgImage := "" -}}
+
+{{- if $themeConfig -}}
+  {{- $bgImage = index $themeConfig "bgImage" -}}
+  {{- $darkBgImage = index $themeConfig "darkBgImage" -}}
+  
+  {{- /* Fallback: use bgImage if darkBgImage not set */ -}}
+  {{- if and (not $darkBgImage) $bgImage -}}
+    {{- $darkBgImage = $bgImage -}}
+  {{- end -}}
+{{- end -}}
 
 {{- range $configKey, $cssVar := $themeVars -}}
-  {{- /* Use config.html to resolve theme.configKey with proper hierarchy */ -}}
-  {{- $themeConfig := partial "config.html" (dict "page" $page "site" $site "key" "theme") -}}
   {{- $value := "" -}}
   
   {{- if $themeConfig -}}
     {{- $value = index $themeConfig $configKey -}}
   {{- end -}}
   
-  {{- /* Add to configured vars if we found a value */ -}}
-  {{- if $value -}}
+  {{- /* Special handling for background images - resolve resource */ -}}
+  {{- if or (eq $configKey "bgImage") (eq $configKey "darkBgImage") -}}
+    {{- /* Use the pre-calculated values with fallback */ -}}
+    {{- if eq $configKey "bgImage" -}}
+      {{- $value = $bgImage -}}
+    {{- else if eq $configKey "darkBgImage" -}}
+      {{- $value = $darkBgImage -}}
+    {{- end -}}
+    
+    {{- if $value -}}
+      {{- $bgURL := "" -}}
+      {{- if or (hasPrefix $value "http") (hasPrefix $value "/") -}}
+        {{- $bgURL = $value -}}
+      {{- else -}}
+        {{- with $page.Resources.Get $value -}}
+          {{- $bgURL = .RelPermalink -}}
+        {{- else -}}
+          {{- with resources.Get $value -}}
+            {{- $bgURL = .RelPermalink -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+      
+      {{- /* Set background image URL and enable overlay flag */ -}}
+      {{- if $bgURL -}}
+        {{- $configuredVars = $configuredVars | append (dict "var" $cssVar "value" (printf "url('%s')" $bgURL)) -}}
+        {{- $configuredVars = $configuredVars | append (dict "var" "--has-bg-image" "value" "1") -}}
+      {{- end -}}
+    {{- end -}}
+  {{- else if $value -}}
+    {{- /* Add to configured vars if we found a value */ -}}
     {{- $configuredVars = $configuredVars | append (dict "var" $cssVar "value" $value) -}}
   {{- end -}}
 {{- end -}}

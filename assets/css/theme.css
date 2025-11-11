@@ -29,5 +29,13 @@
   --spacing-xxl: 2.5rem;
 
   --page-width: 768px;
-}
 
+  /* Background image settings */
+  --dark-bg-image: none;
+  --bg-image: none;
+  --bg-image-size: cover;
+  --bg-image-position: center;
+  --bg-image-attachment: fixed;
+  --bg-image-repeat: no-repeat;
+  --bg-overlay-opacity: 0.65;
+}
