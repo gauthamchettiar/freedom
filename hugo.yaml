@@ -17,6 +17,8 @@ params:
   showTagsCount: true
   showThemeToggle: true
   showHeadingAnchor: true
+  showBlockquoteCite: true
+  showBlockquoteCaption: true
   kind:
     page:
       showBreadcrumbs: true
@@ -34,6 +36,7 @@ params:
     term:
       showPostList: true
       showPostListDate: true
+  
   # Theme customization
   # Uncomment and modify any variables you want to override
   # theme:
@@ -84,6 +87,10 @@ markup:
           enable: true
         superscript: 
           enable: true
+    parser:
+      attribute:
+        block: true
+        title: true
   tableOfContents:
     startLevel: 1
     endLevel: 6

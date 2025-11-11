@@ -47,3 +47,159 @@ h6:hover .heading-anchor {
 .heading-anchor:hover {
     opacity: 1 !important;
 }
+
+/* Standard blockquote */
+.blockquote-figure {
+    border-left: 4px solid var(--accent-color);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    border-radius: 0 4px 4px 0;
+    position: relative;
+    font-style: italic;
+}
+
+.blockquote-caption {
+    margin-top: var(--spacing-xxs);
+    color: color-mix(in srgb, var(--text-color) 60%, transparent);
+    margin-inline-start: var(--spacing-sm);
+}
+
+/* Alert-style blockquotes */
+.blockquote-alert {
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-left: 4px solid;
+    border-radius: 4px;
+    font-style: normal;
+}
+
+.blockquote-alert .alert-heading {
+    margin: 0 0 var(--spacing-xs) 0;
+    font-weight: 600;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.blockquote-alert p {
+    margin: var(--spacing-xs) 0;
+}
+
+.blockquote-alert p:last-child {
+    margin-bottom: 0;
+}
+
+/* Collapsible alert blockquotes (details element) */
+details.blockquote-alert {
+    padding: 0;
+}
+
+details.blockquote-alert summary.alert-heading {
+    padding: var(--spacing-sm) var(--spacing-md);
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    margin: 0;
+    transition: background-color 0.2s ease;
+}
+
+details.blockquote-alert summary.alert-heading:hover {
+  opacity: 0.8;
+}
+
+details.blockquote-alert summary.alert-heading::-webkit-details-marker {
+    display: none;
+}
+
+details.blockquote-alert summary.alert-heading::before {
+    content: "▶";
+    display: inline-block;
+    margin-right: var(--spacing-xs);
+    font-size: 0.75em;
+}
+
+details.blockquote-alert[open] summary.alert-heading::before {
+    transform: rotate(90deg);
+}
+
+details.blockquote-alert[open] summary.alert-heading {
+    padding: var(--spacing-sm) var(--spacing-md) 0 var(--spacing-md);
+}
+
+details.blockquote-alert .alert-content {
+    padding: 0 var(--spacing-md) var(--spacing-sm) var(--spacing-md);
+}
+
+details.blockquote-alert .alert-content p {
+    margin: var(--spacing-xs) 0;
+}
+
+details.blockquote-alert .alert-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Alert type styles - Light mode */
+.alert-note {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+    color: #0d47a1;
+}
+
+.alert-tip {
+    background-color: #e8f5e9;
+    border-color: #4caf50;
+    color: #1b5e20;
+}
+
+.alert-important {
+    background-color: #f3e5f5;
+    border-color: #9c27b0;
+    color: #4a148c;
+}
+
+.alert-warning {
+    background-color: #fff3e0;
+    border-color: #ff9800;
+    color: #e65100;
+}
+
+.alert-caution {
+    background-color: #ffebee;
+    border-color: #f44336;
+    color: #b71c1c;
+}
+
+/* Alert type styles - Dark mode */
+[data-theme="dark"] .alert-note {
+    background-color: #0d47a1;
+    border-color: #64b5f6;
+    color: #e3f2fd;
+}
+
+[data-theme="dark"] .alert-tip {
+    background-color: #1b5e20;
+    border-color: #81c784;
+    color: #e8f5e9;
+}
+
+[data-theme="dark"] .alert-important {
+    background-color: #4a148c;
+    border-color: #ba68c8;
+    color: #f3e5f5;
+}
+
+[data-theme="dark"] .alert-warning {
+    background-color: #e65100;
+    border-color: #ffb74d;
+    color: #fff3e0;
+}
+
+[data-theme="dark"] .alert-caution {
+    background-color: #b71c1c;
+    border-color: #e57373;
+    color: #ffebee;
+}
