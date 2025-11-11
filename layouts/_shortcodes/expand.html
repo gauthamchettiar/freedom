@@ -1,0 +1,54 @@
+{{- /*
+  Expand Shortcode
+  
+  Usage in markdown (positional):
+    {{< expand "Click to expand" >}}
+    Hidden content here
+    {{< /expand >}}
+  
+  Usage in markdown (named):
+    {{< expand title="More details" open=true >}}
+    Content that starts expanded
+    {{< /expand >}}
+  
+  Parameters:
+    - Positional:
+      0: title (required) - Summary/heading text
+    - Named:
+      - title (required): Summary/heading text
+      - open (optional): Start in expanded state (default: false)
+      - class (optional): Additional CSS classes
+  
+  Examples:
+    {{< expand "Click to see more" >}}
+    This content is hidden by default.
+    {{< /expand >}}
+    
+    {{< expand title="FAQ Item" open=true class="custom-style" >}}
+    This content starts expanded.
+    {{< /expand >}}
+*/ -}}
+
+{{- $title := "" -}}
+{{- $open := false -}}
+{{- $class := "" -}}
+
+{{- /* Support both positional and named parameters */ -}}
+{{- if .IsNamedParams -}}
+  {{- $title = .Get "title" -}}
+  {{- $open = .Get "open" | default false -}}
+  {{- $class = .Get "class" | default "" -}}
+{{- else -}}
+  {{- $title = .Get 0 -}}
+{{- end -}}
+
+{{- /* Validate that title is provided */ -}}
+{{- if not $title -}}
+  {{- errorf "expand shortcode requires a title parameter. Usage: {{< expand \"Title\" >}}content{{< /expand >}}" -}}
+{{- end -}}
+
+{{- /* Get inner content */ -}}
+{{- $content := .Inner | .Page.RenderString -}}
+
+{{- /* Call the expand partial */ -}}
+{{ partial "expand.html" (dict "title" $title "content" $content "open" $open "class" $class) }}

@@ -16,7 +16,7 @@
   {{ if $isFoldable }}
     <details class="blockquote-alert alert-{{ .AlertType }}"{{ if $isOpen }} open{{ end }}>
       <summary class="alert-heading">
-        {{ partialCached "widgets/icon.html" (dict "name" (index $icons .AlertType)) "alert" .AlertType }}&nbsp;
+        {{ partialCached "icon.html" (dict "name" (index $icons .AlertType)) "alert" .AlertType }}&nbsp;
         {{ with .AlertTitle }}
           {{ . }}
         {{ else }}
@@ -30,7 +30,7 @@
   {{ else }}
     <blockquote class="blockquote-alert alert-{{ .AlertType }}">
       <p class="alert-heading">
-        {{ partialCached "widgets/icon.html" (dict "name" (index $icons .AlertType)) "alert" .AlertType }}&nbsp;
+        {{ partialCached "icon.html" (dict "name" (index $icons .AlertType)) "alert" .AlertType }}&nbsp;
         {{ with .AlertTitle }}
           {{ . }}
         {{ else }}

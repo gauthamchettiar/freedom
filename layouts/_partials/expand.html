@@ -11,8 +11,8 @@
     - class (optional): Additional CSS classes
   
   Example:
-    {{ partial "widgets/expand.html" (dict "title" "Click to expand" "content" "Hidden content here") }}
-    {{ partial "widgets/expand.html" (dict "title" "More details" "content" .Inner "open" true) }}
+    {{ partial "expand.html" (dict "title" "Click to expand" "content" "Hidden content here") }}
+    {{ partial "expand.html" (dict "title" "More details" "content" .Inner "open" true) }}
 */ -}}
 
 {{- $title := .title -}}
