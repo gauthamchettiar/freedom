@@ -7,34 +7,7 @@ module:
 title: Freedom
 
 params:
-  showTitle: true
-  showPageTitle: true
-  showMenu: true
-  showFooterText: true
   footerText: Made with ❤️ using [hugo](https://gohugo.io/) & [freedom](https://github.com/gauthamchettiar/freedom)
-  showTags: true
-  showTagsCount: true
-  showThemeToggle: true
-  showHeadingAnchor: true
-  showBlockquoteCite: true
-  showBlockquoteCaption: true
-  kind:
-    page:
-      showBreadcrumbs: true
-      showAuthor: true
-      showAuthorIcon: true
-      showReadTime: true
-      showReadTimeIcon: true
-      showDate: true
-      showDateIcon: true
-      showToc: true
-      showTagsCount: false
-    section:
-      showPostList: true
-      showPostListDate: true
-    term:
-      showPostList: true
-      showPostListDate: true
 
 markup:
   goldmark:
