@@ -1,0 +1,42 @@
+{{- /*
+  Chroma Syntax Highlighting Loader
+  
+  Loads and wraps chroma syntax highlighting CSS files with theme-specific selectors.
+  Returns a slice of two resources: light theme and dark theme chroma styles.
+  
+  Light theme styles are applied to:
+  - Explicit light mode: :root:not([data-theme="dark"])
+  - System preference light: @media (prefers-color-scheme: light) with :root[data-theme="system"]
+  
+  Dark theme styles are applied to:
+  - Explicit dark mode: :root[data-theme="dark"]
+  - System preference dark: @media (prefers-color-scheme: dark) with :root[data-theme="system"]
+  
+  Returns:
+    Slice of two resources: [$chromaLight, $chromaDark]
+  
+  Example:
+    {{- $chromaStyles := partial "utils/load-chroma.html" . -}}
+    {{- $chromaLight := index $chromaStyles 0 -}}
+    {{- $chromaDark := index $chromaStyles 1 -}}
+*/ -}}
+
+{{- $chromaLightFile := resources.Get "css/chroma/light.css" -}}
+{{- $chromaDarkFile := resources.Get "css/chroma/dark.css" -}}
+
+{{- /* Wrap chroma styles with simple theme-based media queries and attribute selectors */ -}}
+{{- $chromaLight := "" -}}
+{{- with $chromaLightFile -}}
+  {{- /* Light theme: default (no explicit dark) + system preference */ -}}
+  {{- $wrapped := printf ":root:not([data-theme=\"dark\"]) {\n%s\n}\n\n@media (prefers-color-scheme: light) {\n  :root[data-theme=\"system\"] {\n%s\n  }\n}" .Content .Content -}}
+  {{- $chromaLight = $wrapped | resources.FromString "css/chroma-light-wrapped.css" -}}
+{{- end -}}
+
+{{- $chromaDark := "" -}}
+{{- with $chromaDarkFile -}}
+  {{- /* Dark theme: explicit dark + system preference */ -}}
+  {{- $wrapped := printf ":root[data-theme=\"dark\"] {\n%s\n}\n\n@media (prefers-color-scheme: dark) {\n  :root[data-theme=\"system\"] {\n%s\n  }\n}" .Content .Content -}}
+  {{- $chromaDark = $wrapped | resources.FromString "css/chroma-dark-wrapped.css" -}}
+{{- end -}}
+
+{{- return slice $chromaLight $chromaDark -}}

@@ -1,7 +1,10 @@
 {{- /*
   CSS Bundle Builder
   
-  Concatenates all CSS files from theme, main, secondary, widgets, layouts, and override.
+  Concatenates all CSS files from theme, main, secondary, widgets, layouts, chroma, and override.
+  Chroma syntax highlighting styles are bundled with theme-specific selectors:
+  - Light theme: Applied to light mode and system preference light
+  - Dark theme: Applied to dark mode and system preference dark
   Minifies and fingerprints in production mode.
   
   Context:
@@ -26,9 +29,14 @@
   {{- $layoutFiles = $layoutFiles | append . }}
 {{- end }}
 
+{{- /* Load theme-scoped chroma syntax highlighting styles */ -}}
+{{- $chromaStyles := partial "utils/load-chroma.html" . -}}
+{{- $chromaLight := index $chromaStyles 0 -}}
+{{- $chromaDark := index $chromaStyles 1 -}}
+
 {{- $overrideFile := resources.Get "css/override.css" -}}
 
-{{- $cssFiles := slice $themeFile $themeOverrides $mainFile $secondaryFile | append $widgetFiles | append $layoutFiles | append $overrideFile -}}
+{{- $cssFiles := slice $themeFile $themeOverrides $mainFile $secondaryFile | append $widgetFiles | append $layoutFiles | append $chromaLight | append $chromaDark | append $overrideFile -}}
 {{- $cssBundle := $cssFiles | resources.Concat "css/bundle.css" -}}
 
 {{- with $cssBundle }}
