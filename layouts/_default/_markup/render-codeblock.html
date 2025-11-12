@@ -1,12 +1,20 @@
 {{- /*
   Render Codeblock Hook
   
-  Renders code blocks with syntax highlighting and a language marker.
-  The language marker is positioned at the top right of the code block.
+  Renders code blocks with syntax highlighting and optional display label.
+  - Display label is positioned at the top right (via {display="..."} attribute)
+  - Falls back to language type if display is not provided
+  
+  Example:
+    ```go {display="main.go"}
+    package main
+    ```
 */ -}}
 <div class="codeblock">
-  {{- if .Type -}}
-    <div class="codeblock-lang chroma"><span class="s1">{{ .Type }}</span></div>
+  {{- $displayLabel := .Attributes.displaylang | default .Type -}}
+  {{- if $displayLabel -}}
+    <div class="codeblock-lang chroma"><span class="s1">{{ $displayLabel }}</span></div>
   {{- end -}}
   {{ highlight .Inner .Type .Options }}
+</div>
 </div>
