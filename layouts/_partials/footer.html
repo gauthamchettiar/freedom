@@ -14,8 +14,8 @@
     {{ partial "footer.html" . }}
 */ -}}
 
-{{- $showFooterText := partial "config.html" (dict "site" .Site "page" . "key" "showFooterText") -}}
-{{- $footerText := partial "config.html" (dict "site" .Site "page" . "key" "footerText") -}}
+{{- $showFooterText := partial "utils/config.html" (dict "key" "showFooterText" "default" true) -}}
+{{- $footerText := partial "utils/config.html" (dict "key" "footerText" "default" "") -}}
 
 {{- if $showFooterText -}}
     {{ partial "layouts/blank.html" (dict "size" "xl") }}

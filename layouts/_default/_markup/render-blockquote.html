@@ -1,5 +1,5 @@
-{{- $showBlockquoteCite := partial "config.html" (dict "page" .Page "site" .Page.Site "key" "showBlockquoteCite") -}}
-{{- $showBlockquoteCaption := partial "config.html" (dict "page" .Page "site" .Page.Site "key" "showBlockquoteCaption") -}}
+{{- $showBlockquoteCite := partial "utils/config.html" (dict "key" "showBlockquoteCite" "default" true) -}}
+{{- $showBlockquoteCaption := partial "utils/config.html" (dict "key" "showBlockquoteCaption" "default" true) -}}
 
 {{ $icons := dict
   "caution" "triangle-exclamation"

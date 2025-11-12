@@ -3,7 +3,6 @@
 .expand {
   border: 1px solid var(--text-color);
   border-radius: 0.25rem;
-  margin: var(--spacing-md) 0;
   overflow: hidden;
 }
 

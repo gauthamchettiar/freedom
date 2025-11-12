@@ -83,10 +83,10 @@
   "bgImageAttachment" "--bg-image-attachment"
   "bgImageRepeat" "--bg-image-repeat"
 -}}
-
+  
 {{- /* Collect configured theme variables using config.html for hierarchical resolution */ -}}
 {{- $configuredVars := slice -}}
-{{- $themeConfig := partial "config.html" (dict "page" $page "site" $site "key" "theme") -}}
+{{- $themeConfig := partial "utils/config.html" (dict "key" "theme") -}}
 
 {{- /* Get background image values with fallback logic */ -}}
 {{- $bgImage := "" -}}

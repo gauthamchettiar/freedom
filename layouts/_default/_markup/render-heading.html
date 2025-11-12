@@ -1,4 +1,5 @@
-{{- $showHeadingAnchor := partial "config.html" (dict "page" .Page "site" .Page.Site "key" "showHeadingAnchor") -}}
+{{- $showHeadingAnchor := partial "utils/config.html" (dict "key" "showHeadingAnchor" "default" true) -}}
+
 <h{{ .Level }} id="{{ .Anchor }}"{{- with .Attributes.class }} class="{{ . }}"{{- end }}>
   {{ .Text | safeHTML }}
   {{ if $showHeadingAnchor }}
