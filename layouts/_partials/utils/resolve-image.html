@@ -1,0 +1,17 @@
+{{ $imageUrl := . }}
+
+{{ $image := "" }}
+{{ if hasPrefix $imageUrl "http" }}
+    {{- $image = resources.GetRemote $imageUrl -}}
+{{ else }}
+    {{- $image = page.Resources.Get $imageUrl -}}
+    {{- if not $image -}}
+        {{- $image = resources.Get $imageUrl -}}
+    {{- end -}}
+{{ end }}
+
+{{- if $image -}}
+  {{- return $image.RelPermalink -}}
+{{- else -}}
+  {{ warnf "Image '%s' not found in page, site or remote resource location." $imageUrl -}}
+{{- end -}}

@@ -12,6 +12,7 @@
 */ -}}
 
 {{- $themeFile := resources.Get "css/theme.css" -}}
+{{- $themeOverrides := partial "head/theme.html" . -}}
 {{- $mainFile := resources.Get "css/main.css" -}}
 {{- $secondaryFile := resources.Get "css/secondary.css" -}}
 
@@ -27,7 +28,7 @@
 
 {{- $overrideFile := resources.Get "css/override.css" -}}
 
-{{- $cssFiles := slice $themeFile $mainFile $secondaryFile | append $widgetFiles | append $layoutFiles | append $overrideFile -}}
+{{- $cssFiles := slice $themeFile $themeOverrides $mainFile $secondaryFile | append $widgetFiles | append $layoutFiles | append $overrideFile -}}
 {{- $cssBundle := $cssFiles | resources.Concat "css/bundle.css" -}}
 
 {{- with $cssBundle }}

@@ -30,12 +30,19 @@
 
   --page-width: 768px;
 
-  /* Background image settings */
-  --dark-bg-image: none;
+  /* Background image settings (light mode) */
   --bg-image: none;
   --bg-image-size: cover;
   --bg-image-position: center;
   --bg-image-attachment: fixed;
   --bg-image-repeat: no-repeat;
   --bg-overlay-opacity: 0.65;
+
+  /* Background image settings (dark mode) */
+  --dark-bg-image: none;
+  --dark-bg-image-size: cover;
+  --dark-bg-image-position: center;
+  --dark-bg-image-attachment: fixed;
+  --dark-bg-image-repeat: no-repeat;
+  --dark-bg-overlay-opacity: 0.65;
 }
