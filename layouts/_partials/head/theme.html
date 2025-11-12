@@ -109,7 +109,7 @@
   {{- /* Special handling for background images - resolve resource */ -}}
   {{- if or (eq $configKey "bgImage") (eq $configKey "darkBgImage") -}}
     {{- if $value -}}
-      {{ $value = partial "utils/resolve-image.html" $value }}
+      {{ $value = partialCached "utils/resolve-image.html" $value }}
       {{- if $value -}}
         {{- $value = printf "url('%s')" $value -}}
       {{- end -}}

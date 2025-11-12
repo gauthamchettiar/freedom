@@ -1,0 +1,65 @@
+{{- /*
+  Background Image Preloader
+  
+  Generates <link rel="preload"> tags for background images to prevent FOUC.
+  Fetches background images from both configuration and theme.css files.
+  
+  Context:
+    Standard page context (.)
+  
+  Example:
+    {{ partial "utils/bg-preload.html" . }}
+*/ -}}
+
+{{- $page := . -}}
+{{- $site := .Site -}}
+{{- $bgURLs := slice -}}
+
+{{- /* Method 1: Get from configuration */ -}}
+{{- $themeConfig := partial "utils/config.html" (dict "key" "theme") -}}
+{{- if $themeConfig -}}
+  {{- $bgImage := index $themeConfig "bgImage" -}}
+  {{- if $bgImage -}}
+    {{- $bgURL := partialCached "utils/resolve-image.html" $bgImage -}}
+    {{- if $bgURL -}}
+      {{- $bgURLs = $bgURLs | append $bgURL -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $darkBgImage := index $themeConfig "darkBgImage" -}}
+  {{- if $darkBgImage -}}
+    {{- $darkBgURL := partialCached "utils/resolve-image.html" $darkBgImage -}}
+    {{- if $darkBgURL -}}
+      {{- $bgURLs = $bgURLs | append $darkBgURL -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Method 2: Parse theme.css for background image URLs */ -}}
+{{- /* This gets project's assets/css/theme.css first, then falls back to theme's */ -}}
+{{- $themeCSS := resources.Get "css/theme.css" -}}
+{{- if $themeCSS -}}
+  {{- $content := $themeCSS.Content -}}
+  
+  {{- /* Extract --bg-image: url(...) */ -}}
+  {{- range findRE `--bg-image:\s*url\(['"]?([^'")]+)['"]?\)` $content -}}
+    {{- $url := replaceRE `--bg-image:\s*url\(['"]?([^'")]+)['"]?\)` "$1" . -}}
+    {{- if $url -}}
+      {{- $bgURLs = $bgURLs | append $url -}}
+    {{- end -}}
+  {{- end -}}
+  
+  {{- /* Extract --dark-bg-image: url(...) */ -}}
+  {{- range findRE `--dark-bg-image:\s*url\(['"]?([^'")]+)['"]?\)` $content -}}
+    {{- $url := replaceRE `--dark-bg-image:\s*url\(['"]?([^'")]+)['"]?\)` "$1" . -}}
+    {{- if $url -}}
+      {{- $bgURLs = $bgURLs | append $url -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Remove duplicates and output preload tags */ -}}
+{{- $bgURLs = $bgURLs | uniq -}}
+{{- range $bgURLs -}}
+<link rel="preload" as="image" href="{{ . }}">
+{{- end -}}
