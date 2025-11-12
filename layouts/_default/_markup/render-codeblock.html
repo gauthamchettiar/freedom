@@ -1,0 +1,12 @@
+{{- /*
+  Render Codeblock Hook
+  
+  Renders code blocks with syntax highlighting and a language marker.
+  The language marker is positioned at the top right of the code block.
+*/ -}}
+<div class="codeblock">
+  {{- if .Type -}}
+    <div class="codeblock-lang chroma"><span class="s1">{{ .Type }}</span></div>
+  {{- end -}}
+  {{ highlight .Inner .Type .Options }}
+</div>
