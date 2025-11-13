@@ -4,17 +4,20 @@
 }
 
 .codeblock:has(.codeblock-lang) .highlight pre {
-  padding-top: var(--spacing-xl);
+  padding-top: var(--spacing-xxl);
 }
 
 .codeblock-lang {
   position: absolute;
   top: 0.5em;
+  left: 0.5em;
   right: 0.5em;
-  padding: 0.25em 0.5em;
+  padding: 0.25em 0;
+  margin: 0 0.5em;
   font-size: 0.8em;
   font-family: var(--code-font);
-  border-radius: 0.25em;
+  border-bottom: 2px solid;
+  border-bottom-color: color-mix(in srgb, currentColor 40%, transparent);
   z-index: 1;
   user-select: none;
   font-weight: bold;
