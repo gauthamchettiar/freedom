@@ -23,3 +23,30 @@
   font-weight: bold;
 }
 
+.codeblock-copy {
+  position: absolute;
+  top: 0.5em;
+  right: 1em;
+  padding: 0.4em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 2;
+}
+
+.codeblock:hover .codeblock-copy {
+  opacity: 0.6;
+}
+
+.codeblock-copy:hover {
+  opacity: 1 !important;
+}
+
+.codeblock-copy .icon-copy {
+  width: 1em;
+  height: 1em;
+  display: block;
+}
+

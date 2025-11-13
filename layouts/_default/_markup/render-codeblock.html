@@ -16,8 +16,14 @@
     ```
 */ -}}
 {{ $showLang := .Attributes.showlang | default true }}
+{{ $showCopy := .Attributes.showcopy | default true }}
 
 <div class="codeblock">
+  {{- if $showCopy -}}
+  <button class="codeblock-copy" aria-label="Copy code" title="Copy code">
+    {{ partial "icon.html" (dict "name" "copy" "class" "icon-sm") }}
+  </button>
+  {{- end -}}
   {{- if $showLang -}}
     {{- $displayLabel := .Attributes.display | default .Type -}}
     {{- if $displayLabel -}}
