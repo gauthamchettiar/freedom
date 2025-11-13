@@ -19,16 +19,14 @@
 {{ $showCopy := .Attributes.showcopy | default true }}
 
 <div class="codeblock">
-  {{- if $showCopy -}}
-  <button class="codeblock-copy" aria-label="Copy code" title="Copy code">
-    {{ partial "icon.html" (dict "name" "copy" "class" "icon-sm") }}
+  {{- $displayLabel := .Attributes.display | default .Type -}}
+  {{- if and $showCopy $displayLabel -}}
+  <button class="codeblock-copy chroma" aria-label="Copy code" title="Copy code">
+    <span class="cl">{{ partial "icon.html" (dict "name" "copy" "class" "icon-sm") }}</span>
   </button>
   {{- end -}}
-  {{- if $showLang -}}
-    {{- $displayLabel := .Attributes.display | default .Type -}}
-    {{- if $displayLabel -}}
-      <div class="codeblock-lang chroma"><span class="s1">{{ $displayLabel }}</span></div>
-    {{- end -}}
+  {{- if and $showLang $displayLabel -}}
+    <div class="codeblock-lang chroma"><span class="cl">{{ $displayLabel }}</span></div>
   {{- end -}}
   {{ highlight .Inner .Type .Options }}
 </div>
