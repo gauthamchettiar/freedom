@@ -28,6 +28,7 @@ markup:
       attribute:
         block: true
         title: true
+        image: true
       wrapStandAloneImageWithinParagraph: false
   tableOfContents:
     startLevel: 1

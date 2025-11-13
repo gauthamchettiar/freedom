@@ -1,14 +1,16 @@
-{{ $url := partial "utils/resolve-image.html" (.Destination | safeURL) }}
+{{- $url := partial "utils/resolve-image.html" (.Destination | safeURL) -}}
+{{- $wide := .Attributes.wide | default false -}}
+{{- $class := cond $wide "image-wide" "" -}}
 
 {{- if .IsBlock -}}
-  <figure class="image-figure">
+  <figure class="image-figure{{ if $class }} {{ $class }}{{ end }}">
     <img src="{{ $url }}"
       {{- with .PlainText }} alt="{{ . }}"{{ end -}}
     >
     {{- with .Title }}<figcaption>{{ . }}</figcaption>{{ end -}}
   </figure>
 {{- else -}}
-  <img src="{{ $url }}"
+  <img src="{{ $url }}"{{ if $class }} class="{{ $class }}"{{ end }}
     {{- with .PlainText }} alt="{{ . }}"{{ end -}}
     {{- with .Title }} title="{{ . }}"{{ end -}}
   >

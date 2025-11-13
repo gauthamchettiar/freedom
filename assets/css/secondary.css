@@ -152,6 +152,20 @@ details.blockquote-alert .alert-content p:last-child {
     margin-top: var(--spacing-xxs);
 }
 
+/* Wide/fullscreen images */
+.image-wide {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+.image-wide img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 /* Alert type styles - Light mode */
 .alert-note {
     background-color: #e3f2fd;
