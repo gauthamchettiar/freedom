@@ -1,0 +1,15 @@
+{{ $url := partial "utils/resolve-image.html" (.Destination | safeURL) }}
+
+{{- if .IsBlock -}}
+  <figure class="image-figure">
+    <img src="{{ $url }}"
+      {{- with .PlainText }} alt="{{ . }}"{{ end -}}
+    >
+    {{- with .Title }}<figcaption>{{ . }}</figcaption>{{ end -}}
+  </figure>
+{{- else -}}
+  <img src="{{ $url }}"
+    {{- with .PlainText }} alt="{{ . }}"{{ end -}}
+    {{- with .Title }} title="{{ . }}"{{ end -}}
+  >
+{{- end -}}

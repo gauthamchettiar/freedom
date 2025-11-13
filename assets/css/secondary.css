@@ -146,6 +146,12 @@ details.blockquote-alert .alert-content p:last-child {
     margin-bottom: 0;
 }
 
+.image-figure figcaption {
+    text-align: center;
+    color: color-mix(in srgb, var(--text-color) 60%, transparent);
+    margin-top: var(--spacing-xxs);
+}
+
 /* Alert type styles - Light mode */
 .alert-note {
     background-color: #e3f2fd;

@@ -191,6 +191,13 @@ ul > li > input[type="checkbox"] {
   pointer-events: none;
 }
 
+figure {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0; 
+}
+
 ::-moz-selection { 
   background: color-mix(in srgb, var(--accent-color) 40%, transparent);
 }
