@@ -1,4 +1,16 @@
-{{- $imageUrl := . -}}
+{{- /*
+  Resolve and optionally process image resources
+  
+  Parameters:
+    - url (required): Image URL/path to resolve
+    - process (optional): Pipe-separated image processing operations (e.g., "resize 600x|crop 600x400|r90")
+  
+  Example:
+    {{ partial "utils/resolve-image.html" (dict "url" "image.jpg" "process" "resize 600x|webp") }}
+*/ -}}
+
+{{- $imageUrl := .url | default . -}}
+{{- $processOps := .process | default "" -}}
 {{- $resolvedUrl := $imageUrl -}}
 
 {{- $image := false -}}
@@ -12,6 +24,16 @@
 {{- end -}}
 
 {{- if $image -}}
+  {{- /* Apply processing operations if provided */ -}}
+  {{- if $processOps -}}
+    {{- $ops := split $processOps "|" -}}
+    {{- range $ops -}}
+      {{- $op := trim . " " -}}
+      {{- if $op -}}
+        {{- $image = $image.Process $op -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
   {{- $resolvedUrl = $image.RelPermalink -}}
 {{- else -}}
   {{- warnf "Image '%s' not found in page, site or remote resource location. Using original path." $imageUrl -}}

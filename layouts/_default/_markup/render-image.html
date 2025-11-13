@@ -1,6 +1,10 @@
-{{- $url := partial "utils/resolve-image.html" (.Destination | safeURL) -}}
 {{- $wide := .Attributes.wide | default false -}}
+{{- $process := .Attributes.process | default "" -}}
 {{- $class := cond $wide "image-wide" "" -}}
+
+{{- /* Build context for image resolver */ -}}
+{{- $ctx := dict "url" (.Destination | safeURL) "process" $process -}}
+{{- $url := partial "utils/resolve-image.html" $ctx -}}
 
 {{- if .IsBlock -}}
   <figure class="image-figure{{ if $class }} {{ $class }}{{ end }}">
