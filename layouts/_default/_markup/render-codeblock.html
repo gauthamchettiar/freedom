@@ -15,8 +15,9 @@
     package main
     ```
 */ -}}
-{{ $showLang := .Attributes.showlang | default true }}
-{{ $showCopy := .Attributes.showcopy | default true }}
+
+{{ $showLang := .Attributes.showlang | default (partial "utils/config.html" (dict "key" "showCodeblockLang" "default" true)) }}
+{{ $showCopy := .Attributes.showcopy | default (partial "utils/config.html" (dict "key" "showCodeblockCopy" "default" true)) }}
 
 <div class="codeblock">
   {{- $displayLabel := .Attributes.display | default .Type -}}
