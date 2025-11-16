@@ -13,6 +13,14 @@ a:has(.main-title) {
     color: var(--text-color);
 }
 
+/* External link indicator */
+.external-link-indicator {
+    font-size: 0.85em;
+    margin-left: 0.30em;
+    display: inline-block;
+    line-height: 1;
+}
+
 .page-title {
     margin: var(--spacing-xxs) 0;
 }

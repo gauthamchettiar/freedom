@@ -5,6 +5,8 @@
   - Display label is positioned at the top right (via {display="..."} attribute)
   - Falls back to language type if display is not provided
   - Control visibility with {showLang=false} attribute (default: true)
+  - Control copy button with {showCopy=false} attribute (default: true)
+  - Make full-width with {wide=true} attribute (default: false)
   
   Examples:
     ```go {display="main.go"}
@@ -14,12 +16,19 @@
     ```go {showLang=false}
     package main
     ```
+    
+    ```go {wide=true}
+    package main
+    ```
 */ -}}
 
-{{ $showLang := .Attributes.showlang | default (partial "utils/config.html" (dict "key" "showCodeblockLang" "default" true)) }}
-{{ $showCopy := .Attributes.showcopy | default (partial "utils/config.html" (dict "key" "showCodeblockCopy" "default" true)) }}
+{{- $showLang := .Attributes.showlang | default (partial "utils/config.html" (dict "key" "showCodeblockLang" "default" true)) -}}
+{{- $showCopy := .Attributes.showcopy | default (partial "utils/config.html" (dict "key" "showCodeblockCopy" "default" true)) -}}
+{{- $wide := .Attributes.wide | default false -}}
 
-<div class="codeblock">
+{{- $class := cond $wide "codeblock codeblock-wide" "codeblock" -}}
+
+<div class="{{ $class }}">
   {{- $displayLabel := .Attributes.display | default .Type -}}
   {{- if and $showCopy $displayLabel -}}
   <button class="codeblock-copy chroma" aria-label="Copy code" title="Copy code">

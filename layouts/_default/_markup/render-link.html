@@ -1,0 +1,32 @@
+{{- /*
+  Render Link Hook
+  
+  Renders markdown links with smart defaults for external links.
+  - External links automatically open in new tab with indicator icon
+  - Behavior can be configured globally via hugo.yaml params
+  
+  Note: Hugo doesn't support attributes on markdown links.
+  For custom behavior per-link, use the {{< link >}} shortcode instead.
+  
+  Examples:
+    [External](https://example.com) - Opens in new tab with icon
+    [Internal](/about) - Opens in same tab, no icon
+    {{< link href="https://example.com" externalIndicator=false >}}Custom{{< /link >}}
+*/ -}}
+
+{{- $u := urls.Parse .Destination -}}
+{{- $isExternal := $u.IsAbs -}}
+
+{{- $newTab := and (partial "utils/config.html" (dict "key" "openExternalLinkInNewTab" "default" true)) $isExternal -}}
+{{- $showIndicator := and (partial "utils/config.html" (dict "key" "showExternalLinkIndicator" "default" true)) $isExternal -}}
+
+<a href="{{ .Destination | safeURL }}"
+  {{- with .Title }} title="{{ . }}"{{ end -}}
+  {{- if $isExternal }} rel="external"{{ end -}}
+  {{- if $newTab }} target="_blank"{{ end -}}
+>
+  {{- with .Text }}{{ . }}{{ end -}}
+  {{- if $showIndicator -}}
+    <span class="external-link-indicator" aria-label="Opens in new tab">{{ partial "icon.html" (dict "name" "external-link") }}</span>
+  {{- end -}}
+</a>

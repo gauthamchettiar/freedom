@@ -50,3 +50,15 @@
   display: block;
 }
 
+/* Wide/fullscreen code blocks */
+.codeblock-wide {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.codeblock-wide .highlight pre {
+  border-radius: 0;
+}
+
