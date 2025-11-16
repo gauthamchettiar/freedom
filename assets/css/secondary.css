@@ -166,6 +166,46 @@ details.blockquote-alert .alert-content p:last-child {
     display: block;
 }
 
+/* Image alignment */
+.image-align-left {
+    text-align: left;
+}
+
+.image-align-left img {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.image-align-left figcaption {
+    text-align: left;
+}
+
+.image-align-center {
+    text-align: center;
+}
+
+.image-align-center img {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.image-align-center figcaption {
+    text-align: center;
+}
+
+.image-align-right {
+    text-align: right;
+}
+
+.image-align-right img {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.image-align-right figcaption {
+    text-align: right;
+}
+
 /* Alert type styles - Light mode */
 .alert-note {
     background-color: #e3f2fd;

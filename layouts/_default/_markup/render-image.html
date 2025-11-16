@@ -1,6 +1,16 @@
 {{- $wide := .Attributes.wide | default false -}}
 {{- $process := .Attributes.process | default "" -}}
-{{- $class := cond $wide "image-wide" "" -}}
+{{- $align := .Attributes.align | default "" -}}
+
+{{- /* Build CSS classes */ -}}
+{{- $classes := slice -}}
+{{- if $wide -}}
+  {{- $classes = $classes | append "image-wide" -}}
+{{- end -}}
+{{- if $align -}}
+  {{- $classes = $classes | append (printf "image-align-%s" $align) -}}
+{{- end -}}
+{{- $class := delimit $classes " " -}}
 
 {{- /* Build context for image resolver */ -}}
 {{- $ctx := dict "url" (.Destination | safeURL) "process" $process -}}
