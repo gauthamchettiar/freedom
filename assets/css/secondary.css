@@ -275,3 +275,82 @@ details.blockquote-alert .alert-content p:last-child {
     border-color: #e57373;
     color: #ffebee;
 }
+
+/* Table width options */
+/* Compact (default): table width fits content - no additional CSS needed */
+
+/* Full: table spans full page content width */
+.table-full {
+    width: 100%;
+}
+
+.table-full table {
+    width: 100%;
+}
+
+/* Wide: table spans full viewport width */
+.table-wide {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    overflow-x: auto;
+}
+
+.table-wide table {
+    width: 100%;
+    min-width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* Table captions */
+.table-figure {
+    margin: 0;
+}
+
+.table-figure figcaption {
+    text-align: center;
+    color: color-mix(in srgb, var(--text-color) 60%, transparent);
+    margin-top: var(--spacing-xxs);
+}
+
+/* Table alignment */
+.table-align-left {
+    text-align: left;
+}
+
+.table-align-left table {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.table-align-left figcaption {
+    text-align: left;
+}
+
+.table-align-center {
+    text-align: center;
+}
+
+.table-align-center table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table-align-center figcaption {
+    text-align: center;
+}
+
+.table-align-right {
+    text-align: right;
+}
+
+.table-align-right table {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.table-align-right figcaption {
+    text-align: right;
+}
