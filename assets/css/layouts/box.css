@@ -1,0 +1,38 @@
+/* Box Container */
+.box {
+  display: block;
+}
+
+/* Width variations */
+.box-width-compact {
+  /* No width constraint - fits content naturally */
+  width: fit-content;
+  max-width: 100%;
+}
+
+.box-width-full {
+  width: 100%;
+}
+
+.box-width-wide {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* Alignment variations */
+.box-align-left {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.box-align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.box-align-right {
+  margin-left: auto;
+  margin-right: 0;
+}

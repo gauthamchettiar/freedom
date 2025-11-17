@@ -1,31 +1,21 @@
-{{- $wide := .Attributes.wide | default false -}}
+{{- $width := .Attributes.width | default "compact" -}}
 {{- $process := .Attributes.process | default "" -}}
 {{- $align := .Attributes.align | default "" -}}
-
-{{- /* Build CSS classes */ -}}
-{{- $classes := slice -}}
-{{- if $wide -}}
-  {{- $classes = $classes | append "image-wide" -}}
-{{- end -}}
-{{- if $align -}}
-  {{- $classes = $classes | append (printf "image-align-%s" $align) -}}
-{{- end -}}
-{{- $class := delimit $classes " " -}}
 
 {{- /* Build context for image resolver */ -}}
 {{- $ctx := dict "url" (.Destination | safeURL) "process" $process -}}
 {{- $url := partial "utils/resolve-image.html" $ctx -}}
 
-{{- if .IsBlock -}}
-  <figure class="image-figure{{ if $class }} {{ $class }}{{ end }}">
-    <img src="{{ $url }}"
-      {{- with .PlainText }} alt="{{ . }}"{{ end -}}
-    >
-    {{- with .Title }}<figcaption>{{ . }}</figcaption>{{ end -}}
-  </figure>
-{{- else -}}
-  <img src="{{ $url }}"{{ if $class }} class="{{ $class }}"{{ end }}
-    {{- with .PlainText }} alt="{{ . }}"{{ end -}}
-    {{- with .Title }} title="{{ . }}"{{ end -}}
-  >
+{{- /* Build image content - always use figure for consistent attribute support */ -}}
+{{- $caption := "" -}}
+{{- with .Title -}}
+  {{- $caption = printf `<figcaption>%s</figcaption>` . -}}
 {{- end -}}
+
+{{- $altText := cond .PlainText (printf ` alt="%s"` .PlainText) "" -}}
+{{- $imageContent := printf `<figure class="image-figure">
+  <img src="%s"%s>
+  %s
+</figure>` $url $altText $caption -}}
+
+{{ partial "layouts/box.html" (dict "content" $imageContent "width" $width "align" $align) }}

@@ -4,8 +4,8 @@
   Renders markdown tables with optional width control, caption, and alignment.
   - width: Control table width (compact/full/wide)
     - compact (default): Table width fits content
-    - full: Full width of page content (--page-width)
-    - wide: Full viewport width
+    - full: Full width of page content
+    - wide: Maximum width
   - caption: Add a caption below the table
   - align: Align table and caption (left/center/right)
   
@@ -20,61 +20,52 @@
 {{- $caption := .Attributes.caption | default "" -}}
 {{- $align := .Attributes.align | default "" -}}
 
-{{- /* Build CSS classes */ -}}
-{{- $classes := slice -}}
-{{- if eq $width "full" -}}
-  {{- $classes = $classes | append "table-full" -}}
-{{- else if eq $width "wide" -}}
-  {{- $classes = $classes | append "table-wide" -}}
+{{- /* Build table head */ -}}
+{{- $thead := "" -}}
+{{- range .THead -}}
+  {{- $theadRow := "" -}}
+  {{- range . -}}
+    {{- $style := cond .Alignment (printf ` style="text-align: %s"` .Alignment) "" -}}
+    {{- $theadRow = printf `%s<th%s>%s</th>` $theadRow $style .Text -}}
+  {{- end -}}
+  {{- $thead = printf `%s<tr>%s</tr>` $thead $theadRow -}}
 {{- end -}}
-{{- if $align -}}
-  {{- $classes = $classes | append (printf "table-align-%s" $align) -}}
-{{- end -}}
-{{- $wrapperClass := delimit $classes " " -}}
 
-{{- if or $wrapperClass $caption -}}
-<figure class="table-figure{{ if $wrapperClass }} {{ $wrapperClass }}{{ end }}">
+{{- /* Build table body */ -}}
+{{- $tbody := "" -}}
+{{- range .TBody -}}
+  {{- $tbodyRow := "" -}}
+  {{- range . -}}
+    {{- $style := cond .Alignment (printf ` style="text-align: %s"` .Alignment) "" -}}
+    {{- $tbodyRow = printf `%s<td%s>%s</td>` $tbodyRow $style .Text -}}
+  {{- end -}}
+  {{- $tbody = printf `%s<tr>%s</tr>` $tbody $tbodyRow -}}
 {{- end -}}
-<table
-  {{- range $k, $v := .Attributes }}
-    {{- if and $v (ne $k "width") (ne $k "caption") (ne $k "align") }}
-      {{- printf " %s=%q" $k $v | safeHTMLAttr }}
-    {{- end }}
-  {{- end }}>
-  <thead>
-    {{- range .THead }}
-      <tr>
-        {{- range . }}
-          <th
-            {{- with .Alignment }}
-              {{- printf " style=%q" (printf "text-align: %s" .) | safeHTMLAttr }}
-            {{- end -}}
-          >
-            {{- .Text -}}
-          </th>
-        {{- end }}
-      </tr>
-    {{- end }}
-  </thead>
-  <tbody>
-    {{- range .TBody }}
-      <tr>
-        {{- range . }}
-          <td
-            {{- with .Alignment }}
-              {{- printf " style=%q" (printf "text-align: %s" .) | safeHTMLAttr }}
-            {{- end -}}
-          >
-            {{- .Text -}}
-          </td>
-        {{- end }}
-      </tr>
-    {{- end }}
-  </tbody>
+
+{{- /* Build additional attributes */ -}}
+{{- $attrs := "" -}}
+{{- range $k, $v := .Attributes -}}
+  {{- if and $v (ne $k "width") (ne $k "caption") (ne $k "align") -}}
+    {{- $attrs = printf `%s %s="%s"` $attrs $k $v -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Build table content */ -}}
+{{- $captionHTML := cond $caption (printf `<figcaption>%s</figcaption>` $caption) "" -}}
+{{- $tableContent := "" -}}
+{{- if or $caption (ne $width "compact") -}}
+  {{- $tableContent = printf `<figure class="table-figure">
+<table%s>
+  <thead>%s</thead>
+  <tbody>%s</tbody>
 </table>
-{{- if $caption -}}
-  <figcaption>{{ $caption }}</figcaption>
+%s
+</figure>` $attrs $thead $tbody $captionHTML -}}
+{{- else -}}
+  {{- $tableContent = printf `<table%s>
+  <thead>%s</thead>
+  <tbody>%s</tbody>
+</table>` $attrs $thead $tbody -}}
 {{- end -}}
-{{- if or $wrapperClass $caption -}}
-</figure>
-{{- end -}}
+
+{{ partial "layouts/box.html" (dict "content" $tableContent "width" $width "align" $align) }}

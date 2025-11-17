@@ -1,6 +1,9 @@
 {{- $showBlockquoteCite := partial "utils/config.html" (dict "key" "showBlockquoteCite" "default" true) -}}
 {{- $showBlockquoteCaption := partial "utils/config.html" (dict "key" "showBlockquoteCaption" "default" true) -}}
 
+{{- $width := .Attributes.width | default "full" -}}
+{{- $align := .Attributes.align | default "" -}}
+
 {{ $icons := dict
   "caution" "triangle-exclamation"
   "important" "star"
@@ -9,48 +12,49 @@
   "warning" "circle-exclamation"
 }}
 
-{{ if eq .Type "alert" }}
+{{- $blockquoteContent := "" -}}
+{{- if eq .Type "alert" -}}
   {{- $isFoldable := or (strings.Contains .AlertSign "+") (strings.Contains .AlertSign "-") -}}
   {{- $isOpen := strings.Contains .AlertSign "+" -}}
   
-  {{ if $isFoldable }}
-    <details class="blockquote-alert alert-{{ .AlertType }}"{{ if $isOpen }} open{{ end }}>
+  {{- if $isFoldable -}}
+    {{- $blockquoteContent = printf `<details class="blockquote-alert alert-%s"%s>
       <summary class="alert-heading">
-        {{ partialCached "icon.html" (dict "name" (index $icons .AlertType)) "alert" .AlertType }}&nbsp;
-        {{ with .AlertTitle }}
-          {{ . }}
-        {{ else }}
-          {{ or (i18n .AlertType) (title .AlertType) }}
-        {{ end }}
+        %s&nbsp;%s
       </summary>
       <div class="alert-content">
-        {{ .Text }}
+        %s
       </div>
-    </details>
-  {{ else }}
-    <blockquote class="blockquote-alert alert-{{ .AlertType }}">
+    </details>` .AlertType (cond $isOpen " open" "") (partialCached "icon.html" (dict "name" (index $icons .AlertType)) "alert" .AlertType) (cond .AlertTitle .AlertTitle (or (i18n .AlertType) (title .AlertType))) .Text -}}
+  {{- else -}}
+    {{- $blockquoteContent = printf `<blockquote class="blockquote-alert alert-%s">
       <p class="alert-heading">
-        {{ partialCached "icon.html" (dict "name" (index $icons .AlertType)) "alert" .AlertType }}&nbsp;
-        {{ with .AlertTitle }}
-          {{ . }}
-        {{ else }}
-          {{ or (i18n .AlertType) (title .AlertType) }}
-        {{ end }}
+        %s&nbsp;%s
       </p>
-      <p class="alert-content">{{ .Text }}</p>
-    </blockquote>
-  {{ end }}
-{{ else }}
-<figure class="blockquote-figure">
-  <blockquote {{ with .Attributes.cite }}cite="{{ . }}"{{ end }}>
-    {{ .Text }} {{ with .Attributes.cite }} {{ if $showBlockquoteCite }}<sup><a href="{{ . }}">[cite]</a></sup>{{ end }}{{ end }}
+      <p class="alert-content">%s</p>
+    </blockquote>` .AlertType (partialCached "icon.html" (dict "name" (index $icons .AlertType)) "alert" .AlertType) (cond .AlertTitle .AlertTitle (or (i18n .AlertType) (title .AlertType))) .Text -}}
+  {{- end -}}
+{{- else -}}
+  {{- $citeLink := "" -}}
+  {{- with .Attributes.cite -}}
+    {{- if $showBlockquoteCite -}}
+      {{- $citeLink = printf `<sup><a href="%s">[cite]</a></sup>` . -}}
+    {{- end -}}
+  {{- end -}}
+  
+  {{- $captionHTML := "" -}}
+  {{- with .Attributes.caption -}}
+    {{- if $showBlockquoteCaption -}}
+      {{- $captionHTML = printf `<figcaption class="blockquote-caption">— %s</figcaption>` (. | safeHTML) -}}
+    {{- end -}}
+  {{- end -}}
+  
+  {{- $blockquoteContent = printf `<figure class="blockquote-figure">
+  <blockquote%s>
+    %s%s
   </blockquote>
-  {{ with .Attributes.caption }}
-    {{ if $showBlockquoteCaption }}
-    <figcaption class="blockquote-caption">
-      — {{ . | safeHTML }}
-    </figcaption>
-    {{ end }}
-  {{ end }}
-</figure>
-{{ end }}
+  %s
+</figure>` (cond .Attributes.cite (printf ` cite="%s"` .Attributes.cite) "") .Text $citeLink $captionHTML -}}
+{{- end -}}
+
+{{ partial "layouts/box.html" (dict "content" $blockquoteContent "width" $width "align" $align) }}

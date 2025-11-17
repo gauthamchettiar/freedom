@@ -155,12 +155,14 @@ code {
 }
 
 img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 
 table {
   border-collapse: collapse;
+  width: 100%;
+  margin-block-end: 0.30em;
 }
 
 table thead th {

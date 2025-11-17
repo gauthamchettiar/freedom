@@ -6,7 +6,7 @@
   - Falls back to language type if display is not provided
   - Control visibility with {showLang=false} attribute (default: true)
   - Control copy button with {showCopy=false} attribute (default: true)
-  - Make full-width with {wide=true} attribute (default: false)
+  - Control width with {width="compact|full|wide"} attribute (default: compact)
   
   Examples:
     ```go {display="main.go"}
@@ -17,26 +17,33 @@
     package main
     ```
     
-    ```go {wide=true}
+    ```go {width="wide"}
     package main
     ```
 */ -}}
 
 {{- $showLang := .Attributes.showlang | default (partial "utils/config.html" (dict "key" "showCodeblockLang" "default" true)) -}}
 {{- $showCopy := .Attributes.showcopy | default (partial "utils/config.html" (dict "key" "showCodeblockCopy" "default" true)) -}}
-{{- $wide := .Attributes.wide | default false -}}
+{{- $width := .Attributes.width | default "full" -}}
+{{- $align := .Attributes.align | default "" -}}
 
-{{- $class := cond $wide "codeblock codeblock-wide" "codeblock" -}}
+{{- $displayLabel := .Attributes.display | default .Type -}}
+{{- $copyButton := "" -}}
+{{- if and $showCopy $displayLabel -}}
+  {{- $copyButton = printf `<button class="codeblock-copy chroma" aria-label="Copy code" title="Copy code">
+    <span class="cl">%s</span>
+  </button>` (partial "icon.html" (dict "name" "copy" "class" "icon-sm")) -}}
+{{- end -}}
 
-<div class="{{ $class }}">
-  {{- $displayLabel := .Attributes.display | default .Type -}}
-  {{- if and $showCopy $displayLabel -}}
-  <button class="codeblock-copy chroma" aria-label="Copy code" title="Copy code">
-    <span class="cl">{{ partial "icon.html" (dict "name" "copy" "class" "icon-sm") }}</span>
-  </button>
-  {{- end -}}
-  {{- if and $showLang $displayLabel -}}
-    <div class="codeblock-lang chroma"><span class="cl">{{ $displayLabel }}</span></div>
-  {{- end -}}
-  {{ highlight .Inner .Type .Options }}
-</div>
+{{- $langLabel := "" -}}
+{{- if and $showLang $displayLabel -}}
+  {{- $langLabel = printf `<div class="codeblock-lang chroma"><span class="cl">%s</span></div>` $displayLabel -}}
+{{- end -}}
+
+{{- $codeblockContent := printf `<div class="codeblock">
+  %s
+  %s
+  %s
+</div>` $copyButton $langLabel (highlight .Inner .Type .Options) -}}
+
+{{ partial "layouts/box.html" (dict "content" $codeblockContent "width" $width "align" $align) }}

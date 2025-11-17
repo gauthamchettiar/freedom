@@ -1,0 +1,26 @@
+{{- /*
+  Box Container
+  
+  A container div element for wrapping content with configurable width and alignment.
+  
+  Parameters:
+    - content (required): Content to display inside the box
+    - width (optional): Box width - "compact" (default), "full", "wide"
+    - align (optional): Box alignment - "left", "center", "right"
+    - class (optional): Additional CSS classes
+  
+  Example:
+    {{ partial "layouts/box.html" (dict "content" "Hello World" "width" "wide" "align" "center") }}
+    {{ partial "layouts/box.html" (dict "content" .Content "width" "compact" "align" "left" "class" "my-custom-box") }}
+*/ -}}
+
+{{- $content := .content -}}
+{{- $width := .width | default "compact" -}}
+{{- $align := .align | default "" -}}
+{{- $class := .class | default "" -}}
+
+{{- if $content -}}
+<div class="box box-width-{{ $width }}{{ with $align }} box-align-{{ . }}{{ end }}{{ with $class }} {{ . }}{{ end }}">
+  {{- $content | safeHTML -}}
+</div>
+{{- end -}}
