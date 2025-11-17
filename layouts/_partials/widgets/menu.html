@@ -22,21 +22,77 @@ Renders a menu for the given menu ID.
 {{- end -}}
 
 {{- with index site.Menus $menuID }}
+  {{- /* Find active parent with children for submenu display */ -}}
+  {{- $activeParent := "" -}}
+  {{- range . -}}
+    {{- if .Children -}}
+      {{- $isParentActive := false -}}
+      
+      {{- /* Check if parent is active */ -}}
+      {{- if page.IsMenuCurrent .Menu . -}}
+        {{- $isParentActive = true -}}
+      {{- else if page.HasMenuCurrent .Menu . -}}
+        {{- $isParentActive = true -}}
+      {{- else -}}
+        {{- $menuPath := .URL | strings.TrimSuffix "/" -}}
+        {{- $currentSection := printf "/%s" page.Section -}}
+        {{- $currentType := printf "/%s" page.Type -}}
+        {{- if or (eq $menuPath $currentSection) (eq $menuPath $currentType) -}}
+          {{- $isParentActive = true -}}
+        {{- end -}}
+      {{- end -}}
+      
+      {{- /* Check if any child is active */ -}}
+      {{- if not $isParentActive -}}
+        {{- range .Children -}}
+          {{- if page.IsMenuCurrent .Menu . -}}
+            {{- $isParentActive = true -}}
+          {{- else if page.HasMenuCurrent .Menu . -}}
+            {{- $isParentActive = true -}}
+          {{- else -}}
+            {{- $childPath := .URL | strings.TrimSuffix "/" -}}
+            {{- $currentSection := printf "/%s" page.Section -}}
+            {{- $currentType := printf "/%s" page.Type -}}
+            {{- if or (eq $childPath $currentSection) (eq $childPath $currentType) -}}
+              {{- $isParentActive = true -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+      
+      {{- if $isParentActive -}}
+        {{- $activeParent = .Name -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- /* Render main menu */ -}}
   <nav role="navigation" aria-label="{{ $menuID }} navigation">
     <ul class="menu menu-{{ $menuID }} kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{- $class -}}">
       {{- if $withParentId }}
         {{- partial "inline/menu/walk-children.html" (dict "menuEntries" . "parentId" $withParentId) }}
       {{- else }}
-        {{- partial "inline/menu/walk.html" (dict "menuEntries" .) }}
+        {{- partial "inline/menu/walk.html" (dict "menuEntries" . "activeParent" $activeParent) }}
       {{- end }}
     </ul>
   </nav>
+  
+  {{- /* Render submenu if active parent has children */ -}}
+  {{- if and $activeParent (not $withParentId) -}}
+    <nav role="navigation" aria-label="{{ $menuID }} submenu navigation" class="submenu-nav">
+      <ul class="menu menu-{{ $menuID }}-sub submenu kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }}">
+        {{- partial "inline/menu/walk-children.html" (dict "menuEntries" . "parentId" $activeParent) }}
+      </ul>
+    </nav>
+  {{- end -}}
 {{- end }}
 
 {{- define "_partials/inline/menu/walk.html" }}
+  {{- $activeParent := .activeParent | default "" -}}
   {{- range .menuEntries }}
     {{- $attrs := dict "href" .URL }}
     {{- $isActive := false }}
+    {{- $isParentOfActive := and .Children (eq .Name $activeParent) -}}
     
     {{- /* Check if this is the current page or menu item */}}
     {{- if page.IsMenuCurrent .Menu . }}
@@ -51,6 +107,11 @@ Renders a menu for the given menu ID.
       {{- if or (eq $menuPath $currentSection) (eq $menuPath $currentType) }}
         {{- $isActive = true }}
       {{- end }}
+    {{- end }}
+    
+    {{- /* Mark as active if this is the parent of the active submenu */ -}}
+    {{- if $isParentOfActive }}
+      {{- $isActive = true }}
     {{- end }}
     
     {{- if $isActive }}
@@ -79,7 +140,7 @@ Renders a menu for the given menu ID.
   {{- $parentId := .parentId }}
   {{- range .menuEntries }}
     {{- if eq .Name $parentId }}
-      {{- range .Children }}
+      {{- with .Children }}
         {{- partial "inline/menu/walk.html" (dict "menuEntries" .) }}
       {{- end }}
     {{- end }}
