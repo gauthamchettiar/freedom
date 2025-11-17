@@ -24,6 +24,11 @@ Renders a menu for the given menu ID.
 {{- with index site.Menus $menuID }}
   {{- /* Find active parent with children for submenu display */ -}}
   {{- $activeParent := "" -}}
+  {{- $activeSubParent := "" -}}
+  
+  {{- /* Helper to check if menu item or descendants are active */ -}}
+  {{- $checkActive := dict -}}
+  
   {{- range . -}}
     {{- if .Children -}}
       {{- $isParentActive := false -}}
@@ -42,7 +47,7 @@ Renders a menu for the given menu ID.
         {{- end -}}
       {{- end -}}
       
-      {{- /* Check if any child is active */ -}}
+      {{- /* Check if any child is active (including grandchildren) */ -}}
       {{- if not $isParentActive -}}
         {{- range .Children -}}
           {{- if page.IsMenuCurrent .Menu . -}}
@@ -57,11 +62,71 @@ Renders a menu for the given menu ID.
               {{- $isParentActive = true -}}
             {{- end -}}
           {{- end -}}
+          
+          {{- /* Check grandchildren */ -}}
+          {{- if and (not $isParentActive) .Children -}}
+            {{- range .Children -}}
+              {{- if page.IsMenuCurrent .Menu . -}}
+                {{- $isParentActive = true -}}
+              {{- else if page.HasMenuCurrent .Menu . -}}
+                {{- $isParentActive = true -}}
+              {{- else -}}
+                {{- $grandchildPath := .URL | strings.TrimSuffix "/" -}}
+                {{- $currentSection := printf "/%s" page.Section -}}
+                {{- $currentType := printf "/%s" page.Type -}}
+                {{- if or (eq $grandchildPath $currentSection) (eq $grandchildPath $currentType) -}}
+                  {{- $isParentActive = true -}}
+                {{- end -}}
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
         {{- end -}}
       {{- end -}}
       
       {{- if $isParentActive -}}
         {{- $activeParent = .Name -}}
+        
+        {{- /* Find active sub-parent (child with children that is active) */ -}}
+        {{- range .Children -}}
+          {{- if .Children -}}
+            {{- $isSubParentActive := false -}}
+            
+            {{- if page.IsMenuCurrent .Menu . -}}
+              {{- $isSubParentActive = true -}}
+            {{- else if page.HasMenuCurrent .Menu . -}}
+              {{- $isSubParentActive = true -}}
+            {{- else -}}
+              {{- $subMenuPath := .URL | strings.TrimSuffix "/" -}}
+              {{- $currentSection := printf "/%s" page.Section -}}
+              {{- $currentType := printf "/%s" page.Type -}}
+              {{- if or (eq $subMenuPath $currentSection) (eq $subMenuPath $currentType) -}}
+                {{- $isSubParentActive = true -}}
+              {{- end -}}
+            {{- end -}}
+            
+            {{- /* Check if any grandchild is active */ -}}
+            {{- if not $isSubParentActive -}}
+              {{- range .Children -}}
+                {{- if page.IsMenuCurrent .Menu . -}}
+                  {{- $isSubParentActive = true -}}
+                {{- else if page.HasMenuCurrent .Menu . -}}
+                  {{- $isSubParentActive = true -}}
+                {{- else -}}
+                  {{- $grandchildPath := .URL | strings.TrimSuffix "/" -}}
+                  {{- $currentSection := printf "/%s" page.Section -}}
+                  {{- $currentType := printf "/%s" page.Type -}}
+                  {{- if or (eq $grandchildPath $currentSection) (eq $grandchildPath $currentType) -}}
+                    {{- $isSubParentActive = true -}}
+                  {{- end -}}
+                {{- end -}}
+              {{- end -}}
+            {{- end -}}
+            
+            {{- if $isSubParentActive -}}
+              {{- $activeSubParent = .Name -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -77,11 +142,20 @@ Renders a menu for the given menu ID.
     </ul>
   </nav>
   
-  {{- /* Render submenu if active parent has children */ -}}
+  {{- /* Render first level submenu if active parent has children */ -}}
   {{- if and $activeParent (not $withParentId) -}}
     <nav role="navigation" aria-label="{{ $menuID }} submenu navigation" class="submenu-nav">
       <ul class="menu menu-{{ $menuID }}-sub submenu kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }}">
-        {{- partial "inline/menu/walk-children.html" (dict "menuEntries" . "parentId" $activeParent) }}
+        {{- partial "inline/menu/walk-children.html" (dict "menuEntries" . "parentId" $activeParent "activeParent" $activeSubParent) }}
+      </ul>
+    </nav>
+  {{- end -}}
+  
+  {{- /* Render second level submenu if active sub-parent has children */ -}}
+  {{- if and $activeSubParent (not $withParentId) -}}
+    <nav role="navigation" aria-label="{{ $menuID }} sub-submenu navigation" class="submenu-nav submenu-level-2">
+      <ul class="menu menu-{{ $menuID }}-subsub submenu submenu-level-2 kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }}">
+        {{- partial "inline/menu/walk-grandchildren.html" (dict "menuEntries" . "parentId" $activeParent "subParentId" $activeSubParent) }}
       </ul>
     </nav>
   {{- end -}}
@@ -138,10 +212,27 @@ Renders a menu for the given menu ID.
 
 {{- define "_partials/inline/menu/walk-children.html" }}
   {{- $parentId := .parentId }}
+  {{- $activeParent := .activeParent | default "" }}
   {{- range .menuEntries }}
     {{- if eq .Name $parentId }}
       {{- with .Children }}
-        {{- partial "inline/menu/walk.html" (dict "menuEntries" .) }}
+        {{- partial "inline/menu/walk.html" (dict "menuEntries" . "activeParent" $activeParent) }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- define "_partials/inline/menu/walk-grandchildren.html" }}
+  {{- $parentId := .parentId }}
+  {{- $subParentId := .subParentId }}
+  {{- range .menuEntries }}
+    {{- if eq .Name $parentId }}
+      {{- range .Children }}
+        {{- if eq .Name $subParentId }}
+          {{- with .Children }}
+            {{- partial "inline/menu/walk.html" (dict "menuEntries" .) }}
+          {{- end }}
+        {{- end }}
       {{- end }}
     {{- end }}
   {{- end }}
