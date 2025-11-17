@@ -7,20 +7,22 @@
     - content (required): Content to display inside the box
     - width (optional): Box width - "compact" (default), "full", "wide"
     - align (optional): Box alignment - "left", "center", "right"
+    - border (optional): Add border - true/false (default: false)
     - class (optional): Additional CSS classes
   
   Example:
     {{ partial "layouts/box.html" (dict "content" "Hello World" "width" "wide" "align" "center") }}
-    {{ partial "layouts/box.html" (dict "content" .Content "width" "compact" "align" "left" "class" "my-custom-box") }}
+    {{ partial "layouts/box.html" (dict "content" .Content "width" "compact" "align" "left" "border" true "class" "my-custom-box") }}
 */ -}}
 
 {{- $content := .content -}}
 {{- $width := .width | default "compact" -}}
 {{- $align := .align | default "" -}}
+{{- $border := .border | default false -}}
 {{- $class := .class | default "" -}}
 
 {{- if $content -}}
-<div class="box box-width-{{ $width }}{{ with $align }} box-align-{{ . }}{{ end }}{{ with $class }} {{ . }}{{ end }}">
+<div class="box box-width-{{ $width }}{{ with $align }} box-align-{{ . }}{{ end }}{{ if $border }} box-border{{ end }}{{ with $class }} {{ . }}{{ end }}">
   {{- $content | safeHTML -}}
 </div>
 {{- end -}}
