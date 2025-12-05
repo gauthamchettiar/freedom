@@ -1,0 +1,136 @@
+/* Post Card Grid */
+.post-card-grid {
+  display: grid;
+  gap: var(--spacing-lg);
+  margin: var(--spacing-lg) 0;
+}
+
+/* Column configurations */
+.post-card-grid.columns-1 {
+  grid-template-columns: 1fr;
+}
+
+.post-card-grid.columns-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.post-card-grid.columns-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.post-card-grid.columns-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Post Card Link (wraps entire card) */
+.post-card-link {
+  display: block;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.post-card-link:hover {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.post-card-link:visited {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+/* Post Card */
+.post-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid color-mix(in srgb, var(--text-color) 20%, transparent);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: color-mix(in srgb, var(--accent-color) 5%, transparent);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  height: 100%;
+}
+
+.post-card-link:hover .post-card {
+  border-color: color-mix(in srgb, var(--accent-color) 50%, transparent);
+  background-color: color-mix(in srgb, var(--accent-color) 10%, transparent);
+}
+
+:root[data-theme="dark"] .post-card-link:hover .post-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Post Card Image */
+.post-card-image {
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background-color: color-mix(in srgb, var(--text-color) 10%, transparent);
+}
+
+.post-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.post-card-link:hover .post-card-image img {
+  transform: scale(1.05);
+}
+
+/* Post Card Content */
+.post-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+}
+
+/* Post Card Title */
+.post-card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Post Card Date */
+.post-card-date {
+  display: block;
+  font-size: 0.875rem;
+  color: color-mix(in srgb, var(--text-color) 70%, transparent);
+}
+
+/* Post Card Summary */
+.post-card-summary {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .post-card-grid.columns-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .post-card-grid.columns-3,
+  .post-card-grid.columns-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .post-card-grid.columns-2,
+  .post-card-grid.columns-3,
+  .post-card-grid.columns-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .post-card-grid {
+    gap: var(--spacing-md);
+  }
+}

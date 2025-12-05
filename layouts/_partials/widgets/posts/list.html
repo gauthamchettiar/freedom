@@ -13,9 +13,9 @@
     - key (optional): Config key for visibility (default: "showPostList")
   
   Example:
-    {{ partial "widgets/list.html" (dict "page" . "site" .Site "pageList" .Pages) }}
-    {{ partial "widgets/list.html" (dict "page" . "site" .Site "pageList" .Pages "listStyle" "disc") }}
-    {{ partial "widgets/list.html" (dict "page" . "site" .Site "pageList" .Pages "class" "post-list" "listStyle" "circle") }}
+    {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages) }}
+    {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages "listStyle" "disc") }}
+    {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages "class" "post-list" "listStyle" "circle") }}
 */ -}}
 
 

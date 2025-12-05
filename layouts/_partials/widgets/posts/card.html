@@ -1,0 +1,69 @@
+{{- /*
+  Card Widget
+  
+  Renders a list of pages as a multi-column card grid with title, summary, image, and date.
+  
+  Parameters:
+    - pageList (required): Slice of pages to render
+    - page (required): Page context
+    - site (required): Site context
+    - class (optional): Additional CSS classes for the container
+    - columns (optional): Number of columns (default: from config or 3)
+    - dateFormat (optional): Date format (default: ":date_medium")
+    - showSummary (optional): Whether to show summary (default: true)
+    - showImage (optional): Whether to show page image (default: true)
+    - key (optional): Config key for visibility (default: "PostCard")
+  
+  Example:
+    {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages) }}
+    {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages "columns" 2) }}
+    {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages "showSummary" false) }}
+*/ -}}
+
+
+{{- $pageList := .pageList -}}
+{{- $key := .key | default "PostCard" -}}
+{{- $class := .class | default "" -}}
+
+{{- $showPostCard := (partial "utils/config.html" (dict "key" (print "show" $key) "default" false)) -}}
+{{- $showPostCardDate := (partial "utils/config.html" (dict "key" (print "show" $key "Date") "default" true)) -}}
+{{- $showPostCardSummary := (partial "utils/config.html" (dict "key" (print "show" $key "Summary") "default" (.showSummary | default true))) -}}
+{{- $showPostCardImage := (partial "utils/config.html" (dict "key" (print "show" $key "Image") "default" (.showImage | default true))) -}}
+{{- $postCardDateFormat := (partial "utils/config.html" (dict "key" (print $key "DateFormat") "default" (.dateFormat | default ":date_medium"))) -}}
+{{- $postCardColumns := (partial "utils/config.html" (dict "key" (print $key "Columns") "default" (.columns | default 3))) -}}
+
+{{- if and $pageList $showPostCard -}}
+  <div class="post-card-grid columns-{{ $postCardColumns }} kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}">
+    {{- range $pageList -}}
+      <a href="{{ .RelPermalink }}" class="post-card-link">
+        <article class="post-card">
+          {{- if $showPostCardImage -}}
+            {{- with .Params.image -}}
+              <div class="post-card-image">
+                {{- $image := partial "utils/resolve-image.html" (dict "path" . "page" $) -}}
+                {{- with $image -}}
+                  <img src="{{ .RelPermalink }}" alt="{{ $.Title }}" loading="lazy">
+                {{- end -}}
+              </div>
+            {{- end -}}
+          {{- end -}}
+          <div class="post-card-content">
+            <h3 class="post-card-title">{{ .Title }}</h3>
+            {{- if $showPostCardDate -}}
+              {{- with .Date -}}
+                <time class="post-card-date" datetime="{{ .Format "2006-01-02" }}">
+                  {{ . | time.Format $postCardDateFormat }}
+                </time>
+              {{- end -}}
+            {{- end -}}
+            {{- if $showPostCardSummary -}}
+              {{- with .Summary -}}
+                <p class="post-card-summary">{{ . | plainify }}</p>
+              {{- end -}}
+            {{- end -}}
+          </div>
+        </article>
+      </a>
+    {{- end -}}
+  </div>
+{{- end -}}

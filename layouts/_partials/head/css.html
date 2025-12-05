@@ -23,6 +23,9 @@
 {{- range (resources.Match "css/widgets/*.css") }}
   {{- $widgetFiles = $widgetFiles | append . }}
 {{- end }}
+{{- range (resources.Match "css/widgets/**/*.css") }}
+  {{- $widgetFiles = $widgetFiles | append . }}
+{{- end }}
 
 {{- $layoutFiles := slice }}
 {{- range (resources.Match "css/layouts/*.css") }}
