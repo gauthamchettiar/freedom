@@ -80,6 +80,11 @@ h5 + h6 {
   margin-block-start: var(--spacing-xxs);
 }
 
+main > h1:first-child, main > h2:first-child, main > h3:first-child,
+main > h4:first-child, main > h5:first-child, main > h6:first-child {
+  margin-block-start: var(--spacing-sm);
+}
+
 h1 {
   font-size: 1.75rem;
 }
