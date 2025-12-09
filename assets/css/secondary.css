@@ -1,3 +1,7 @@
+/* ============================================
+   NAVIGATION & MENUS
+   ============================================ */
+
 .all-tags {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
@@ -7,6 +11,11 @@
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
+
+
+/* ============================================
+   LINKS
+   ============================================ */
 
 a:has(.main-title) {
     text-decoration: none;
@@ -21,6 +30,11 @@ a:has(.main-title) {
     line-height: 1;
 }
 
+
+/* ============================================
+   PAGE ELEMENTS
+   ============================================ */
+
 .page-title {
     margin: var(--spacing-xxs) 0;
 }
@@ -28,6 +42,11 @@ a:has(.main-title) {
 .page-meta-row {
     color: color-mix(in srgb, var(--text-color) 75%, transparent);
 }
+
+
+/* ============================================
+   HEADINGS
+   ============================================ */
 
 /* Heading anchor links */
 .heading-anchor {
@@ -55,6 +74,11 @@ h6:hover .heading-anchor {
 .heading-anchor:hover {
     opacity: 1 !important;
 }
+
+
+/* ============================================
+   BLOCKQUOTES
+   ============================================ */
 
 /* Standard blockquote */
 .blockquote-figure {
@@ -89,78 +113,62 @@ h6:hover .heading-anchor {
 }
 
 .blockquote-alert .alert-heading {
-    margin: 0 0 var(--spacing-xs) 0;
+    margin: 0;
+    padding-bottom: var(--spacing-sm);
     font-weight: 600;
     font-size: 1em;
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
+    border-bottom: 1px solid color-mix(in srgb, var(--text-color) 20%, transparent);
 }
 
-.blockquote-alert p {
-    margin: var(--spacing-xs) 0;
+.blockquote-alert .alert-content p {
+    margin: var(--spacing-sm) 0;
 }
 
-.blockquote-alert p:last-child {
+.blockquote-alert .alert-content p:last-child {
     margin-bottom: 0;
 }
 
 /* Collapsible alert blockquotes (details element) */
-details.blockquote-alert {
-    padding: 0;
-}
-
-details.blockquote-alert summary.alert-heading {
-    padding: var(--spacing-sm) var(--spacing-md);
+details.blockquote-alert .alert-heading {
+    padding-bottom: 0;
+    border-bottom: none;
     cursor: pointer;
     user-select: none;
-    list-style: none;
-    margin: 0;
-    transition: background-color 0.2s ease;
+    transition: opacity 0.2s ease;
 }
 
-details.blockquote-alert summary.alert-heading:hover {
-  opacity: 0.8;
+details.blockquote-alert .alert-heading:hover {
+    opacity: 0.8;
 }
 
-details.blockquote-alert summary.alert-heading::-webkit-details-marker {
+details.blockquote-alert .alert-heading::-webkit-details-marker {
     display: none;
 }
 
-details.blockquote-alert summary.alert-heading::before {
+details.blockquote-alert .alert-heading::before {
     content: "▶";
     display: inline-block;
     margin-right: var(--spacing-xs);
     font-size: 0.75em;
+    transition: transform 0.2s ease;
 }
 
-details.blockquote-alert[open] summary.alert-heading::before {
+details.blockquote-alert[open] .alert-heading {
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid color-mix(in srgb, var(--text-color) 20%, transparent);
+}
+
+details.blockquote-alert[open] .alert-heading::before {
     transform: rotate(90deg);
 }
 
-details.blockquote-alert[open] summary.alert-heading {
-    padding: var(--spacing-sm) var(--spacing-md) 0 var(--spacing-md);
-}
+/* ============================================
+   ALERT TYPES - LIGHT MODE
+   ============================================ */
 
-details.blockquote-alert .alert-content {
-    padding: 0 var(--spacing-md) var(--spacing-sm) var(--spacing-md);
-}
-
-details.blockquote-alert .alert-content p {
-    margin: var(--spacing-xs) 0;
-}
-
-details.blockquote-alert .alert-content p:last-child {
-    margin-bottom: 0;
-}
-
-.image-figure figcaption {
-    text-align: center;
-    color: color-mix(in srgb, var(--text-color) 60%, transparent);
-    margin-top: var(--spacing-xxs);
-}
-
-/* Alert type styles - Light mode */
 .alert-note {
     background-color: #e3f2fd;
     border-color: #2196f3;
@@ -191,7 +199,11 @@ details.blockquote-alert .alert-content p:last-child {
     color: #b71c1c;
 }
 
-/* Alert type styles - Dark mode */
+
+/* ============================================
+   ALERT TYPES - DARK MODE
+   ============================================ */
+
 [data-theme="dark"] .alert-note {
     background-color: #0d47a1;
     border-color: #64b5f6;
@@ -222,7 +234,19 @@ details.blockquote-alert .alert-content p:last-child {
     color: #ffebee;
 }
 
-/* Table captions */
+
+/* ============================================
+   FIGURES & CAPTIONS
+   ============================================ */
+
+/* Image figures */
+.image-figure figcaption {
+    text-align: center;
+    color: color-mix(in srgb, var(--text-color) 60%, transparent);
+    margin-top: var(--spacing-xxs);
+}
+
+/* Table figures */
 .table-figure {
     margin: 0;
 }

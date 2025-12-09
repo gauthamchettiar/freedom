@@ -133,7 +133,9 @@ dd {
 }
 
 ol, ul {
-  padding-inline-start: var(--spacing-md);
+  padding-inline-start: var(--spacing-xl);
+  margin-top: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
 ul ul, ol ol, ul ol, ol ul {

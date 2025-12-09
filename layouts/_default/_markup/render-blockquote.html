@@ -31,7 +31,7 @@
       <p class="alert-heading">
         %s&nbsp;%s
       </p>
-      <p class="alert-content">%s</p>
+      <div class="alert-content">%s</div>
     </blockquote>` .AlertType (partialCached "icon.html" (dict "name" (index $icons .AlertType)) "alert" .AlertType) (cond .AlertTitle .AlertTitle (or (i18n .AlertType) (title .AlertType))) .Text -}}
   {{- end -}}
 {{- else -}}
