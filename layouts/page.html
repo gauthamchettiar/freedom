@@ -12,7 +12,7 @@
 
   {{ $toc := partial "widgets/meta/toc.html" (dict "page" . "site" .Site ) }}
   {{ if $toc }}
-    {{ partial "expand.html" (dict "title" "Table Of Contents" "content" $toc "class" "page-toc") }}
+    {{ partial "widgets/expand.html" (dict "title" "Table Of Contents" "content" $toc "class" "page-toc") }}
     {{ partial "layouts/blank.html" (dict "size" "lg") }}
   {{ end }}
   {{ partial "content/wrapper.html" .Content }}

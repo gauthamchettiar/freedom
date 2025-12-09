@@ -31,7 +31,7 @@ markup:
         image: true
       wrapStandAloneImageWithinParagraph: false
   tableOfContents:
-    startLevel: 1
+    startLevel: 2
     endLevel: 6
     ordered: false
   highlight:
