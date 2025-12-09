@@ -190,7 +190,6 @@ table tbody td {
 mark {
   background-color: color-mix(in srgb, var(--accent-color) 40%, transparent);
   padding: var(--spacing-xxs) var(--spacing-xs);
-  border-radius: 3px;
   color: var(--text-color);
 }
 
