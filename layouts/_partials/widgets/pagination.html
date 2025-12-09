@@ -1,0 +1,75 @@
+{{- /*
+  Pagination Widget
+  
+  Renders pagination controls for navigating through pages.
+  
+  Parameters:
+    - paginator (required): Hugo paginator object
+    - page (optional): Page context for config
+    - site (optional): Site context for config
+    - class (optional): Additional CSS classes
+    - key (optional): Config key for visibility (default: "showPagination")
+  
+  Example:
+    {{ partial "widgets/pagination.html" (dict "paginator" .Paginator) }}
+    {{ partial "widgets/pagination.html" (dict "paginator" .Paginator "page" . "site" .Site) }}
+*/ -}}
+
+{{- $paginator := .paginator -}}
+{{- $key := .key | default "Pagination" -}}
+{{- $class := .class | default "" -}}
+
+{{- $showPagination := true -}}
+{{- if and .page .site -}}
+  {{- $showPagination = (partial "utils/config.html" (dict "key" (print "show" $key) "default" true)) -}}
+{{- end -}}
+
+{{- if and $paginator $showPagination (gt $paginator.TotalPages 1) -}}
+  <nav class="pagination {{ $class }}" role="navigation" aria-label="Pagination">
+    <ul class="pagination-list">
+      {{- if $paginator.HasPrev -}}
+        <li class="pagination-item pagination-prev">
+          <a href="{{ $paginator.Prev.URL }}" class="pagination-link" aria-label="Previous page">
+            <span aria-hidden="true">←</span> Previous
+          </a>
+        </li>
+      {{- else -}}
+        <li class="pagination-item pagination-prev pagination-disabled">
+          <span class="pagination-link" aria-disabled="true">
+            <span aria-hidden="true">←</span> Previous
+          </span>
+        </li>
+      {{- end -}}
+
+      {{- range $paginator.Pagers -}}
+        {{- if eq . $paginator -}}
+          <li class="pagination-item pagination-number pagination-current">
+            <span class="pagination-link" aria-current="page" aria-label="Page {{ .PageNumber }}">
+              {{ .PageNumber }}
+            </span>
+          </li>
+        {{- else -}}
+          <li class="pagination-item pagination-number">
+            <a href="{{ .URL }}" class="pagination-link" aria-label="Go to page {{ .PageNumber }}">
+              {{ .PageNumber }}
+            </a>
+          </li>
+        {{- end -}}
+      {{- end -}}
+
+      {{- if $paginator.HasNext -}}
+        <li class="pagination-item pagination-next">
+          <a href="{{ $paginator.Next.URL }}" class="pagination-link" aria-label="Next page">
+            Next <span aria-hidden="true">→</span>
+          </a>
+        </li>
+      {{- else -}}
+        <li class="pagination-item pagination-next pagination-disabled">
+          <span class="pagination-link" aria-disabled="true">
+            Next <span aria-hidden="true">→</span>
+          </span>
+        </li>
+      {{- end -}}
+    </ul>
+  </nav>
+{{- end -}}

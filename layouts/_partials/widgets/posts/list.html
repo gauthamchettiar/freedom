@@ -13,11 +13,14 @@
     - sortBy (optional): Sort field - "date", "weight", "title" (default: "date")
     - sortOrder (optional): Sort order - "asc" or "desc" (default: "desc")
     - key (optional): Config key for visibility (default: "showPostList")
+    - paginate (optional): Enable pagination (default: false)
+    - pageSize (optional): Number of items per page (default: 10)
   
   Example:
     {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages) }}
     {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages "sortBy" "weight" "sortOrder" "asc") }}
     {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages "listStyle" "disc") }}
+    {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages "paginate" true "pageSize" 20) }}
 */ -}}
 
 
@@ -31,6 +34,8 @@
 {{- $postListDateFormat := (partial "utils/config.html" (dict "key" (print $key "DateFormat") "default" (.dateFormat | default ":date_medium"))) -}}
 {{- $sortBy := .sortBy | default (partial "utils/config.html" (dict "key" (print $key "SortBy") "default" "date")) -}}
 {{- $sortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "asc")) -}}
+{{- $enablePagination := .paginate | default (partial "utils/config.html" (dict "key" (print $key "Paginate") "default" true)) -}}
+{{- $pageSize := .pageSize | default (partial "utils/config.html" (dict "key" (print $key "PageSize") "default" 15)) -}}
 
 {{- if and $pageList $showPostList -}}
   {{- /* Apply sorting */ -}}
@@ -47,6 +52,13 @@
     {{- $pageList = $pageList.Reverse -}}
   {{- end -}}
   
+  {{- /* Apply pagination if enabled */ -}}
+  {{- $paginator := "" -}}
+  {{- if $enablePagination -}}
+    {{- $paginator = .page.Paginate $pageList $pageSize -}}
+    {{- $pageList = $paginator.Pages -}}
+  {{- end -}}
+  
   {{- $paddingLeft := cond (eq $postListStyle "none") "0" "" -}}
   <ul class="page-list kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}" style="list-style-type: {{ $postListStyle }};{{ if $paddingLeft }} padding-left: {{ $paddingLeft }};{{ end }}">
     {{- range $pageList -}}
@@ -60,5 +72,9 @@
       </li>
     {{- end -}}
   </ul>
+  
+  {{- /* Render pagination if enabled */ -}}
+  {{- if and $enablePagination $paginator -}}
+    {{ partial "widgets/pagination.html" (dict "paginator" $paginator "page" .page "site" .site) }}
+  {{- end -}}
 {{- end -}}
-

@@ -15,11 +15,14 @@
     - sortBy (optional): Sort field - "date", "weight", "title" (default: "date")
     - sortOrder (optional): Sort order - "asc" or "desc" (default: "desc")
     - key (optional): Config key for visibility (default: "PostCard")
+    - paginate (optional): Enable pagination (default: false)
+    - pageSize (optional): Number of items per page (default: 12)
   
   Example:
     {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages) }}
     {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages "columns" 2) }}
     {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages "sortBy" "weight" "sortOrder" "asc") }}
+    {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages "paginate" true "pageSize" 9) }}
 */ -}}
 
 
@@ -35,6 +38,8 @@
 {{- $postCardColumns := (partial "utils/config.html" (dict "key" (print $key "Columns") "default" (.columns | default 3))) -}}
 {{- $sortBy := .sortBy | default (partial "utils/config.html" (dict "key" (print $key "SortBy") "default" "date")) -}}
 {{- $sortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "asc")) -}}
+{{- $enablePagination := .paginate | default (partial "utils/config.html" (dict "key" (print $key "Paginate") "default" true)) -}}
+{{- $pageSize := .pageSize | default (partial "utils/config.html" (dict "key" (print $key "PageSize") "default" 20)) -}}
 
 {{- if and $pageList $showPostCard -}}
   {{- /* Apply sorting */ -}}
@@ -49,6 +54,13 @@
   {{- /* Reverse if descending */ -}}
   {{- if eq $sortOrder "desc" -}}
     {{- $pageList = $pageList.Reverse -}}
+  {{- end -}}
+  
+  {{- /* Apply pagination if enabled */ -}}
+  {{- $paginator := "" -}}
+  {{- if $enablePagination -}}
+    {{- $paginator = .page.Paginate $pageList $pageSize -}}
+    {{- $pageList = $paginator.Pages -}}
   {{- end -}}
   
   <div class="post-card-grid columns-{{ $postCardColumns }} kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}">
@@ -84,4 +96,9 @@
       </a>
     {{- end -}}
   </div>
+  
+  {{- /* Render pagination if enabled */ -}}
+  {{- if and $enablePagination $paginator -}}
+    {{ partial "widgets/pagination.html" (dict "paginator" $paginator "page" .page "site" .site) }}
+  {{- end -}}
 {{- end -}}
