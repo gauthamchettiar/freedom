@@ -16,5 +16,7 @@
     {{ partial "layouts/blank.html" (dict "size" "lg") }}
   {{ end }}
   {{ partial "content/wrapper.html" .Content }}
+  
+  {{ partial "widgets/navigation.html" (dict "page" . "site" .Site) }}
 
 {{ end }}

@@ -1,0 +1,168 @@
+{{- /*
+  Navigation Widget (Next/Previous Article)
+  
+  Displays navigation links to the next and previous pages.
+  Previous link appears on the left, next link on the right.
+  Supports custom prev/next links via page front matter parameters.
+  
+  Parameters:
+    - page (required): Page context
+    - site (required): Site context
+    - key (optional): Config key for visibility (default: "showNavigation")
+    - class (optional): Additional CSS classes
+    - showIcon (optional): Override icon visibility
+    - prevText (optional): Text for previous link (default: "Previous")
+    - nextText (optional): Text for next link (default: "Next")
+    - navigationBySection (optional): Navigate within section only (default: true)
+  
+  Front Matter Parameters (in page):
+    - navigationPrev: Custom previous link (path string or map with url/title)
+    - navigationNext: Custom next link (path string or map with url/title)
+    - navigationBySection: Navigate within section only for this page (default: true)
+  
+  Navigation Behavior:
+    - When navigationBySection is true: Uses .PrevInSection and .NextInSection
+    - When navigationBySection is false: Uses .Prev and .Next (respects weight sorting)
+  
+  Example:
+    {{ partial "widgets/navigation.html" (dict "page" . "site" .Site) }}
+    {{ partial "widgets/navigation.html" (dict "page" . "site" .Site "navigationBySection" false) }}
+  
+  Front Matter Examples:
+    # String format (path to page)
+    navigationPrev: "/blog/my-previous-post"
+    navigationNext: "/blog/my-next-post"
+    
+    # Map format (custom URL and title)
+    navigationPrev:
+      url: "/custom/path"
+      title: "Custom Previous Title"
+    navigationNext:
+      url: "/another/path"
+      title: "Custom Next Title"
+    
+    # Use global navigation (respects weight)
+    navigationBySection: false
+*/ -}}
+
+{{- $page := .page -}}
+{{- $site := .site -}}
+{{- $key := .key | default "Navigation" -}}
+{{- $class := .class | default "" -}}
+
+{{- $showNavigation := partial "utils/config.html" (dict "key" (print "show" $key) "default" true) -}}
+{{- $showIcon := .showIcon -}}
+{{- if eq $showIcon nil -}}
+  {{- $showIcon = partial "utils/config.html" (dict "key" (print "show" $key "Icon") "default" true) -}}
+{{- end -}}
+
+{{- $prevText := .prevText | default (partial "utils/config.html" (dict "key" (print $key "PrevText") "default" "Previous")) -}}
+{{- $nextText := .nextText | default (partial "utils/config.html" (dict "key" (print $key "NextText") "default" "Next")) -}}
+
+{{- /* Determine navigation scope: by section or globally */ -}}
+{{- $navigationBySection := .navigationBySection -}}
+{{- if eq $navigationBySection nil -}}
+  {{- $navigationBySection = partial "utils/config.html" (dict "key" (print $key "BySection") "default" true) -}}
+{{- end -}}
+
+{{- if $showNavigation -}}
+  {{- with $page -}}
+    {{- /* Check for custom prev/next from front matter first, then fall back to automatic navigation */ -}}
+    {{- $customPrev := .Params.navigationPrev -}}
+    {{- $customNext := .Params.navigationNext -}}
+    
+    {{- /* Check if this page specifies navigation scope */ -}}
+    {{- if ne .Params.navigationBySection nil -}}
+      {{- $navigationBySection = .Params.navigationBySection -}}
+    {{- end -}}
+    
+    {{- $prev := false -}}
+    {{- $next := false -}}
+    
+    {{- /* Handle custom previous link */ -}}
+    {{- if $customPrev -}}
+      {{- if eq (printf "%T" $customPrev) "string" -}}
+        {{- $prev = site.GetPage $customPrev -}}
+      {{- else if reflect.IsMap $customPrev -}}
+        {{- /* Support map format: {url: "/path", title: "Title"} */ -}}
+        {{- $prev = $customPrev -}}
+      {{- end -}}
+    {{- else -}}
+      {{- /* Use section-scoped or global navigation */ -}}
+      {{- if $navigationBySection -}}
+        {{- $prev = .PrevInSection -}}
+      {{- else -}}
+        {{- $prev = .Prev -}}
+      {{- end -}}
+    {{- end -}}
+    
+    {{- /* Handle custom next link */ -}}
+    {{- if $customNext -}}
+      {{- if eq (printf "%T" $customNext) "string" -}}
+        {{- $next = site.GetPage $customNext -}}
+      {{- else if reflect.IsMap $customNext -}}
+        {{- /* Support map format: {url: "/path", title: "Title"} */ -}}
+        {{- $next = $customNext -}}
+      {{- end -}}
+    {{- else -}}
+      {{- /* Use section-scoped or global navigation */ -}}
+      {{- if $navigationBySection -}}
+        {{- $next = .NextInSection -}}
+      {{- else -}}
+        {{- $next = .Next -}}
+      {{- end -}}
+    {{- end -}}
+    
+    {{- if or $prev $next -}}
+      <nav class="navigation {{ $class }}" aria-label="Article navigation">
+        <div class="navigation-container">
+          {{- if $prev -}}
+            <div class="navigation-item navigation-prev">
+              {{- /* Handle both Page object and custom map format */ -}}
+              {{- $prevURL := "" -}}
+              {{- $prevTitle := "" -}}
+              {{- if reflect.IsMap $prev -}}
+                {{- $prevURL = index $prev "url" -}}
+                {{- $prevTitle = index $prev "title" -}}
+              {{- else -}}
+                {{- $prevURL = $prev.RelPermalink -}}
+                {{- $prevTitle = $prev.Title -}}
+              {{- end -}}
+              <a href="{{ $prevURL }}" rel="prev" title="{{ $prevTitle }}">
+                {{- if $showIcon -}}
+                  <span class="navigation-icon">&lt;</span>
+                {{- end -}}
+                <span>{{ $prevText }}: {{ $prevTitle }}</span>
+              </a>
+            </div>
+          {{- else -}}
+            <div class="navigation-item navigation-prev navigation-empty"></div>
+          {{- end -}}
+          
+          {{- if $next -}}
+            <div class="navigation-item navigation-next">
+              {{- /* Handle both Page object and custom map format */ -}}
+              {{- $nextURL := "" -}}
+              {{- $nextTitle := "" -}}
+              {{- if reflect.IsMap $next -}}
+                {{- $nextURL = index $next "url" -}}
+                {{- $nextTitle = index $next "title" -}}
+              {{- else -}}
+                {{- $nextURL = $next.RelPermalink -}}
+                {{- $nextTitle = $next.Title -}}
+              {{- end -}}
+              <a href="{{ $nextURL }}" rel="next" title="{{ $nextTitle }}">
+                <span>{{ $nextText }}: {{ $nextTitle }}</span>
+                {{- if $showIcon -}}
+                  <span class="navigation-icon">&gt;</span>
+                {{- end -}}
+              </a>
+            </div>
+          {{- else -}}
+            <div class="navigation-item navigation-next navigation-empty"></div>
+          {{- end -}}
+        </div>
+      </nav>
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
