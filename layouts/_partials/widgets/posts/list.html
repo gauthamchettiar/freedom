@@ -10,12 +10,14 @@
     - class (optional): Additional CSS classes for the ul element
     - listStyle (optional): CSS list-style-type value (default: "none")
     - dateFormat (optional): Date format (default: ":date_medium")
+    - sortBy (optional): Sort field - "date", "weight", "title" (default: "date")
+    - sortOrder (optional): Sort order - "asc" or "desc" (default: "desc")
     - key (optional): Config key for visibility (default: "showPostList")
   
   Example:
     {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages) }}
+    {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages "sortBy" "weight" "sortOrder" "asc") }}
     {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages "listStyle" "disc") }}
-    {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages "class" "post-list" "listStyle" "circle") }}
 */ -}}
 
 
@@ -27,8 +29,24 @@
 {{- $showPostListDate := (partial "utils/config.html" (dict "key" (print "show" $key "Date") "default" true)) -}}
 {{- $postListStyle := (partial "utils/config.html" (dict "key" (print $key "Style") "default" (.listStyle | default "none"))) -}}
 {{- $postListDateFormat := (partial "utils/config.html" (dict "key" (print $key "DateFormat") "default" (.dateFormat | default ":date_medium"))) -}}
+{{- $sortBy := .sortBy | default (partial "utils/config.html" (dict "key" (print $key "SortBy") "default" "date")) -}}
+{{- $sortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "asc")) -}}
 
 {{- if and $pageList $showPostList -}}
+  {{- /* Apply sorting */ -}}
+  {{- if eq $sortBy "weight" -}}
+    {{- $pageList = $pageList.ByWeight -}}
+  {{- else if eq $sortBy "title" -}}
+    {{- $pageList = $pageList.ByTitle -}}
+  {{- else -}}
+    {{- $pageList = $pageList.ByDate -}}
+  {{- end -}}
+  
+  {{- /* Reverse if descending */ -}}
+  {{- if eq $sortOrder "desc" -}}
+    {{- $pageList = $pageList.Reverse -}}
+  {{- end -}}
+  
   {{- $paddingLeft := cond (eq $postListStyle "none") "0" "" -}}
   <ul class="page-list kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}" style="list-style-type: {{ $postListStyle }};{{ if $paddingLeft }} padding-left: {{ $paddingLeft }};{{ end }}">
     {{- range $pageList -}}

@@ -12,12 +12,14 @@
     - dateFormat (optional): Date format (default: ":date_medium")
     - showSummary (optional): Whether to show summary (default: true)
     - showImage (optional): Whether to show page image (default: true)
+    - sortBy (optional): Sort field - "date", "weight", "title" (default: "date")
+    - sortOrder (optional): Sort order - "asc" or "desc" (default: "desc")
     - key (optional): Config key for visibility (default: "PostCard")
   
   Example:
     {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages) }}
     {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages "columns" 2) }}
-    {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages "showSummary" false) }}
+    {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages "sortBy" "weight" "sortOrder" "asc") }}
 */ -}}
 
 
@@ -31,8 +33,24 @@
 {{- $showPostCardImage := (partial "utils/config.html" (dict "key" (print "show" $key "Image") "default" (.showImage | default true))) -}}
 {{- $postCardDateFormat := (partial "utils/config.html" (dict "key" (print $key "DateFormat") "default" (.dateFormat | default ":date_medium"))) -}}
 {{- $postCardColumns := (partial "utils/config.html" (dict "key" (print $key "Columns") "default" (.columns | default 3))) -}}
+{{- $sortBy := .sortBy | default (partial "utils/config.html" (dict "key" (print $key "SortBy") "default" "date")) -}}
+{{- $sortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "asc")) -}}
 
 {{- if and $pageList $showPostCard -}}
+  {{- /* Apply sorting */ -}}
+  {{- if eq $sortBy "weight" -}}
+    {{- $pageList = $pageList.ByWeight -}}
+  {{- else if eq $sortBy "title" -}}
+    {{- $pageList = $pageList.ByTitle -}}
+  {{- else -}}
+    {{- $pageList = $pageList.ByDate -}}
+  {{- end -}}
+  
+  {{- /* Reverse if descending */ -}}
+  {{- if eq $sortOrder "desc" -}}
+    {{- $pageList = $pageList.Reverse -}}
+  {{- end -}}
+  
   <div class="post-card-grid columns-{{ $postCardColumns }} kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}">
     {{- range $pageList -}}
       <a href="{{ .RelPermalink }}" class="post-card-link">
