@@ -28,18 +28,18 @@
 {{- $showToc := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "show" $key) "default" true) -}}
 
 {{- if and $showToc $page.TableOfContents -}}
-  {{- $sticky := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "sticky" $key) "default" true) -}}
-  {{- $position := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "sticky" $key "Position") "default" "left") -}}
-  {{- $minWidth := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "sticky" $key "MinWidth") "default" 1280) -}}
+  {{- $stickyToc := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "sticky" $key) "default" true) -}}
+  {{- $stickyTocPosition := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "sticky" $key "Position") "default" "left") -}}
+  {{- $stickyTocMinWidth := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "sticky" $key "MinWidth") "default" 1280) -}}
 
 {{- /* Main TOC - just the content, no styling */ -}}
 <nav id="toc-main" class="toc {{ $class }}"
-  {{- if $sticky }} data-sticky="true" data-sticky-position="{{ $position }}" data-sticky-min-width="{{ $minWidth }}"{{ end -}}>
+  {{- if $stickyToc }} data-sticky="true" data-sticky-position="{{ $stickyTocPosition }}" data-sticky-min-width="{{ $stickyTocMinWidth }}"{{ end -}}>
   {{- $page.TableOfContents | safeHTML -}}
 </nav>
 
 {{- /* Sticky TOC - shown by JavaScript on scroll */ -}}
-{{- if $sticky -}}
+{{- if $stickyToc -}}
 <div id="toc-sticky" class="toc-sticky" aria-hidden="true">
   {{- $page.TableOfContents | safeHTML -}}
 </div>

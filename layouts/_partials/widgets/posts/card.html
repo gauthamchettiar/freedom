@@ -36,30 +36,30 @@
 {{- $showPostCardImage := (partial "utils/config.html" (dict "key" (print "show" $key "Image") "default" (.showImage | default true))) -}}
 {{- $postCardDateFormat := (partial "utils/config.html" (dict "key" (print $key "DateFormat") "default" (.dateFormat | default ":date_medium"))) -}}
 {{- $postCardColumns := (partial "utils/config.html" (dict "key" (print $key "Columns") "default" (.columns | default 3))) -}}
-{{- $sortBy := .sortBy | default (partial "utils/config.html" (dict "key" (print $key "SortBy") "default" "date")) -}}
-{{- $sortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "asc")) -}}
-{{- $enablePagination := .paginate | default (partial "utils/config.html" (dict "key" (print $key "Paginate") "default" true)) -}}
-{{- $pageSize := .pageSize | default (partial "utils/config.html" (dict "key" (print $key "PageSize") "default" 20)) -}}
+{{- $postCardSortBy := .sortBy | default (partial "utils/config.html" (dict "key" (print $key "SortBy") "default" "date")) -}}
+{{- $postCardSortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "asc")) -}}
+{{- $postCardPaginate := .paginate | default (partial "utils/config.html" (dict "key" (print $key "Paginate") "default" true)) -}}
+{{- $postCardPageSize := .pageSize | default (partial "utils/config.html" (dict "key" (print $key "PageSize") "default" 20)) -}}
 
 {{- if and $pageList $showPostCard -}}
   {{- /* Apply sorting */ -}}
-  {{- if eq $sortBy "weight" -}}
+  {{- if eq $postCardSortBy "weight" -}}
     {{- $pageList = $pageList.ByWeight -}}
-  {{- else if eq $sortBy "title" -}}
+  {{- else if eq $postCardSortBy "title" -}}
     {{- $pageList = $pageList.ByTitle -}}
   {{- else -}}
     {{- $pageList = $pageList.ByDate -}}
   {{- end -}}
   
   {{- /* Reverse if descending */ -}}
-  {{- if eq $sortOrder "desc" -}}
+  {{- if eq $postCardSortOrder "desc" -}}
     {{- $pageList = $pageList.Reverse -}}
   {{- end -}}
   
   {{- /* Apply pagination if enabled */ -}}
   {{- $paginator := "" -}}
-  {{- if $enablePagination -}}
-    {{- $paginator = .page.Paginate $pageList $pageSize -}}
+  {{- if $postCardPaginate -}}
+    {{- $paginator = .page.Paginate $pageList $postCardPageSize -}}
     {{- $pageList = $paginator.Pages -}}
   {{- end -}}
   
@@ -98,7 +98,7 @@
   </div>
   
   {{- /* Render pagination if enabled */ -}}
-  {{- if and $enablePagination $paginator -}}
+  {{- if and $postCardPaginate $paginator -}}
     {{ partial "widgets/pagination.html" (dict "paginator" $paginator "page" .page "site" .site) }}
   {{- end -}}
 {{- end -}}

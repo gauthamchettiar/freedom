@@ -32,30 +32,30 @@
 {{- $showPostListDate := (partial "utils/config.html" (dict "key" (print "show" $key "Date") "default" true)) -}}
 {{- $postListStyle := (partial "utils/config.html" (dict "key" (print $key "Style") "default" (.listStyle | default "none"))) -}}
 {{- $postListDateFormat := (partial "utils/config.html" (dict "key" (print $key "DateFormat") "default" (.dateFormat | default ":date_medium"))) -}}
-{{- $sortBy := .sortBy | default (partial "utils/config.html" (dict "key" (print $key "SortBy") "default" "date")) -}}
-{{- $sortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "asc")) -}}
-{{- $enablePagination := .paginate | default (partial "utils/config.html" (dict "key" (print $key "Paginate") "default" true)) -}}
-{{- $pageSize := .pageSize | default (partial "utils/config.html" (dict "key" (print $key "PageSize") "default" 15)) -}}
+{{- $postListSortBy := .sortBy | default (partial "utils/config.html" (dict "key" (print $key "SortBy") "default" "date")) -}}
+{{- $postListSortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "asc")) -}}
+{{- $postListPaginate := .paginate | default (partial "utils/config.html" (dict "key" (print $key "Paginate") "default" true)) -}}
+{{- $postListPageSize := .pageSize | default (partial "utils/config.html" (dict "key" (print $key "PageSize") "default" 15)) -}}
 
 {{- if and $pageList $showPostList -}}
   {{- /* Apply sorting */ -}}
-  {{- if eq $sortBy "weight" -}}
+  {{- if eq $postListSortBy "weight" -}}
     {{- $pageList = $pageList.ByWeight -}}
-  {{- else if eq $sortBy "title" -}}
+  {{- else if eq $postListSortBy "title" -}}
     {{- $pageList = $pageList.ByTitle -}}
   {{- else -}}
     {{- $pageList = $pageList.ByDate -}}
   {{- end -}}
   
   {{- /* Reverse if descending */ -}}
-  {{- if eq $sortOrder "desc" -}}
+  {{- if eq $postListSortOrder "desc" -}}
     {{- $pageList = $pageList.Reverse -}}
   {{- end -}}
   
   {{- /* Apply pagination if enabled */ -}}
   {{- $paginator := "" -}}
-  {{- if $enablePagination -}}
-    {{- $paginator = .page.Paginate $pageList $pageSize -}}
+  {{- if $postListPaginate -}}
+    {{- $paginator = .page.Paginate $pageList $postListPageSize -}}
     {{- $pageList = $paginator.Pages -}}
   {{- end -}}
   
@@ -74,7 +74,7 @@
   </ul>
   
   {{- /* Render pagination if enabled */ -}}
-  {{- if and $enablePagination $paginator -}}
+  {{- if and $postListPaginate $paginator -}}
     {{ partial "widgets/pagination.html" (dict "paginator" $paginator "page" .page "site" .site) }}
   {{- end -}}
 {{- end -}}

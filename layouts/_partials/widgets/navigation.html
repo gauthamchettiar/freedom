@@ -56,8 +56,8 @@
   {{- $showIcon = partial "utils/config.html" (dict "key" (print "show" $key "Icon") "default" true) -}}
 {{- end -}}
 
-{{- $prevText := .prevText | default (partial "utils/config.html" (dict "key" (print $key "PrevText") "default" "Previous")) -}}
-{{- $nextText := .nextText | default (partial "utils/config.html" (dict "key" (print $key "NextText") "default" "Next")) -}}
+{{- $navigationPrevText := .prevText | default (partial "utils/config.html" (dict "key" (print $key "PrevText") "default" "Previous")) -}}
+{{- $navigationNextText := .nextText | default (partial "utils/config.html" (dict "key" (print $key "NextText") "default" "Next")) -}}
 
 {{- /* Determine navigation scope: by section or globally */ -}}
 {{- $navigationBySection := .navigationBySection -}}
@@ -132,7 +132,7 @@
                 {{- if $showIcon -}}
                   <span class="navigation-icon">&lt;</span>
                 {{- end -}}
-                <span>{{ $prevText }}: {{ $prevTitle }}</span>
+                <span>{{ $navigationPrevText }}: {{ $prevTitle }}</span>
               </a>
             </div>
           {{- else -}}
@@ -152,7 +152,7 @@
                 {{- $nextTitle = $next.Title -}}
               {{- end -}}
               <a href="{{ $nextURL }}" rel="next" title="{{ $nextTitle }}">
-                <span>{{ $nextText }}: {{ $nextTitle }}</span>
+                <span>{{ $navigationNextText }}: {{ $nextTitle }}</span>
                 {{- if $showIcon -}}
                   <span class="navigation-icon">&gt;</span>
                 {{- end -}}
