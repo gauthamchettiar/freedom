@@ -1,0 +1,59 @@
+{{- /*
+  Process Page List Utility
+  
+  Handles common page list processing: sorting and pagination.
+  Returns a dict with processed pageList and optional paginator.
+  
+  Parameters:
+    - pageList (required): Slice of pages to process
+    - page (required): Page context for pagination
+    - sortBy (optional): Sort field - "date", "weight", "title" (default: "date")
+    - sortOrder (optional): Sort order - "asc" or "desc" (default: "desc")
+    - paginate (optional): Enable pagination (default: false)
+    - pageSize (optional): Number of items per page (default: 10)
+  
+  Returns:
+    - dict with "pageList" and "paginator" keys
+  
+  Example:
+    {{ $result := partial "utils/process-page-list.html" (dict 
+      "pageList" .Pages 
+      "page" . 
+      "sortBy" "date" 
+      "sortOrder" "desc" 
+      "paginate" true 
+      "pageSize" 20
+    ) }}
+    {{ $processedPages := $result.pageList }}
+    {{ $paginator := $result.paginator }}
+*/ -}}
+
+{{- $pageList := .pageList -}}
+{{- $sortBy := .sortBy | default "date" -}}
+{{- $sortOrder := .sortOrder | default "desc" -}}
+{{- $paginate := .paginate | default false -}}
+{{- $pageSize := .pageSize | default 10 -}}
+
+{{- /* Apply sorting */ -}}
+{{- if eq $sortBy "weight" -}}
+  {{- $pageList = $pageList.ByWeight -}}
+{{- else if eq $sortBy "title" -}}
+  {{- $pageList = $pageList.ByTitle -}}
+{{- else -}}
+  {{- $pageList = $pageList.ByDate -}}
+{{- end -}}
+
+{{- /* Reverse if descending */ -}}
+{{- if eq $sortOrder "desc" -}}
+  {{- $pageList = $pageList.Reverse -}}
+{{- end -}}
+
+{{- /* Apply pagination if enabled */ -}}
+{{- $paginator := "" -}}
+{{- if $paginate -}}
+  {{- $paginator = .page.Paginate $pageList $pageSize -}}
+  {{- $pageList = $paginator.Pages -}}
+{{- end -}}
+
+{{- /* Return result as dict */ -}}
+{{- return (dict "pageList" $pageList "paginator" $paginator) -}}

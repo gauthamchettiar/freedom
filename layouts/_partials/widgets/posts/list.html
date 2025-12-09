@@ -38,26 +38,17 @@
 {{- $postListPageSize := .pageSize | default (partial "utils/config.html" (dict "key" (print $key "PageSize") "default" 15)) -}}
 
 {{- if and $pageList $showPostList -}}
-  {{- /* Apply sorting */ -}}
-  {{- if eq $postListSortBy "weight" -}}
-    {{- $pageList = $pageList.ByWeight -}}
-  {{- else if eq $postListSortBy "title" -}}
-    {{- $pageList = $pageList.ByTitle -}}
-  {{- else -}}
-    {{- $pageList = $pageList.ByDate -}}
-  {{- end -}}
-  
-  {{- /* Reverse if descending */ -}}
-  {{- if eq $postListSortOrder "desc" -}}
-    {{- $pageList = $pageList.Reverse -}}
-  {{- end -}}
-  
-  {{- /* Apply pagination if enabled */ -}}
-  {{- $paginator := "" -}}
-  {{- if $postListPaginate -}}
-    {{- $paginator = .page.Paginate $pageList $postListPageSize -}}
-    {{- $pageList = $paginator.Pages -}}
-  {{- end -}}
+  {{- /* Process page list: sorting and pagination */ -}}
+  {{- $result := partial "utils/process-page-list.html" (dict 
+    "pageList" $pageList 
+    "page" .page 
+    "sortBy" $postListSortBy 
+    "sortOrder" $postListSortOrder 
+    "paginate" $postListPaginate 
+    "pageSize" $postListPageSize
+  ) -}}
+  {{- $pageList = $result.pageList -}}
+  {{- $paginator := $result.paginator -}}
   
   {{- $paddingLeft := cond (eq $postListStyle "none") "0" "" -}}
   <ul class="page-list kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}" style="list-style-type: {{ $postListStyle }};{{ if $paddingLeft }} padding-left: {{ $paddingLeft }};{{ end }}">
