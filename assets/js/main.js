@@ -251,11 +251,19 @@
 // Smooth expand/collapse animations for details elements
 (function() {
   function initExpandAnimations() {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
     document.querySelectorAll('details.expand').forEach(details => {
       const summary = details.querySelector('.expand-title');
       const content = details.querySelector('.expand-content');
       
       if (!summary || !content) return;
+      
+      // If reduced motion is preferred, skip animation setup
+      if (prefersReducedMotion) {
+        return; // Let browser handle default behavior
+      }
       
       // Store animation reference
       let animation = null;
