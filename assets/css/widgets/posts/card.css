@@ -39,25 +39,41 @@
   text-decoration: none;
 }
 
+/* Post Card Title */
+.post-card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--link-color);
+  transition: opacity 0.2s ease;
+}
+
+.post-card-link:visited .post-card-title {
+  color: var(--link-visited);
+}
+
+.post-card-link:hover .post-card-title {
+  opacity: 0.8;
+}
+
 /* Post Card */
 .post-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid color-mix(in srgb, var(--text-color) 20%, transparent);
+  border: 1px solid var(--text-color);
   border-radius: 8px;
   overflow: hidden;
-  background-color: color-mix(in srgb, var(--accent-color) 5%, transparent);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   height: 100%;
 }
 
 .post-card-link:hover .post-card {
-  border-color: color-mix(in srgb, var(--accent-color) 50%, transparent);
-  background-color: color-mix(in srgb, var(--accent-color) 10%, transparent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 :root[data-theme="dark"] .post-card-link:hover .post-card {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
 }
 
 /* Post Card Image */
@@ -85,14 +101,6 @@
   flex-direction: column;
   gap: var(--spacing-sm);
   padding: var(--spacing-md);
-}
-
-/* Post Card Title */
-.post-card-title {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.4;
 }
 
 /* Post Card Date */

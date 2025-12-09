@@ -15,6 +15,7 @@
   list-style: none;
   display: flex;
   align-items: center;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
 }
 
 .expand-title:hover {
@@ -36,6 +37,7 @@
   display: inline-block;
   margin-right: var(--spacing-sm);
   font-size: 0.75em;
+  transition: transform 0.3s ease;
 }
 
 .expand[open] .expand-title::before {
@@ -44,7 +46,12 @@
 
 .expand-content {
   padding: 0 var(--spacing-md);
-  border-top: 1px solid var(--text-color);
+  border-top: 1px solid transparent;
+  overflow: hidden;
+}
+
+.expand[open] .expand-content {
+  border-top-color: var(--text-color);
 }
 
 .expand-content > *:first-child {
@@ -62,6 +69,10 @@
 }
 
 .expand.compact .expand-content {
+  padding: var(--spacing-sm);
+}
+
+.expand.compact[open] .expand-content {
   padding: var(--spacing-sm);
 }
 

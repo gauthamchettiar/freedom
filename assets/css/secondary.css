@@ -137,7 +137,7 @@ details.blockquote-alert .alert-heading {
     border-bottom: none;
     cursor: pointer;
     user-select: none;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease, padding-bottom 0.3s ease, border-bottom 0.3s ease;
 }
 
 details.blockquote-alert .alert-heading:hover {
@@ -153,7 +153,14 @@ details.blockquote-alert .alert-heading::before {
     display: inline-block;
     margin-right: var(--spacing-xs);
     font-size: 0.75em;
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease;
+}
+
+details.blockquote-alert .alert-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
 }
 
 details.blockquote-alert[open] .alert-heading {
@@ -163,6 +170,12 @@ details.blockquote-alert[open] .alert-heading {
 
 details.blockquote-alert[open] .alert-heading::before {
     transform: rotate(90deg);
+}
+
+details.blockquote-alert[open] .alert-content {
+    max-height: 5000px;
+    opacity: 1;
+    margin-top: var(--spacing-sm);
 }
 
 /* ============================================

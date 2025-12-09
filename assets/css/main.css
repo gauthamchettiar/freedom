@@ -43,6 +43,7 @@ body {
   max-width: var(--page-width);
   padding: var(--spacing-md);
   position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Background image overlay for better readability */
@@ -112,10 +113,12 @@ h6 {
 a {
   color: var(--link-color);
   text-decoration: underline;
+  transition: color 0.3s ease;
 }
 
 a:visited {
   color: var(--link-visited);
+  transition: color 0.3s ease;
 }
 
 p {

@@ -2,14 +2,25 @@
 (function() {
   const THEME_KEY = 'theme-preference';
   
-  function applyTheme(theme) {
+  function applyTheme(theme, withAnimation = false) {
+    if (withAnimation) {
+      // Add animation class
+      const toggleButton = document.getElementById('theme-toggle');
+      if (toggleButton) {
+        toggleButton.classList.add('theme-switching');
+        // Remove class after animation completes
+        setTimeout(() => {
+          toggleButton.classList.remove('theme-switching');
+        }, 300);
+      }
+    }
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(THEME_KEY, theme);
   }
   
   function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-    applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    applyTheme(currentTheme === 'dark' ? 'light' : 'dark', true);
   }
   
   function initTheme() {
@@ -234,5 +245,99 @@
     document.addEventListener('DOMContentLoaded', initStickyToc);
   } else {
     initStickyToc();
+  }
+})();
+
+// Smooth expand/collapse animations for details elements
+(function() {
+  function initExpandAnimations() {
+    document.querySelectorAll('details.expand').forEach(details => {
+      const summary = details.querySelector('.expand-title');
+      const content = details.querySelector('.expand-content');
+      
+      if (!summary || !content) return;
+      
+      // Store animation reference
+      let animation = null;
+      
+      // Prevent default toggle to control it manually
+      summary.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Stop any ongoing animation
+        if (animation) {
+          animation.cancel();
+        }
+        
+        // Determine if we're opening or closing
+        const isClosing = details.open;
+        
+        if (isClosing) {
+          // Closing animation
+          animation = content.animate(
+            [
+              {
+                opacity: 1,
+                maxHeight: content.scrollHeight + 'px',
+                paddingTop: getComputedStyle(content).paddingTop,
+                paddingBottom: getComputedStyle(content).paddingBottom
+              },
+              {
+                opacity: 0,
+                maxHeight: '0px',
+                paddingTop: '0px',
+                paddingBottom: '0px'
+              }
+            ],
+            {
+              duration: 400,
+              easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+            }
+          );
+          
+          animation.onfinish = () => {
+            details.open = false;
+            animation = null;
+          };
+        } else {
+          // Opening animation
+          details.open = true;
+          
+          // Force a reflow to get accurate scrollHeight
+          const startHeight = content.scrollHeight;
+          
+          animation = content.animate(
+            [
+              {
+                opacity: 0,
+                maxHeight: '0px',
+                paddingTop: '0px',
+                paddingBottom: '0px'
+              },
+              {
+                opacity: 1,
+                maxHeight: startHeight + 'px',
+                paddingTop: getComputedStyle(content).paddingTop,
+                paddingBottom: getComputedStyle(content).paddingBottom
+              }
+            ],
+            {
+              duration: 400,
+              easing: 'cubic-bezier(0, 0, 0.2, 1)'
+            }
+          );
+          
+          animation.onfinish = () => {
+            animation = null;
+          };
+        }
+      });
+    });
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initExpandAnimations);
+  } else {
+    initExpandAnimations();
   }
 })();
