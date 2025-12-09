@@ -61,3 +61,178 @@
     initCodeCopy();
   }
 })();
+
+// Sticky Table of Contents
+(function() {
+  function initStickyToc() {
+    const mainToc = document.getElementById('toc-main');
+    if (!mainToc || mainToc.getAttribute('data-sticky') !== 'true') return;
+    
+    const stickyToc = document.getElementById('toc-sticky');
+    if (!stickyToc) return;
+    
+    const position = mainToc.getAttribute('data-sticky-position') || 'right';
+    const minWidth = parseInt(mainToc.getAttribute('data-sticky-min-width')) || 1280;
+    
+    // Add position class for border styling
+    stickyToc.classList.add(`position-${position}`);
+    
+    let ticking = false;
+    let scrollTimeout = null;
+    
+    function checkWideElementsInView() {
+      // Check for wide elements (box-width-wide) in viewport
+      const wideElements = document.querySelectorAll('.box-width-wide');
+      const viewportHeight = window.innerHeight;
+      
+      for (const element of wideElements) {
+        const rect = element.getBoundingClientRect();
+        // Check if element is in viewport
+        if (rect.top < viewportHeight && rect.bottom > 0) {
+          return true;
+        }
+      }
+      return false;
+    }
+    
+    function updateStickyToc() {
+      if (window.innerWidth < minWidth) {
+        stickyToc.classList.remove('visible');
+        return;
+      }
+      
+      // Hide if wide element is in view
+      if (checkWideElementsInView()) {
+        stickyToc.classList.remove('visible');
+        return;
+      }
+      
+      // Show sticky when scrolled past main TOC
+      const mainRect = mainToc.getBoundingClientRect();
+      const shouldShow = mainRect.bottom < 0;
+      
+      if (shouldShow) {
+        positionStickyToc();
+        stickyToc.classList.add('visible');
+        updateActiveLink();
+        
+        // Add scrolling class while scrolling
+        stickyToc.classList.add('scrolling');
+        
+        // Remove scrolling class after scroll ends
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          stickyToc.classList.remove('scrolling');
+        }, 1500 );
+      } else {
+        stickyToc.classList.remove('visible');
+      }
+    }
+    
+    function positionStickyToc() {
+      const main = document.querySelector('main');
+      if (!main) return;
+      
+      const mainRect = main.getBoundingClientRect();
+      const tocWidth = 250;
+      const gap = 20;
+      
+      if (position === 'right') {
+        const left = mainRect.right + gap;
+        const availableSpace = window.innerWidth - left;
+        if (availableSpace >= tocWidth) {
+          stickyToc.style.left = `${left}px`;
+          stickyToc.style.right = 'auto';
+        } else {
+          stickyToc.classList.remove('visible');
+        }
+      } else {
+        const availableSpace = mainRect.left - gap;
+        if (availableSpace >= tocWidth) {
+          const right = window.innerWidth - mainRect.left + gap;
+          stickyToc.style.right = `${right}px`;
+          stickyToc.style.left = 'auto';
+        } else {
+          stickyToc.classList.remove('visible');
+        }
+      }
+    }
+    
+    function updateActiveLink() {
+      const headings = document.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]');
+      let activeId = null;
+      
+      headings.forEach(heading => {
+        if (heading.offsetTop <= window.scrollY + 100) {
+          activeId = heading.id;
+        }
+      });
+      
+      stickyToc.querySelectorAll('a').forEach(link => {
+        link.classList.remove('active');
+        if (activeId && link.getAttribute('href') === `#${activeId}`) {
+          link.classList.add('active');
+          
+          // Auto-scroll the active link into view within sticky TOC
+          // Position it slightly above center to show context below
+          const linkOffsetTop = link.offsetTop;
+          const tocScrollTop = stickyToc.scrollTop;
+          const tocHeight = stickyToc.clientHeight;
+          const linkHeight = link.offsetHeight;
+          
+          // Calculate if link is outside visible area
+          const linkTopInView = linkOffsetTop - tocScrollTop;
+          const linkBottomInView = linkTopInView + linkHeight;
+          
+          if (linkTopInView < 0 || linkBottomInView > tocHeight) {
+            // Position the link at 1/3 from top to show more context below
+            const targetScroll = linkOffsetTop - (tocHeight / 3);
+            stickyToc.scrollTo({ top: targetScroll, behavior: 'smooth' });
+          }
+        }
+      });
+    }
+    
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateStickyToc();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+    
+    function onResize() {
+      updateStickyToc();
+    }
+    
+    // Smooth scroll on link click
+    stickyToc.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            window.scrollTo({
+              top: target.offsetTop - 20,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+    
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    
+    updateStickyToc();
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStickyToc);
+  } else {
+    initStickyToc();
+  }
+})();

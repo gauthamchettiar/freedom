@@ -1,0 +1,90 @@
+/* Table of Contents Widget */
+
+/* Main TOC - minimal styling, inherits from parent (e.g., expand widget) */
+.toc nav#TableOfContents {
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+}
+.toc nav#TableOfContents ul {
+  margin: 0;
+}
+
+.toc nav#TableOfContents a {
+  color: var(--link-color);
+  text-decoration: none;
+  display: block;
+}
+
+/* Sticky TOC */
+.toc-sticky {
+  position: fixed;
+  top: var(--spacing-lg);
+  bottom: var(--spacing-lg);
+  z-index: 100;
+  width: 250px;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+  padding-right: calc(var(--spacing-md) + 8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.toc-sticky.visible {
+  opacity: 0.4;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.toc-sticky.visible.scrolling,
+.toc-sticky.visible:hover {
+  opacity: 1;
+}
+
+.toc-sticky.hidden-by-user {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Sticky TOC content */
+.toc-sticky nav#TableOfContents ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.toc-sticky nav#TableOfContents ul ul {
+  padding-left: var(--spacing-sm);
+  margin-top: var(--spacing-xxs);
+}
+
+.toc-sticky nav#TableOfContents li {
+  margin: var(--spacing-xxs) 0;
+}
+
+.toc-sticky nav#TableOfContents a {
+  color: var(--link-color);
+  text-decoration: none;
+  display: block;
+  padding: var(--spacing-xxs) var(--spacing-sm);
+  border-left: 2px solid transparent;
+}
+
+
+.toc-sticky nav#TableOfContents a.active {
+  font-weight: 600;
+  border-left-color: var(--link-color);
+}
+
+/* Scrollbar */
+.toc-sticky::-webkit-scrollbar {
+  width: 0;
+}
+
+/* Hide on narrow viewports */
+@media (max-width: 1400px) {
+  .toc-sticky {
+    display: none;
+  }
+}

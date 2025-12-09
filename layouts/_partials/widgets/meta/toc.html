@@ -2,31 +2,49 @@
   Table of Contents Widget
   
   Displays a table of contents for the current page based on headings.
-  Uses Hugo's built-in .TableOfContents method, which properly integrates
-  with custom heading renderers like render-heading.html.
+  Supports optional sticky TOC that appears on scroll.
   
   Parameters:
     - page (required): Page context
     - site (required): Site context
-    - title (optional): TOC heading title (default: "Table of Contents")
     - class (optional): Additional CSS classes
-    - key (optional): Config key for visibility (default: "showToc")
+    - key (optional): Config key for visibility (default: "Toc")
+  
+  Configuration:
+    - showToc: Show/hide TOC (default: true)
+    - stickyToc: Enable sticky behavior (default: true)
+    - stickyTocPosition: "left" or "right" (default: "right")
+    - stickyTocMinWidth: Minimum viewport width in px (default: 1280)
   
   Example:
     {{ partial "widgets/meta/toc.html" (dict "page" . "site" .Site) }}
-    {{ partial "widgets/meta/toc.html" (dict "page" . "site" .Site "title" "On This Page") }}
 */ -}}
 
-
+{{- $page := .page -}}
+{{- $site := .site -}}
 {{- $key := .key | default "Toc" -}}
 {{- $class := .class | default "" -}}
 
-{{- $showToc := partial "utils/config.html" (dict "key" (print "show" $key) "default" true) -}}
+{{- $showToc := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "show" $key) "default" true) -}}
 
-{{- if and $showToc page.TableOfContents -}}
-<nav class="toc {{ $class }}" aria-label="Table of Contents">
-  {{- page.TableOfContents | safeHTML -}}
+{{- if and $showToc $page.TableOfContents -}}
+  {{- $sticky := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "sticky" $key) "default" true) -}}
+  {{- $position := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "sticky" $key "Position") "default" "left") -}}
+  {{- $minWidth := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "sticky" $key "MinWidth") "default" 1280) -}}
+
+{{- /* Main TOC - just the content, no styling */ -}}
+<nav id="toc-main" class="toc {{ $class }}"
+  {{- if $sticky }} data-sticky="true" data-sticky-position="{{ $position }}" data-sticky-min-width="{{ $minWidth }}"{{ end -}}>
+  {{- $page.TableOfContents | safeHTML -}}
 </nav>
+
+{{- /* Sticky TOC - shown by JavaScript on scroll */ -}}
+{{- if $sticky -}}
+<div id="toc-sticky" class="toc-sticky" aria-hidden="true">
+  {{- $page.TableOfContents | safeHTML -}}
+</div>
+{{- end -}}
+
 {{- end -}}
 
 
