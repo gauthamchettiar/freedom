@@ -30,12 +30,12 @@
 
 {{- $showPostList := (partial "utils/config.html" (dict "key" (print "show" $key) "default" true)) -}}
 {{- $showPostListDate := (partial "utils/config.html" (dict "key" (print "show" $key "Date") "default" true)) -}}
-{{- $postListStyle := (partial "utils/config.html" (dict "key" (print $key "Style") "default" (.listStyle | default "none"))) -}}
+{{- $postListStyle := .postListStyle | default (partial "utils/config.html" (dict "key" (print $key "Style") "default" (.listStyle | default "none"))) -}}
 {{- $postListDateFormat := (partial "utils/config.html" (dict "key" (print $key "DateFormat") "default" (.dateFormat | default ":date_medium"))) -}}
 {{- $postListSortBy := .sortBy | default (partial "utils/config.html" (dict "key" (print $key "SortBy") "default" "date")) -}}
 {{- $postListSortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "asc")) -}}
 {{- $postListPaginate := .paginate | default (partial "utils/config.html" (dict "key" (print $key "Paginate") "default" true)) -}}
-{{- $postListPageSize := .pageSize | default (partial "utils/config.html" (dict "key" (print $key "PageSize") "default" 15)) -}}
+{{- $postListPageSize := .pageSize | default (partial "utils/config.html" (dict "key" (print $key "PageSize") "default" 10)) -}}
 
 {{- if and $pageList $showPostList -}}
   {{- /* Process page list: sorting and pagination */ -}}
@@ -54,12 +54,15 @@
   <ul class="page-list kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}" style="list-style-type: {{ $postListStyle }};{{ if $paddingLeft }} padding-left: {{ $paddingLeft }};{{ end }}">
     {{- range $pageList -}}
       <li class="page-list-item">
-        {{- if $showPostListDate -}}
-          {{- with .Date -}}
-            <code class="page-list-date">{{ . | time.Format $postListDateFormat }} » </code>
+        <span class="page-list-content">
+          <a class="page-list-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+          {{- if $showPostListDate -}}
+            <span class="page-list-dots"></span>
+            {{- with .Date -}}
+              <time class="page-list-date" datetime="{{ .Format "2006-01-02" }}">{{ . | time.Format $postListDateFormat }}</time>
+            {{- end -}}
           {{- end -}}
-        {{- end -}}
-        <a class="page-list-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </span>
       </li>
     {{- end -}}
   </ul>

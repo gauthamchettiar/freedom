@@ -1,0 +1,39 @@
+/* Post List Widget */
+.page-list {
+  list-style: decimal;
+  padding-left: var(--spacing-xl);
+  margin: 0;
+}
+
+.page-list-item {
+  margin-bottom: var(--spacing-xs);
+}
+
+.page-list-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.page-list-link {
+  flex-shrink: 0;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.page-list-link:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+.page-list-dots {
+  flex-grow: 1;
+  border-bottom: 1px dotted var(--text-color);
+  min-width: var(--spacing-md);
+  margin: 0 var(--spacing-xs);
+}
+
+.page-list-date {
+  flex-shrink: 0;
+  font-size: 0.875rem;
+}

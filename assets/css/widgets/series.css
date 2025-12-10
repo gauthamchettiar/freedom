@@ -1,6 +1,8 @@
 /* Series List - Spacing between series items */
 .series-item {
   margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  border: 2px dotted var(--text-color);
 }
 
 .series-item .expand-content {
@@ -11,75 +13,61 @@
   padding-left: var(--spacing-xs);
 }
 
-/* Series Overview Widget - Shows all parts in a series on individual posts */
-.series-overview {
-  margin: var(--spacing-lg) 0;
-  padding: var(--spacing-md);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius);
-  background: var(--color-surface);
-}
-
-.series-overview-header {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-md);
-  padding-bottom: var(--spacing-sm);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.series-overview-icon {
-  font-size: var(--font-size-lg);
-}
-
-.series-overview-title {
-  margin: 0;
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-bold);
-}
-
-.series-overview-title a {
-  color: var(--color-text);
+/* Series Item Title */
+.series-item-title-link {
   text-decoration: none;
+  color: var(--text-color);
 }
 
-.series-overview-title a:hover {
-  color: var(--color-primary);
-  text-decoration: underline;
+.series-item-title {
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: 1.25rem;
+  font-weight: 700;
 }
 
-.series-overview-list {
+/* Series Description */
+.series-description {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* Series Posts List */
+.series-posts {
   list-style: decimal;
   padding-left: var(--spacing-xl);
   margin: 0;
 }
 
-.series-overview-item {
+.series-post-item {
   margin-bottom: var(--spacing-xs);
 }
 
-.series-overview-item.current {
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
-}
-
-.series-overview-current {
-  display: inline-flex;
+.series-post-content {
+  display: flex;
   align-items: center;
   gap: var(--spacing-xs);
 }
 
-.series-overview-marker {
-  font-size: var(--font-size-sm);
-}
-
-.series-overview-link {
-  color: var(--color-text);
+.series-post-link {
+  flex-shrink: 0;
+  color: var(--text-color);
   text-decoration: none;
 }
 
-.series-overview-link:hover {
-  color: var(--color-primary);
+.series-post-link:hover {
+  color: var(--accent-color);
   text-decoration: underline;
+}
+
+.series-post-dots {
+  flex-grow: 1;
+  border-bottom: 1px dotted var(--text-color);
+  min-width: var(--spacing-md);
+  margin: 0 var(--spacing-xs);
+}
+
+.series-post-date {
+  flex-shrink: 0;
+  font-size: 0.875rem;
 }

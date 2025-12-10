@@ -14,6 +14,7 @@
   list-style: none;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   transition: opacity 0.2s ease, background-color 0.2s ease;
 }
 
@@ -30,17 +31,18 @@
   content: '';
 }
 
-/* Custom arrow indicator */
-.expand-title::before {
-  content: '▶';
+/* Custom plus/minus indicator at the right */
+.expand-title::after {
+  content: '+';
   display: inline-block;
-  margin-right: var(--spacing-sm);
-  font-size: 0.75em;
-  transition: transform 0.3s ease;
+  margin-left: var(--spacing-sm);
+  font-size: 1.25em;
+  font-weight: 400;
+  line-height: 1;
 }
 
-.expand[open] .expand-title::before {
-  transform: rotate(90deg);
+.expand[open] .expand-title::after {
+  content: '−';
 }
 
 .expand-content {
