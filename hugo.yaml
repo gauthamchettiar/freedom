@@ -6,6 +6,10 @@ module:
     min: 0.146.0
 title: Freedom
 
+taxonomies:
+  tag: tags
+  series: series
+
 params:
   footerText: Made with ❤️ using [hugo](https://gohugo.io/) & [freedom](https://github.com/gauthamchettiar/freedom)
 

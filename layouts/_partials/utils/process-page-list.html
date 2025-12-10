@@ -7,7 +7,7 @@
   Parameters:
     - pageList (required): Slice of pages to process
     - page (required): Page context for pagination
-    - sortBy (optional): Sort field - "date", "weight", "title" (default: "date")
+    - sortBy (optional): Sort field - "date", "weight", "title", "seriesorder" (default: "date")
     - sortOrder (optional): Sort order - "asc" or "desc" (default: "desc")
     - paginate (optional): Enable pagination (default: false)
     - pageSize (optional): Number of items per page (default: 10)
@@ -39,6 +39,8 @@
   {{- $pageList = $pageList.ByWeight -}}
 {{- else if eq $sortBy "title" -}}
   {{- $pageList = $pageList.ByTitle -}}
+{{- else if eq $sortBy "seriesorder" -}}
+  {{- $pageList = sort $pageList "Params.seriesorder" -}}
 {{- else -}}
   {{- $pageList = $pageList.ByDate -}}
 {{- end -}}

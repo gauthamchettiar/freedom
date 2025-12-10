@@ -1,4 +1,5 @@
 {{ define "main" }}
+  {{ partial "widgets/title.html" (dict "page" . "site" .Site "key" "SectionTitle" "titleFrom" "section") }}
   {{ partial "content/wrapper.html" .Content }}
   {{ partial "widgets/terms.html" (dict "taxonomy" "tags" "site" .Site "page" . "taxonomyFrom" "site" "class" "all-tags") }}
 {{ end }}

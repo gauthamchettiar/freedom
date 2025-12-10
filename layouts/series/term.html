@@ -1,0 +1,4 @@
+{{ define "main" }}
+    {{ partial "widgets/title.html" (dict "page" . "site" .Site "key" "SectionTitle") }}
+  {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages "sortBy" "seriesorder" "sortOrder" "asc") }}
+{{ end }}
