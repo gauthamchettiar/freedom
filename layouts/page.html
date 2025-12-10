@@ -1,6 +1,6 @@
 {{ define "main" }}
   {{ partial "widgets/breadcrumb.html" (dict "page" . "site" .Site) }}
-  {{ partial "widgets/title.html" (dict "site" .Site "page" . "title" .Title "key" "showPageTitle" "class" "page-title") }}
+  {{ partial "widgets/title.html" (dict "site" .Site "page" . "title" .Title "key" "PageTitle" "class" "page-title") }}
   
   {{ $time := partial "widgets/meta/date.html" (dict "page" . "site" .Site "format" ":date_long") }}
   {{ $readTime := partial "widgets/meta/read-time.html" (dict "page" . "site" .Site) }}
