@@ -29,14 +29,14 @@
     <ul class="pagination-list">
       {{- if $paginator.HasPrev -}}
         <li class="pagination-item pagination-prev">
-          <a href="{{ $paginator.Prev.URL }}" class="pagination-link" aria-label="Previous page">
-            <span aria-hidden="true">←</span> Previous
+          <a href="{{ $paginator.Prev.URL }}" class="pagination-link" aria-label="{{ i18n "pagination_previous_page" | default "Previous page" }}">
+            <span aria-hidden="true">←</span> {{ i18n "pagination_previous" | default "Previous" }}
           </a>
         </li>
       {{- else -}}
         <li class="pagination-item pagination-prev pagination-disabled">
           <span class="pagination-link" aria-disabled="true">
-            <span aria-hidden="true">←</span> Previous
+            <span aria-hidden="true">←</span> {{ i18n "pagination_previous" | default "Previous" }}
           </span>
         </li>
       {{- end -}}
@@ -44,13 +44,13 @@
       {{- range $paginator.Pagers -}}
         {{- if eq . $paginator -}}
           <li class="pagination-item pagination-number pagination-current">
-            <span class="pagination-link" aria-current="page" aria-label="Page {{ .PageNumber }}">
+            <span class="pagination-link" aria-current="page" aria-label="{{ i18n "pagination_page" | default "Page" }} {{ .PageNumber }}">
               {{ .PageNumber }}
             </span>
           </li>
         {{- else -}}
           <li class="pagination-item pagination-number">
-            <a href="{{ .URL }}" class="pagination-link" aria-label="Go to page {{ .PageNumber }}">
+            <a href="{{ .URL }}" class="pagination-link" aria-label="{{ i18n "pagination_go_to_page" | default "Go to page" }} {{ .PageNumber }}">
               {{ .PageNumber }}
             </a>
           </li>
@@ -59,14 +59,14 @@
 
       {{- if $paginator.HasNext -}}
         <li class="pagination-item pagination-next">
-          <a href="{{ $paginator.Next.URL }}" class="pagination-link" aria-label="Next page">
-            Next <span aria-hidden="true">→</span>
+          <a href="{{ $paginator.Next.URL }}" class="pagination-link" aria-label="{{ i18n "pagination_next_page" | default "Next page" }}">
+            {{ i18n "pagination_next" | default "Next" }} <span aria-hidden="true">→</span>
           </a>
         </li>
       {{- else -}}
         <li class="pagination-item pagination-next pagination-disabled">
           <span class="pagination-link" aria-disabled="true">
-            Next <span aria-hidden="true">→</span>
+            {{ i18n "pagination_next" | default "Next" }} <span aria-hidden="true">→</span>
           </span>
         </li>
       {{- end -}}

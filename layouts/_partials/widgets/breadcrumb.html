@@ -27,11 +27,11 @@
 {{ $breadcrumbSeparator := (partial "utils/config.html" (dict "key" (print $key "Separator") "default" (.separator | default " » "))) }}
 
 {{- if $showBreadcrumb -}}
-<div class="breadcrumbs kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}">
+<div class="breadcrumbs {{ $class }}">
     {{- with page.Ancestors.Reverse -}}
         {{- range $index, $ancestor := . -}}
             {{- if eq $index 0 -}}
-                <a href="{{ .RelPermalink }}">Home</a>
+                <a href="{{ .RelPermalink }}">{{ i18n "breadcrumb_home" | default "Home" }}</a>
             {{- else -}}
                 <a href="{{ .RelPermalink }}">{{ .Title }}</a>
             {{- end -}}
@@ -39,9 +39,9 @@
         {{- end -}}
     {{- else -}}
         {{- if $showCurrentPage -}}
-            <a href="/">Home</a>{{ $breadcrumbSeparator }}
+            <a href="/">{{ i18n "breadcrumb_home" | default "Home" }}</a>{{ $breadcrumbSeparator }}
         {{- else -}}
-            <a href="/">Home</a>
+            <a href="/">{{ i18n "breadcrumb_home" | default "Home" }}</a>
         {{- end -}}
     {{- end -}}
     {{- if $showCurrentPage -}}

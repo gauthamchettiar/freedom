@@ -55,7 +55,7 @@ For a given taxonomy, renders a list of terms assigned to the page.
   {{- $taxonomy := .taxonomy }}
   {{- $taxonomyFrom := .taxonomyFrom }}
   <nav role="navigation" aria-label="{{ $taxonomy }} {{ $taxonomyFrom }} navigation">
-    <ul class="terms  kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{- $class -}}">
+    <ul class="terms {{ $class }}">
       {{- range $terms }}
         {{- $attrs := dict "href" .link }}
         {{- if .isActive }}

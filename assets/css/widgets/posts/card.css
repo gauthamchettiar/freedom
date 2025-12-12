@@ -113,6 +113,10 @@
   line-height: 1.6;
 }
 
+.post-card-link:visited .post-card-summary {
+  color: inherit;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .post-card-grid.columns-4 {

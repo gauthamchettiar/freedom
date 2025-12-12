@@ -1,3 +1,37 @@
+{{- /*
+  Blockquote Render Hook
+
+  Renders blockquotes with support for GitHub-style alerts and custom attributes.
+  
+  Features:
+    - Standard blockquotes with optional cite/caption
+    - GitHub-style alerts: NOTE, TIP, IMPORTANT, WARNING, CAUTION
+    - Collapsible alerts with + (open) or - (closed) prefix
+    - Width/align control via attributes
+  
+  Attributes:
+    - width: "compact", "full" (default), "wide"
+    - align: "left", "center", "right"
+    - cite: Citation URL
+    - caption: Custom caption text
+  
+  Alert Syntax:
+    > [!NOTE] Optional custom title
+    > Alert content here
+    
+    > [!TIP+] Collapsible and open by default
+    > [!WARNING-] Collapsible and closed by default
+  
+  Examples:
+    > Simple blockquote
+    
+    > [!NOTE]
+    > This is a note alert
+    
+    > Regular blockquote with attributes
+    {width="wide" align="center"}
+*/ -}}
+
 {{- $showBlockquoteCite := partial "utils/config.html" (dict "key" "showBlockquoteCite" "default" true) -}}
 {{- $showBlockquoteCaption := partial "utils/config.html" (dict "key" "showBlockquoteCaption" "default" true) -}}
 
@@ -12,10 +46,13 @@
   "warning" "circle-exclamation"
 }}
 
+{{- $defaultIcon := "circle-info" -}}
+
 {{- $blockquoteContent := "" -}}
 {{- if eq .Type "alert" -}}
   {{- $isFoldable := or (strings.Contains .AlertSign "+") (strings.Contains .AlertSign "-") -}}
   {{- $isOpen := strings.Contains .AlertSign "+" -}}
+  {{- $alertIcon := index $icons .AlertType | default $defaultIcon -}}
   
   {{- if $isFoldable -}}
     {{- $blockquoteContent = printf `<details class="blockquote-alert alert-%s"%s>
@@ -25,14 +62,14 @@
       <div class="alert-content">
         %s
       </div>
-    </details>` .AlertType (cond $isOpen " open" "") (partialCached "icon.html" (dict "name" (index $icons .AlertType)) "alert" .AlertType) (cond .AlertTitle .AlertTitle (or (i18n .AlertType) (title .AlertType))) .Text -}}
+    </details>` .AlertType (cond $isOpen " open" "") (partialCached "icon.html" (dict "name" $alertIcon) "alert" $alertIcon) (cond .AlertTitle .AlertTitle (or (i18n .AlertType) (title .AlertType))) .Text -}}
   {{- else -}}
     {{- $blockquoteContent = printf `<blockquote class="blockquote-alert alert-%s">
       <p class="alert-heading">
         %s&nbsp;%s
       </p>
       <div class="alert-content">%s</div>
-    </blockquote>` .AlertType (partialCached "icon.html" (dict "name" (index $icons .AlertType)) "alert" .AlertType) (cond .AlertTitle .AlertTitle (or (i18n .AlertType) (title .AlertType))) .Text -}}
+    </blockquote>` .AlertType (partialCached "icon.html" (dict "name" $alertIcon) "alert" $alertIcon) (cond .AlertTitle .AlertTitle (or (i18n .AlertType) (title .AlertType))) .Text -}}
   {{- end -}}
 {{- else -}}
   {{- $citeLink := "" -}}

@@ -11,14 +11,16 @@
     - key (optional): Config key for visibility (default: "showNavigation")
     - class (optional): Additional CSS classes
     - showIcon (optional): Override icon visibility
-    - prevText (optional): Text for previous link (default: "Previous")
-    - nextText (optional): Text for next link (default: "Next")
     - navigationBySection (optional): Navigate within section only (default: true)
   
   Front Matter Parameters (in page):
     - navigationPrev: Custom previous link (path string or map with url/title)
     - navigationNext: Custom next link (path string or map with url/title)
     - navigationBySection: Navigate within section only for this page (default: true)
+  
+  i18n Keys:
+    - navigation_previous: Text for previous link (default: "Previous")
+    - navigation_next: Text for next link (default: "Next")
   
   Navigation Behavior:
     - When navigationBySection is true: Uses .PrevInSection and .NextInSection
@@ -55,9 +57,6 @@
 {{- if eq $showIcon nil -}}
   {{- $showIcon = partial "utils/config.html" (dict "key" (print "show" $key "Icon") "default" true) -}}
 {{- end -}}
-
-{{- $navigationPrevText := .prevText | default (partial "utils/config.html" (dict "key" (print $key "PrevText") "default" "Previous")) -}}
-{{- $navigationNextText := .nextText | default (partial "utils/config.html" (dict "key" (print $key "NextText") "default" "Next")) -}}
 
 {{- /* Determine navigation scope: by section or globally */ -}}
 {{- $navigationBySection := .navigationBySection -}}
@@ -132,7 +131,7 @@
                 {{- if $showIcon -}}
                   <span class="navigation-icon">&lt;</span>
                 {{- end -}}
-                <span>{{ $navigationPrevText }}: {{ $prevTitle }}</span>
+                <span>{{ i18n "navigation_previous" | default "Previous" }}: {{ $prevTitle }}</span>
               </a>
             </div>
           {{- else -}}
@@ -152,7 +151,7 @@
                 {{- $nextTitle = $next.Title -}}
               {{- end -}}
               <a href="{{ $nextURL }}" rel="next" title="{{ $nextTitle }}">
-                <span>{{ $navigationNextText }}: {{ $nextTitle }}</span>
+                <span>{{ i18n "navigation_next" | default "Next" }}: {{ $nextTitle }}</span>
                 {{- if $showIcon -}}
                   <span class="navigation-icon">&gt;</span>
                 {{- end -}}

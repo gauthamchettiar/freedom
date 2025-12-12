@@ -35,6 +35,6 @@
     {{- if $showReadTimeIcon -}}
       {{ partialCached "icon.html" (dict "name" "clock" "style" "regular") "clock" "regular" }}&nbsp;&nbsp;
     {{- end -}}
-    {{- $readTime }} min
+    {{- $readTime }} {{ i18n "read_time_min" | default "min" }}
   </span>
 {{ end }}

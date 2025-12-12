@@ -1,21 +1,28 @@
 // Dark mode toggle
 (function() {
   const THEME_KEY = 'theme-preference';
+  const ANIMATION_DURATION_MS = 300;
+  const THEME_TOGGLE_ID = 'theme-toggle';
   
   function applyTheme(theme, withAnimation = false) {
     if (withAnimation) {
       // Add animation class
-      const toggleButton = document.getElementById('theme-toggle');
+      const toggleButton = document.getElementById(THEME_TOGGLE_ID);
       if (toggleButton) {
         toggleButton.classList.add('theme-switching');
         // Remove class after animation completes
         setTimeout(() => {
           toggleButton.classList.remove('theme-switching');
-        }, 300);
+        }, ANIMATION_DURATION_MS);
       }
     }
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem(THEME_KEY, theme);
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch (e) {
+      // Fail silently if localStorage is not available
+      console.warn('Unable to save theme preference:', e);
+    }
   }
   
   function toggleTheme() {
@@ -24,10 +31,16 @@
   }
   
   function initTheme() {
-    const storedTheme = localStorage.getItem(THEME_KEY) || 'light';
+    let storedTheme = 'light';
+    try {
+      storedTheme = localStorage.getItem(THEME_KEY) || 'light';
+    } catch (e) {
+      // Fail silently if localStorage is not available
+      console.warn('Unable to read theme preference:', e);
+    }
     applyTheme(storedTheme);
     
-    const toggleButton = document.getElementById('theme-toggle');
+    const toggleButton = document.getElementById(THEME_TOGGLE_ID);
     if (toggleButton) {
       toggleButton.addEventListener('click', toggleTheme);
       toggleButton.addEventListener('keydown', function(e) {
@@ -48,20 +61,39 @@
 
 // Copy code functionality
 (function() {
+  const COPY_BUTTON_SELECTOR = '.codeblock-copy';
+  const CODEBLOCK_SELECTOR = '.codeblock';
+  const CODE_SELECTOR = 'pre code';
+  const SUCCESS_DISPLAY_DURATION_MS = 2000;
+  
+  // SVG icons as constants
+  const COPY_ICON = '<svg class="icon-copy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor"><path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg>';
+  const CHECK_ICON = '<svg class="icon-copy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
+  
   function initCodeCopy() {
-    document.querySelectorAll('.codeblock-copy').forEach(button => {
+    document.querySelectorAll(COPY_BUTTON_SELECTOR).forEach(button => {
       button.addEventListener('click', function() {
-        const codeblock = this.closest('.codeblock');
-        const code = codeblock.querySelector('pre code');
-        if (code) {
-          navigator.clipboard.writeText(code.textContent).then(() => {
+        const codeblock = this.closest(CODEBLOCK_SELECTOR);
+        const code = codeblock?.querySelector(CODE_SELECTOR);
+        if (!code) return;
+        
+        // Check if clipboard API is available
+        if (!navigator.clipboard) {
+          console.warn('Clipboard API not available');
+          return;
+        }
+        
+        navigator.clipboard.writeText(code.textContent)
+          .then(() => {
             const originalHTML = this.innerHTML;
-            this.innerHTML = '<span class="cl"><svg class="icon-copy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></span>';
+            this.innerHTML = `<span class="cl">${CHECK_ICON}</span>`;
             setTimeout(() => {
               this.innerHTML = originalHTML;
-            }, 2000);
+            }, SUCCESS_DISPLAY_DURATION_MS);
+          })
+          .catch(err => {
+            console.error('Failed to copy code:', err);
           });
-        }
       });
     });
   }
@@ -75,15 +107,25 @@
 
 // Sticky Table of Contents
 (function() {
+  const TOC_MAIN_ID = 'toc-main';
+  const TOC_STICKY_ID = 'toc-sticky';
+  const DEFAULT_MIN_WIDTH = 1280;
+  const DEFAULT_POSITION = 'right';
+  const TOC_WIDTH = 250;
+  const TOC_GAP = 20;
+  const HEADING_OFFSET = 100;
+  const SCROLL_TIMEOUT_MS = 1500;
+  const SMOOTH_SCROLL_OFFSET = 20;
+  
   function initStickyToc() {
-    const mainToc = document.getElementById('toc-main');
+    const mainToc = document.getElementById(TOC_MAIN_ID);
     if (!mainToc || mainToc.getAttribute('data-sticky') !== 'true') return;
     
-    const stickyToc = document.getElementById('toc-sticky');
+    const stickyToc = document.getElementById(TOC_STICKY_ID);
     if (!stickyToc) return;
     
-    const position = mainToc.getAttribute('data-sticky-position') || 'right';
-    const minWidth = parseInt(mainToc.getAttribute('data-sticky-min-width')) || 1280;
+    const position = mainToc.getAttribute('data-sticky-position') || DEFAULT_POSITION;
+    const minWidth = parseInt(mainToc.getAttribute('data-sticky-min-width')) || DEFAULT_MIN_WIDTH;
     
     // Add position class for border styling
     stickyToc.classList.add(`position-${position}`);
@@ -134,7 +176,7 @@
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
           stickyToc.classList.remove('scrolling');
-        }, 1500 );
+        }, SCROLL_TIMEOUT_MS);
       } else {
         stickyToc.classList.remove('visible');
       }
@@ -145,22 +187,20 @@
       if (!main) return;
       
       const mainRect = main.getBoundingClientRect();
-      const tocWidth = 250;
-      const gap = 20;
       
       if (position === 'right') {
-        const left = mainRect.right + gap;
+        const left = mainRect.right + TOC_GAP;
         const availableSpace = window.innerWidth - left;
-        if (availableSpace >= tocWidth) {
+        if (availableSpace >= TOC_WIDTH) {
           stickyToc.style.left = `${left}px`;
           stickyToc.style.right = 'auto';
         } else {
           stickyToc.classList.remove('visible');
         }
       } else {
-        const availableSpace = mainRect.left - gap;
-        if (availableSpace >= tocWidth) {
-          const right = window.innerWidth - mainRect.left + gap;
+        const availableSpace = mainRect.left - TOC_GAP;
+        if (availableSpace >= TOC_WIDTH) {
+          const right = window.innerWidth - mainRect.left + TOC_GAP;
           stickyToc.style.right = `${right}px`;
           stickyToc.style.left = 'auto';
         } else {
@@ -174,7 +214,7 @@
       let activeId = null;
       
       headings.forEach(heading => {
-        if (heading.offsetTop <= window.scrollY + 100) {
+        if (heading.offsetTop <= window.scrollY + HEADING_OFFSET) {
           activeId = heading.id;
         }
       });
@@ -227,7 +267,7 @@
           const target = document.querySelector(href);
           if (target) {
             window.scrollTo({
-              top: target.offsetTop - 20,
+              top: target.offsetTop - SMOOTH_SCROLL_OFFSET,
               behavior: 'smooth'
             });
           }
@@ -250,13 +290,20 @@
 
 // Smooth expand/collapse animations for details elements
 (function() {
+  const EXPAND_SELECTOR = 'details.expand';
+  const EXPAND_TITLE_SELECTOR = '.expand-title';
+  const EXPAND_CONTENT_SELECTOR = '.expand-content';
+  const ANIMATION_DURATION_MS = 400;
+  const ANIMATION_EASING_IN = 'cubic-bezier(0, 0, 0.2, 1)';
+  const ANIMATION_EASING_OUT = 'cubic-bezier(0.4, 0, 0.2, 1)';
+  
   function initExpandAnimations() {
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
-    document.querySelectorAll('details.expand').forEach(details => {
-      const summary = details.querySelector('.expand-title');
-      const content = details.querySelector('.expand-content');
+    document.querySelectorAll(EXPAND_SELECTOR).forEach(details => {
+      const summary = details.querySelector(EXPAND_TITLE_SELECTOR);
+      const content = details.querySelector(EXPAND_CONTENT_SELECTOR);
       
       if (!summary || !content) return;
       
@@ -298,8 +345,8 @@
               }
             ],
             {
-              duration: 400,
-              easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+              duration: ANIMATION_DURATION_MS,
+              easing: ANIMATION_EASING_OUT
             }
           );
           
@@ -330,8 +377,8 @@
               }
             ],
             {
-              duration: 400,
-              easing: 'cubic-bezier(0, 0, 0.2, 1)'
+              duration: ANIMATION_DURATION_MS,
+              easing: ANIMATION_EASING_IN
             }
           );
           

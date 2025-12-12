@@ -50,8 +50,22 @@
   {{- $pageList = $result.pageList -}}
   {{- $paginator := $result.paginator -}}
   
-  {{- $paddingLeft := cond (eq $postListStyle "none") "0" "" -}}
-  <ul class="page-list kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}" style="list-style-type: {{ $postListStyle }};{{ if $paddingLeft }} padding-left: {{ $paddingLeft }};{{ end }}">
+  {{- $listStyleClass := "" -}}
+  {{- $roleAttr := "" -}}
+  {{- if eq $postListStyle "none" -}}
+    {{- $listStyleClass = "list-style-none" -}}
+    {{- $roleAttr = ` role="list"` -}}
+  {{- else if eq $postListStyle "disc" -}}
+    {{- $listStyleClass = "list-style-disc" -}}
+  {{- else if eq $postListStyle "decimal" -}}
+    {{- $listStyleClass = "list-style-decimal" -}}
+  {{- else if eq $postListStyle "circle" -}}
+    {{- $listStyleClass = "list-style-circle" -}}
+  {{- else if eq $postListStyle "square" -}}
+    {{- $listStyleClass = "list-style-square" -}}
+  {{- end -}}
+  
+  <ul class="page-list {{ $listStyleClass }} {{ $class }}"{{ $roleAttr | safeHTMLAttr }}>
     {{- range $pageList -}}
       <li class="page-list-item">
         <a class="page-list-link" href="{{ .RelPermalink }}">

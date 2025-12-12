@@ -133,7 +133,7 @@ Renders a menu for the given menu ID.
 
   {{- /* Render main menu */ -}}
   <nav role="navigation" aria-label="{{ $menuID }} navigation">
-    <ul class="menu menu-{{ $menuID }} kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{- $class -}}">
+    <ul class="menu menu-{{ $menuID }} {{ $class }}">
       {{- if $withParentId }}
         {{- partial "inline/menu/walk-children.html" (dict "menuEntries" . "parentId" $withParentId) }}
       {{- else }}
@@ -145,7 +145,7 @@ Renders a menu for the given menu ID.
   {{- /* Render first level submenu if active parent has children */ -}}
   {{- if and $activeParent (not $withParentId) -}}
     <nav role="navigation" aria-label="{{ $menuID }} submenu navigation" class="submenu-nav">
-      <ul class="menu menu-{{ $menuID }}-sub submenu kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }}">
+      <ul class="menu menu-{{ $menuID }}-sub submenu">
         {{- partial "inline/menu/walk-children.html" (dict "menuEntries" . "parentId" $activeParent "activeParent" $activeSubParent) }}
       </ul>
     </nav>
@@ -154,7 +154,7 @@ Renders a menu for the given menu ID.
   {{- /* Render second level submenu if active sub-parent has children */ -}}
   {{- if and $activeSubParent (not $withParentId) -}}
     <nav role="navigation" aria-label="{{ $menuID }} sub-submenu navigation" class="submenu-nav submenu-level-2">
-      <ul class="menu menu-{{ $menuID }}-subsub submenu submenu-level-2 kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }}">
+      <ul class="menu menu-{{ $menuID }}-subsub submenu submenu-level-2">
         {{- partial "inline/menu/walk-grandchildren.html" (dict "menuEntries" . "parentId" $activeParent "subParentId" $activeSubParent) }}
       </ul>
     </nav>

@@ -54,14 +54,14 @@
   {{- $pageList = $result.pageList -}}
   {{- $paginator := $result.paginator -}}
   
-  <div class="post-card-grid columns-{{ $postCardColumns }} kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}">
+  <div class="post-card-grid columns-{{ $postCardColumns }} {{ $class }}" role="region" aria-label="Article grid">
     {{- range $pageList -}}
-      <a href="{{ .RelPermalink }}" class="post-card-link">
+      <a href="{{ .RelPermalink }}" class="post-card-link" aria-label="{{ .Title }}">
         <article class="post-card">
           {{- if $showPostCardImage -}}
             {{- with .Params.image -}}
               <div class="post-card-image">
-                {{- $image := partial "utils/resolve-image.html" (dict "path" . "page" $) -}}
+                {{- $image := partial "utils/resolve-image.html" (dict "url" . "page" $) -}}
                 {{- with $image -}}
                   <img src="{{ .RelPermalink }}" alt="{{ $.Title }}" loading="lazy">
                 {{- end -}}

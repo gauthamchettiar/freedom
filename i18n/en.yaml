@@ -1,0 +1,20 @@
+# English translations for Freedom Hugo Theme
+
+# Navigation widget
+navigation_previous: Previous
+navigation_next: Next
+
+# Breadcrumb widget
+breadcrumb_home: Home
+
+# Read time widget
+read_time_min: min
+read_time_minutes: minutes
+
+# Pagination widget
+pagination_previous: Previous
+pagination_next: Next
+pagination_page: Page
+pagination_go_to_page: Go to page
+pagination_previous_page: Previous page
+pagination_next_page: Next page
