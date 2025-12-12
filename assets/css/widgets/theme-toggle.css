@@ -1,11 +1,18 @@
 /* Dark mode toggle */
 .theme-toggle {
   cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+
+.theme-toggle:active {
+  transform: scale(0.95);
 }
 
 .theme-icon {
   display: none;
   line-height: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .theme-icon .icon {
@@ -20,4 +27,20 @@
 :root[data-theme="light"] .theme-icon-dark,
 :root:not([data-theme]) .theme-icon-dark {
   display: inline-flex;
+}
+
+/* Animation only when theme is actively switched */
+.theme-switching .theme-icon {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: rotate(-180deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
 }

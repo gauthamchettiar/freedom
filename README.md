@@ -5,7 +5,7 @@ Freedom is a minimal, flexible Hugo theme built on a component-based architectur
 - **Strong Markdown Support**: Has both basic and extended markdown syntax support. 
 - **Component-Based**: Reusable partials and shortcodes, making it easier than ever to create custom layouts.
 - **Highly Configurable**: Control features at page, section, or site level.
-- **Dark Mode**: Built-in theme toggle  [ {{< icon "sun" >}} / {{< icon "moon" >}} ]  with system preference support.
+- **Dark Mode**: Built-in theme toggle with system preference support.
 - **Minimal & Fast**: Clean CSS with minimal JavaScript dependencies.
 - **Semantic HTML**: Accessible markup with proper ARIA labels.
 

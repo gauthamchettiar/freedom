@@ -1,0 +1,20 @@
+/*
+ * Override CSS
+ * 
+ * This file is intentionally empty and provided as a placeholder for user customizations.
+ * 
+ * Users can create an override.css file in their project root at:
+ *   assets/css/override.css
+ * 
+ * This file will be loaded last in the CSS bundle, allowing you to override
+ * any theme styles without modifying the theme files directly.
+ * 
+ * Example usage:
+ *   .post-card {
+ *     border-radius: 8px;
+ *   }
+ * 
+ *   :root {
+ *     --primary-color: #custom-color;
+ *   }
+ */

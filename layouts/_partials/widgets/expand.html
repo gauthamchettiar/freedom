@@ -22,7 +22,7 @@
 
 {{- if and $title $content -}}
 <details class="expand {{ $class }}"{{- if $open }} open{{- end -}}>
-  <summary class="expand-title">{{ $title }}</summary>
+  <summary class="expand-title">{{ $title | safeHTML }}</summary>
   <div class="expand-content">
     {{ $content | safeHTML }}
   </div>

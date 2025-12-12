@@ -1,21 +1,28 @@
 {{- /*
-Generic configuration resolver that checks multiple sources in priority order:
-1. Page frontmatter
-2. Page type specific config in site params
-3. Universal config in site params
-4. Default value (if provided)
+Configuration Resolver
 
-@context {context} context Page context (or use page parameter for backward compatibility)
-@context {page} page The current page (optional, for backward compatibility).
-@context {site} site The site object (optional, for backward compatibility).
-@context {string} key The configuration key to resolve.
-@context {any} default The default value to use if no config is found (optional).
+Resolves configuration values from multiple sources in priority order:
+1. Page frontmatter (.Params)
+2. Section-specific site params (site.Params.SECTION.key)
+3. Page kind params (site.Params.KIND.key) 
+4. Type-specific site params (site.Params.type.TYPE.key)
+5. Global site params (site.Params.key)
+6. Default value (if provided)
 
-@returns The resolved configuration value
+This partial uses Hugo's global page and site functions internally,
+so it can be called from any template context.
 
-@example: {{ partial "utils/config.html" (dict "context" . "key" "showTitle") }}
-@example: {{ partial "utils/config.html" (dict "context" . "key" "showTitle" "default" true) }}
-*/}}
+Parameters:
+  - key (required): Configuration key to resolve (case-insensitive)
+  - default (optional): Default value if key not found
+
+Returns:
+  The resolved configuration value
+
+Examples:
+  {{ partial "utils/config.html" (dict "key" "showTitle") }}
+  {{ partial "utils/config.html" (dict "key" "showTitle" "default" true) }}
+*/ -}}
 
 {{- $key := .key | lower -}}
 {{- $value := .default -}} {{/* Default value */}}

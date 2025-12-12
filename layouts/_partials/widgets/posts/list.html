@@ -1,0 +1,90 @@
+{{- /*
+  List Widget
+  
+  Renders a list of pageList as an unordered list with links.
+  
+  Parameters:
+    - pageList (required): Slice of pageList to render
+    - page (required): Page context
+    - site (required): Site context
+    - class (optional): Additional CSS classes for the ul element
+    - listStyle (optional): CSS list-style-type value (default: "none")
+    - dateFormat (optional): Date format (default: ":date_medium")
+    - sortBy (optional): Sort field - "date", "weight", "title" (default: "date")
+    - sortOrder (optional): Sort order - "asc" or "desc" (default: "desc")
+    - key (optional): Config key for visibility (default: "showPostList")
+    - paginate (optional): Enable pagination (default: false)
+    - pageSize (optional): Number of items per page (default: 10)
+  
+  Example:
+    {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages) }}
+    {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages "sortBy" "weight" "sortOrder" "asc") }}
+    {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages "listStyle" "disc") }}
+    {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages "paginate" true "pageSize" 20) }}
+*/ -}}
+
+
+{{- $pageList := .pageList -}}
+{{- $key := .key | default "PostList" -}}
+{{- $class := .class | default "" -}}
+
+{{- $showPostList := (partial "utils/config.html" (dict "key" (print "show" $key) "default" true)) -}}
+{{- $showPostListDate := (partial "utils/config.html" (dict "key" (print "show" $key "Date") "default" true)) -}}
+{{- $postListStyle := .postListStyle | default (partial "utils/config.html" (dict "key" (print $key "Style") "default" (.listStyle | default "none"))) -}}
+{{- $postListDateFormat := (partial "utils/config.html" (dict "key" (print $key "DateFormat") "default" (.dateFormat | default ":date_medium"))) -}}
+{{- $postListSortBy := .sortBy | default (partial "utils/config.html" (dict "key" (print $key "SortBy") "default" "date")) -}}
+{{- $postListSortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "asc")) -}}
+{{- $postListPaginate := .paginate | default (partial "utils/config.html" (dict "key" (print $key "Paginate") "default" true)) -}}
+{{- $postListPageSize := .pageSize | default (partial "utils/config.html" (dict "key" (print $key "PageSize") "default" 10)) -}}
+
+{{- if and $pageList $showPostList -}}
+  {{- /* Process page list: sorting and pagination */ -}}
+  {{- $result := partial "utils/process-page-list.html" (dict 
+    "pageList" $pageList 
+    "page" .page 
+    "sortBy" $postListSortBy 
+    "sortOrder" $postListSortOrder 
+    "paginate" $postListPaginate 
+    "pageSize" $postListPageSize
+  ) -}}
+  {{- $pageList = $result.pageList -}}
+  {{- $paginator := $result.paginator -}}
+  
+  {{- $listStyleClass := "" -}}
+  {{- $roleAttr := "" -}}
+  {{- if eq $postListStyle "none" -}}
+    {{- $listStyleClass = "list-style-none" -}}
+    {{- $roleAttr = ` role="list"` -}}
+  {{- else if eq $postListStyle "disc" -}}
+    {{- $listStyleClass = "list-style-disc" -}}
+  {{- else if eq $postListStyle "decimal" -}}
+    {{- $listStyleClass = "list-style-decimal" -}}
+  {{- else if eq $postListStyle "circle" -}}
+    {{- $listStyleClass = "list-style-circle" -}}
+  {{- else if eq $postListStyle "square" -}}
+    {{- $listStyleClass = "list-style-square" -}}
+  {{- end -}}
+  
+  <ul class="page-list {{ $listStyleClass }} {{ $class }}"{{ $roleAttr | safeHTMLAttr }}>
+    {{- range $pageList -}}
+      <li class="page-list-item">
+        <a class="page-list-link" href="{{ .RelPermalink }}">
+          <span class="page-list-content">
+            <span class="page-list-title">{{ .Title }}</span>
+            {{- if $showPostListDate -}}
+              <span class="page-list-dots"></span>
+              {{- with .Date -}}
+                <time class="page-list-date" datetime="{{ .Format "2006-01-02" }}">{{ . | time.Format $postListDateFormat }}</time>
+              {{- end -}}
+            {{- end -}}
+          </span>
+        </a>
+      </li>
+    {{- end -}}
+  </ul>
+  
+  {{- /* Render pagination if enabled */ -}}
+  {{- if and $postListPaginate $paginator -}}
+    {{ partial "widgets/pagination.html" (dict "paginator" $paginator "page" .page "site" .site) }}
+  {{- end -}}
+{{- end -}}

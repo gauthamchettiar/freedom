@@ -43,6 +43,7 @@ body {
   max-width: var(--page-width);
   padding: var(--spacing-md);
   position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Background image overlay for better readability */
@@ -112,10 +113,12 @@ h6 {
 a {
   color: var(--link-color);
   text-decoration: underline;
+  transition: color 0.3s ease;
 }
 
 a:visited {
   color: var(--link-visited);
+  transition: color 0.3s ease;
 }
 
 p {
@@ -133,7 +136,9 @@ dd {
 }
 
 ol, ul {
-  padding-inline-start: var(--spacing-md);
+  padding-inline-start: var(--spacing-xl);
+  margin-top: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
 ul ul, ol ol, ul ol, ol ul {
@@ -185,7 +190,6 @@ table tbody td {
 mark {
   background-color: color-mix(in srgb, var(--accent-color) 40%, transparent);
   padding: var(--spacing-xxs) var(--spacing-xs);
-  border-radius: 3px;
   color: var(--text-color);
 }
 
@@ -211,4 +215,15 @@ figure {
 
 ::selection {
   background: color-mix(in srgb, var(--accent-color) 40%, transparent);
+}
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

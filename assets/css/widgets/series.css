@@ -1,0 +1,76 @@
+/* Series List - Spacing between series items */
+.series-item {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  border: 2px dotted var(--text-color);
+}
+
+.series-item .expand-content {
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.series-item .series-count {
+  padding-left: var(--spacing-xs);
+}
+
+/* Series Item Title */
+.series-item-title-link {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.series-item-title {
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* Series Description */
+.series-description {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* Series Posts List */
+.series-posts {
+  list-style: decimal;
+  padding-left: var(--spacing-xl);
+  margin: 0;
+}
+
+.series-post-item {
+  margin-bottom: var(--spacing-xs);
+}
+
+.series-post-link {
+  display: block;
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.series-post-link:hover .series-post-title {
+  text-decoration: underline;
+}
+
+.series-post-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.series-post-title {
+  flex-shrink: 0;
+}
+
+.series-post-dots {
+  flex-grow: 1;
+  border-bottom: 1px dotted var(--text-color);
+  min-width: var(--spacing-md);
+  margin: 0 var(--spacing-xs);
+}
+
+.series-post-date {
+  flex-shrink: 0;
+  font-size: 0.875rem;
+}

@@ -1,0 +1,63 @@
+/* Post List Widget */
+.page-list {
+  list-style: decimal;
+  padding-left: var(--spacing-xl);
+  margin: 0;
+}
+
+/* List style utilities */
+.list-style-none {
+  list-style: none;
+  padding-left: 0;
+}
+
+.list-style-disc {
+  list-style: disc;
+}
+
+.list-style-decimal {
+  list-style: decimal;
+}
+
+.list-style-circle {
+  list-style: circle;
+}
+
+.list-style-square {
+  list-style: square;
+}
+
+.page-list-item {
+  margin-bottom: var(--spacing-xs);
+}
+
+.page-list-link {
+  display: block;
+  text-decoration: none;
+}
+
+.page-list-link:hover .page-list-title {
+  text-decoration: underline;
+}
+
+.page-list-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.page-list-title {
+  flex-shrink: 0;
+}
+
+.page-list-dots {
+  flex-grow: 1;
+  border-bottom: 1px dotted var(--text-color);
+  min-width: var(--spacing-md);
+  margin: 0 var(--spacing-xs);
+}
+
+.page-list-date {
+  flex-shrink: 0;
+  font-size: 0.875rem;
+}

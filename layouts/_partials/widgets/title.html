@@ -24,7 +24,11 @@
 {{- if eq $titleFrom "site" -}}
     {{- $title = site.Title -}}
 {{- else -}}
+  {{- if eq $titleFrom "section" -}}
+    {{- $title = printf "%s" (title page.Section) -}}
+  {{- else -}}
     {{- $title = page.Title -}}
+  {{- end -}}
 {{- end -}}
 
 {{- if $showTitle -}}

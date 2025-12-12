@@ -1,0 +1,95 @@
+{{- /*
+  Card Widget
+  
+  Renders a list of pages as a multi-column card grid with title, summary, image, and date.
+  
+  Parameters:
+    - pageList (required): Slice of pages to render
+    - page (required): Page context
+    - site (required): Site context
+    - class (optional): Additional CSS classes for the container
+    - columns (optional): Number of columns (default: from config or 3)
+    - dateFormat (optional): Date format (default: ":date_medium")
+    - showSummary (optional): Whether to show summary (default: true)
+    - showImage (optional): Whether to show page image (default: true)
+    - sortBy (optional): Sort field - "date", "weight", "title" (default: "date")
+    - sortOrder (optional): Sort order - "asc" or "desc" (default: "desc")
+    - key (optional): Config key for visibility (default: "PostCard")
+    - paginate (optional): Enable pagination (default: false)
+    - pageSize (optional): Number of items per page (default: 12)
+  
+  Example:
+    {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages) }}
+    {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages "columns" 2) }}
+    {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages "sortBy" "weight" "sortOrder" "asc") }}
+    {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages "paginate" true "pageSize" 9) }}
+*/ -}}
+
+
+{{- $pageList := .pageList -}}
+{{- $key := .key | default "PostCard" -}}
+{{- $class := .class | default "" -}}
+
+{{- $showPostCard := (partial "utils/config.html" (dict "key" (print "show" $key) "default" false)) -}}
+{{- $showPostCardDate := (partial "utils/config.html" (dict "key" (print "show" $key "Date") "default" true)) -}}
+{{- $showPostCardSummary := (partial "utils/config.html" (dict "key" (print "show" $key "Summary") "default" (.showSummary | default true))) -}}
+{{- $showPostCardImage := (partial "utils/config.html" (dict "key" (print "show" $key "Image") "default" (.showImage | default true))) -}}
+{{- $postCardDateFormat := (partial "utils/config.html" (dict "key" (print $key "DateFormat") "default" (.dateFormat | default ":date_medium"))) -}}
+{{- $postCardColumns := (partial "utils/config.html" (dict "key" (print $key "Columns") "default" (.columns | default 3))) -}}
+{{- $postCardSortBy := .sortBy | default (partial "utils/config.html" (dict "key" (print $key "SortBy") "default" "date")) -}}
+{{- $postCardSortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "asc")) -}}
+{{- $postCardPaginate := .paginate | default (partial "utils/config.html" (dict "key" (print $key "Paginate") "default" true)) -}}
+{{- $postCardPageSize := .pageSize | default (partial "utils/config.html" (dict "key" (print $key "PageSize") "default" 20)) -}}
+
+{{- if and $pageList $showPostCard -}}
+  {{- /* Process page list: sorting and pagination */ -}}
+  {{- $result := partial "utils/process-page-list.html" (dict 
+    "pageList" $pageList 
+    "page" .page 
+    "sortBy" $postCardSortBy 
+    "sortOrder" $postCardSortOrder 
+    "paginate" $postCardPaginate 
+    "pageSize" $postCardPageSize
+  ) -}}
+  {{- $pageList = $result.pageList -}}
+  {{- $paginator := $result.paginator -}}
+  
+  <div class="post-card-grid columns-{{ $postCardColumns }} {{ $class }}" role="region" aria-label="Article grid">
+    {{- range $pageList -}}
+      <a href="{{ .RelPermalink }}" class="post-card-link" aria-label="{{ .Title }}">
+        <article class="post-card">
+          {{- if $showPostCardImage -}}
+            {{- with .Params.image -}}
+              <div class="post-card-image">
+                {{- $image := partial "utils/resolve-image.html" (dict "url" . "page" $) -}}
+                {{- with $image -}}
+                  <img src="{{ .RelPermalink }}" alt="{{ $.Title }}" loading="lazy">
+                {{- end -}}
+              </div>
+            {{- end -}}
+          {{- end -}}
+          <div class="post-card-content">
+            <h3 class="post-card-title">{{ .Title }}</h3>
+            {{- if $showPostCardDate -}}
+              {{- with .Date -}}
+                <time class="post-card-date" datetime="{{ .Format "2006-01-02" }}">
+                  {{ . | time.Format $postCardDateFormat }}
+                </time>
+              {{- end -}}
+            {{- end -}}
+            {{- if $showPostCardSummary -}}
+              {{- with .Summary -}}
+                <p class="post-card-summary">{{ . | plainify }}</p>
+              {{- end -}}
+            {{- end -}}
+          </div>
+        </article>
+      </a>
+    {{- end -}}
+  </div>
+  
+  {{- /* Render pagination if enabled */ -}}
+  {{- if and $postCardPaginate $paginator -}}
+    {{ partial "widgets/pagination.html" (dict "paginator" $paginator "page" .page "site" .site) }}
+  {{- end -}}
+{{- end -}}

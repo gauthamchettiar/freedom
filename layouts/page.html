@@ -1,6 +1,6 @@
 {{ define "main" }}
   {{ partial "widgets/breadcrumb.html" (dict "page" . "site" .Site) }}
-  {{ partial "widgets/title.html" (dict "site" .Site "page" . "title" .Title "key" "showPageTitle" "class" "page-title") }}
+  {{ partial "widgets/title.html" (dict "site" .Site "page" . "title" .Title "key" "PageTitle" "class" "page-title") }}
   
   {{ $time := partial "widgets/meta/date.html" (dict "page" . "site" .Site "format" ":date_long") }}
   {{ $readTime := partial "widgets/meta/read-time.html" (dict "page" . "site" .Site) }}
@@ -12,9 +12,11 @@
 
   {{ $toc := partial "widgets/meta/toc.html" (dict "page" . "site" .Site ) }}
   {{ if $toc }}
-    {{ partial "expand.html" (dict "title" "Table Of Contents" "content" $toc "class" "page-toc") }}
+    {{ partial "widgets/expand.html" (dict "title" "Table Of Contents" "content" $toc "class" "page-toc") }}
     {{ partial "layouts/blank.html" (dict "size" "lg") }}
   {{ end }}
   {{ partial "content/wrapper.html" .Content }}
+  
+  {{ partial "widgets/navigation.html" (dict "page" . "site" .Site) }}
 
 {{ end }}

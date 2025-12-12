@@ -1,0 +1,71 @@
+{{- /*
+  Series List Widget
+  
+  Displays all series with their descriptions and expandable posts under each series.
+  Posts are ordered by seriesOrder parameter. Series descriptions are fetched from
+  individual series taxonomy term markdown files (content/series/{series-name}/_index.md).
+  
+  Parameters:
+    - site (required): Site context
+    - page (optional): Page context
+    - key (optional): Config key for visibility (default: "SeriesList")
+    - class (optional): Additional CSS classes
+    - expanded (optional): Show all series posts expanded by default (default: false)
+  
+  Series Description Setup:
+    Create a file at content/series/{series-slug}/_index.md with front matter and content:
+    ---
+    title: "Series Title"
+    ---
+    Your series description here.
+  
+  Example:
+    {{ partial "widgets/series/list.html" (dict "site" .Site "page" .) }}
+    {{ partial "widgets/series/list.html" (dict "site" .Site "expanded" true) }}
+*/ -}}
+
+{{- $key := .key | default "SeriesList" -}}
+{{- $class := .class | default "" -}}
+{{- $expanded := .expanded | default false -}}
+
+{{- $showSeriesList := partial "utils/config.html" (dict "key" (print "show" $key) "default" true) -}}
+
+{{- if $showSeriesList -}}
+  {{- with .site.Taxonomies.series -}}
+    <div class="series-list {{ $class }}">
+      {{- range . -}}
+        {{- $seriesName := .Page.Title -}}
+        {{- $seriesSlug := .Page.RelPermalink -}}
+        {{- $seriesCount := .Count -}}
+        {{- $seriesDescription := .Page.Content -}}
+        
+        {{- /* Sort pages by seriesOrder (or weight, then date as fallback) */ -}}
+        {{- $sortedPages := sort .Pages "Params.seriesorder" -}}
+        
+        {{- /* Build expand title with post count */ -}}
+        {{- $expandTitle := printf `Posts in this series ( %d )` $seriesCount -}}
+        
+        {{- /* Build series posts list */ -}}
+        {{- $postsHTML := "" -}}
+        {{- range $index, $post := $sortedPages -}}
+          {{- $dateHTML := "" -}}
+          {{- with $post.Date -}}
+            {{- $dateHTML = printf `<time class="series-post-date" datetime="%s">%s</time>` (.Format "2006-01-02") (.Format "Jan 2, 2006") -}}
+          {{- end -}}
+          {{- $postsHTML = printf `%s<li class="series-post-item"><a href="%s" class="series-post-link"><span class="series-post-content"><span class="series-post-title">%s</span><span class="series-post-dots"></span>%s</span></a></li>` $postsHTML $post.RelPermalink $post.Title $dateHTML -}}
+        {{- end -}}
+        {{- $seriesContent := printf `<ol class="series-posts">%s</ol>` $postsHTML -}}
+        
+        <div class="series-item">
+          <a href="{{ $seriesSlug }}" class="series-item-title-link">
+            <h3 class="series-item-title">{{ $seriesName }}</h3>
+          </a>
+          {{- if $seriesDescription -}}
+            <div class="series-description">{{ $seriesDescription | safeHTML }}</div>
+          {{- end -}}
+          {{ partial "widgets/expand.html" (dict "title" $expandTitle "content" $seriesContent "open" $expanded "class" "series-expand") }}
+        </div>
+      {{- end -}}
+    </div>
+  {{- end -}}
+{{- end -}}
