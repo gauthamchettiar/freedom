@@ -135,6 +135,7 @@ details.blockquote-alert .alert-heading {
     border-bottom: none;
     cursor: pointer;
     user-select: none;
+    justify-content: space-between;
     transition: opacity 0.2s ease, padding-bottom 0.3s ease, border-bottom 0.3s ease;
 }
 
@@ -142,16 +143,28 @@ details.blockquote-alert .alert-heading:hover {
     opacity: 0.8;
 }
 
+.alert-heading-text {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
 details.blockquote-alert .alert-heading::-webkit-details-marker {
     display: none;
 }
 
-details.blockquote-alert .alert-heading::before {
-    content: "▶";
+details.blockquote-alert .alert-heading::marker {
+    content: '';
+}
+
+/* Custom plus/minus indicator at the right */
+details.blockquote-alert .alert-heading::after {
+    content: '+';
     display: inline-block;
-    margin-right: var(--spacing-xs);
-    font-size: 0.75em;
-    transition: transform 0.3s ease;
+    margin-left: var(--spacing-sm);
+    font-size: 1.25em;
+    font-weight: 400;
+    line-height: 1;
 }
 
 details.blockquote-alert .alert-content {
@@ -166,14 +179,13 @@ details.blockquote-alert[open] .alert-heading {
     border-bottom: 1px solid color-mix(in srgb, var(--text-color) 20%, transparent);
 }
 
-details.blockquote-alert[open] .alert-heading::before {
-    transform: rotate(90deg);
+details.blockquote-alert[open] .alert-heading::after {
+    content: '−';
 }
 
 details.blockquote-alert[open] .alert-content {
     max-height: 5000px;
     opacity: 1;
-    margin-top: var(--spacing-sm);
 }
 
 /* ============================================

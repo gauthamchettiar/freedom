@@ -20,7 +20,7 @@
   {{- if $isFoldable -}}
     {{- $blockquoteContent = printf `<details class="blockquote-alert alert-%s"%s>
       <summary class="alert-heading">
-        %s&nbsp;%s
+        <span class="alert-heading-text">%s&nbsp;%s</span>
       </summary>
       <div class="alert-content">
         %s

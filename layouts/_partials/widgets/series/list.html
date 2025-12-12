@@ -52,7 +52,7 @@
           {{- with $post.Date -}}
             {{- $dateHTML = printf `<time class="series-post-date" datetime="%s">%s</time>` (.Format "2006-01-02") (.Format "Jan 2, 2006") -}}
           {{- end -}}
-          {{- $postsHTML = printf `%s<li class="series-post-item"><span class="series-post-content"><a href="%s" class="series-post-link">%s</a><span class="series-post-dots"></span>%s</span></li>` $postsHTML $post.RelPermalink $post.Title $dateHTML -}}
+          {{- $postsHTML = printf `%s<li class="series-post-item"><a href="%s" class="series-post-link"><span class="series-post-content"><span class="series-post-title">%s</span><span class="series-post-dots"></span>%s</span></a></li>` $postsHTML $post.RelPermalink $post.Title $dateHTML -}}
         {{- end -}}
         {{- $seriesContent := printf `<ol class="series-posts">%s</ol>` $postsHTML -}}
         

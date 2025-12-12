@@ -43,21 +43,24 @@
   margin-bottom: var(--spacing-xs);
 }
 
+.series-post-link {
+  display: block;
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.series-post-link:hover .series-post-title {
+  text-decoration: underline;
+}
+
 .series-post-content {
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
 }
 
-.series-post-link {
+.series-post-title {
   flex-shrink: 0;
-  color: var(--text-color);
-  text-decoration: none;
-}
-
-.series-post-link:hover {
-  color: var(--accent-color);
-  text-decoration: underline;
 }
 
 .series-post-dots {

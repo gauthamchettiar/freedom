@@ -9,21 +9,23 @@
   margin-bottom: var(--spacing-xs);
 }
 
+.page-list-link {
+  display: block;
+  text-decoration: none;
+}
+
+.page-list-link:hover .page-list-title {
+  text-decoration: underline;
+}
+
 .page-list-content {
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
 }
 
-.page-list-link {
+.page-list-title {
   flex-shrink: 0;
-  color: var(--text-color);
-  text-decoration: none;
-}
-
-.page-list-link:hover {
-  color: var(--accent-color);
-  text-decoration: underline;
 }
 
 .page-list-dots {

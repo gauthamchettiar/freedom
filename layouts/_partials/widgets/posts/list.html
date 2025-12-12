@@ -54,15 +54,17 @@
   <ul class="page-list kind-{{ page.Kind }} section-{{ page.Section }} type-{{ page.Type }} {{ $class }}" style="list-style-type: {{ $postListStyle }};{{ if $paddingLeft }} padding-left: {{ $paddingLeft }};{{ end }}">
     {{- range $pageList -}}
       <li class="page-list-item">
-        <span class="page-list-content">
-          <a class="page-list-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
-          {{- if $showPostListDate -}}
-            <span class="page-list-dots"></span>
-            {{- with .Date -}}
-              <time class="page-list-date" datetime="{{ .Format "2006-01-02" }}">{{ . | time.Format $postListDateFormat }}</time>
+        <a class="page-list-link" href="{{ .RelPermalink }}">
+          <span class="page-list-content">
+            <span class="page-list-title">{{ .Title }}</span>
+            {{- if $showPostListDate -}}
+              <span class="page-list-dots"></span>
+              {{- with .Date -}}
+                <time class="page-list-date" datetime="{{ .Format "2006-01-02" }}">{{ . | time.Format $postListDateFormat }}</time>
+              {{- end -}}
             {{- end -}}
-          {{- end -}}
-        </span>
+          </span>
+        </a>
       </li>
     {{- end -}}
   </ul>
