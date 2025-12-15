@@ -34,6 +34,13 @@
 .page-list-link {
   display: block;
   text-decoration: none;
+  padding: var(--spacing-xxs) var(--spacing-sm);
+  margin: 0 calc(-1 * var(--spacing-sm));
+  transition: background-color 0.2s ease;
+}
+
+.page-list-link:hover {
+  background-color: color-mix(in srgb, var(--text-color) 8%, transparent);
 }
 
 .page-list-link:hover .page-list-title {
@@ -48,6 +55,11 @@
 
 .page-list-title {
   flex-shrink: 0;
+  color: var(--link-color);
+}
+
+.page-list-link:visited .page-list-title {
+  color: var(--link-color);
 }
 
 .page-list-dots {
@@ -60,4 +72,5 @@
 .page-list-date {
   flex-shrink: 0;
   font-size: 0.875rem;
+  color: var(--text-color);
 }
