@@ -1,6 +1,7 @@
 /* Box Container */
 .box {
   display: block;
+  overflow-x: auto;
 }
 
 /* Width variations */

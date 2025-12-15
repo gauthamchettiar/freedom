@@ -157,9 +157,12 @@ code {
   font-family: var(--code-font);
 }
 
+pre {
+  overflow-x: auto;
+}
+
 .highlight pre {
   padding: 1em;
-  overflow-x: auto !important; 
 }
 
 img {
