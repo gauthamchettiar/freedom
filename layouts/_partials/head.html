@@ -17,6 +17,25 @@
 
 {{ partial "utils/preload-bg.html" . }}
 
+<style>
+  /* Critical inline CSS for instant theme application - prevents Safari flash */
+  :root {
+    --bg-color: #ffffff;
+    --text-color: #222222;
+    --dark-bg-color: #212121;
+    --dark-text-color: #F0F0F0;
+  }
+  :root[data-theme="dark"] {
+    --bg-color: var(--dark-bg-color);
+    --text-color: var(--dark-text-color);
+  }
+  html {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100%;
+  }
+</style>
+
 <script>
   (function() {
     const theme = localStorage.getItem('theme-preference') || 'light';

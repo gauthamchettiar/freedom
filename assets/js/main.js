@@ -1,21 +1,9 @@
 // Dark mode toggle
 (function() {
   const THEME_KEY = 'theme-preference';
-  const ANIMATION_DURATION_MS = 300;
   const THEME_TOGGLE_ID = 'theme-toggle';
   
-  function applyTheme(theme, withAnimation = false) {
-    if (withAnimation) {
-      // Add animation class
-      const toggleButton = document.getElementById(THEME_TOGGLE_ID);
-      if (toggleButton) {
-        toggleButton.classList.add('theme-switching');
-        // Remove class after animation completes
-        setTimeout(() => {
-          toggleButton.classList.remove('theme-switching');
-        }, ANIMATION_DURATION_MS);
-      }
-    }
+  function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     try {
       localStorage.setItem(THEME_KEY, theme);
@@ -27,7 +15,7 @@
   
   function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-    applyTheme(currentTheme === 'dark' ? 'light' : 'dark', true);
+    applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
   }
   
   function initTheme() {
