@@ -70,7 +70,7 @@
       <li class="page-list-item">
         <a class="page-list-link" href="{{ .RelPermalink }}">
           <span class="page-list-content">
-            <span class="page-list-title">{{ .Title }}</span>
+            <span class="page-list-title">{{ .Title | markdownify }}</span>
             {{- if $showPostListDate -}}
               <span class="page-list-dots"></span>
               {{- with .Date -}}

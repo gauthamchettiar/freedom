@@ -69,7 +69,7 @@
             {{- end -}}
           {{- end -}}
           <div class="post-card-content">
-            <h3 class="post-card-title">{{ .Title }}</h3>
+            <h3 class="post-card-title">{{ .Title | markdownify }}</h3>
             {{- if $showPostCardDate -}}
               {{- with .Date -}}
                 <time class="post-card-date" datetime="{{ .Format "2006-01-02" }}">

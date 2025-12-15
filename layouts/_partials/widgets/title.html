@@ -32,5 +32,5 @@
 {{- end -}}
 
 {{- if $showTitle -}}
-    <h1 class="title {{ $class }}">{{ $title }}</h1>
+    <h1 class="title {{ $class }}">{{ $title | markdownify }}</h1>
 {{- end -}}
