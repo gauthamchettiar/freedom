@@ -126,6 +126,12 @@ h6:hover .heading-anchor {
     margin-bottom: 0;
 }
 
+/* Ensure code blocks inside alerts have consistent font size */
+.blockquote-alert pre,
+.blockquote-alert code {
+    font-size: 1rem;
+}
+
 /* Collapsible alert blockquotes (details element) */
 details.blockquote-alert .alert-heading {
     padding-bottom: 0;
