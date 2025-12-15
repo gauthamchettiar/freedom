@@ -43,6 +43,7 @@ body {
   max-width: var(--page-width);
   padding: var(--spacing-md);
   position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Background image overlay for better readability */
@@ -57,6 +58,7 @@ body::before {
   opacity: var(--bg-overlay-opacity);
   z-index: -1;
   pointer-events: none;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
 body > * {
@@ -120,8 +122,8 @@ a:visited {
 }
 
 p {
-  margin-block-start: var(--spacing-sm);
-  margin-block-end: var(--spacing-sm);
+  margin-block-start: var(--spacing-md);
+  margin-block-end: var(--spacing-xs);
 }
 
 pre, table, dl, ol, ul {

@@ -229,31 +229,31 @@ details.blockquote-alert[open] .alert-content {
    ALERT TYPES - DARK MODE
    ============================================ */
 
-[data-theme="dark"] .alert-note {
+:root[data-theme="dark"] .alert-note {
     background-color: #0d47a1;
     border-color: #64b5f6;
     color: #e3f2fd;
 }
 
-[data-theme="dark"] .alert-tip {
+:root[data-theme="dark"] .alert-tip {
     background-color: #1b5e20;
     border-color: #81c784;
     color: #e8f5e9;
 }
 
-[data-theme="dark"] .alert-important {
+:root[data-theme="dark"] .alert-important {
     background-color: #4a148c;
     border-color: #ba68c8;
     color: #f3e5f5;
 }
 
-[data-theme="dark"] .alert-warning {
+:root[data-theme="dark"] .alert-warning {
     background-color: #e65100;
     border-color: #ffb74d;
     color: #fff3e0;
 }
 
-[data-theme="dark"] .alert-caution {
+:root[data-theme="dark"] .alert-caution {
     background-color: #b71c1c;
     border-color: #e57373;
     color: #ffebee;
