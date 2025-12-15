@@ -27,7 +27,15 @@
 
 {{- $showToc := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "show" $key) "default" true) -}}
 
-{{- if and $showToc $page.TableOfContents -}}
+{{- /* Check if page has headings by looking at fragments */ -}}
+{{- $hasHeadings := false -}}
+{{- with $page.Fragments.Headings -}}
+  {{- if gt (len .) 0 -}}
+    {{- $hasHeadings = true -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if and $showToc $page.TableOfContents $hasHeadings -}}
   {{- $stickyToc := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "sticky" $key) "default" true) -}}
   {{- $stickyTocPosition := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "sticky" $key "Position") "default" "left") -}}
   {{- $stickyTocMinWidth := partial "utils/config.html" (dict "page" $page "site" $site "key" (print "sticky" $key "MinWidth") "default" 1280) -}}
