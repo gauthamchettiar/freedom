@@ -3,4 +3,6 @@
   {{ partial "content/wrapper.html" .Content }}
   {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" .Pages ) }}
   {{ partial "widgets/posts/card.html" (dict "page" . "site" .Site "pageList" .Pages ) }}
+  {{ partial "layouts/blank.html" (dict "size" "lg") }}
+  {{ partial "widgets/terms.html" (dict "taxonomy" "tags" "page" . "site" .Site "taxonomyFrom" "section") }}
 {{ end }}

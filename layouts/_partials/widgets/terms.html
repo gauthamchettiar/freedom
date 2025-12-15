@@ -4,9 +4,11 @@ For a given taxonomy, renders a list of terms assigned to the page.
 @context {page} page The current page (optional).
 @context {site} site The site object (optional).
 @context {string} taxonomy The taxonomy.
+@context {string} taxonomyFrom The source: "page", "site", or "section".
 
 @example: {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
 @example: {{ partial "terms.html" (dict "taxonomy" "tags" "site" .Site) }}
+@example: {{ partial "terms.html" (dict "taxonomy" "tags" "page" . "taxonomyFrom" "section") }}
 */}}
 
 {{- $taxonomy := .taxonomy }}
@@ -35,6 +37,30 @@ For a given taxonomy, renders a list of terms assigned to the page.
       {{- end }}
       {{- partial "inline/terms/render.html" (dict "terms" $terms "class" $class "showCount" $showTermsCount "taxonomy" $taxonomy "taxonomyFrom" $taxonomyFrom) }}
     {{- end }}
+  {{- end -}}
+
+  {{- if and page (eq $taxonomyFrom "section") -}}
+    {{- $sectionPages := page.Pages -}}
+    {{- $allSectionPages := page.RegularPagesRecursive -}}
+    {{- $termsMap := dict -}}
+    {{- range $allSectionPages -}}
+      {{- range .GetTerms $taxonomy -}}
+        {{- $termKey := .LinkTitle | urlize -}}
+        {{- $existing := index $termsMap $termKey -}}
+        {{- if $existing -}}
+          {{- $termsMap = merge $termsMap (dict $termKey (dict "title" .LinkTitle "link" .RelPermalink "count" (add $existing.count 1))) -}}
+        {{- else -}}
+          {{- $termsMap = merge $termsMap (dict $termKey (dict "title" .LinkTitle "link" .RelPermalink "count" 1)) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $terms := slice -}}
+    {{- range $key, $value := $termsMap -}}
+      {{- $terms = $terms | append $value -}}
+    {{- end -}}
+    {{- if $terms -}}
+      {{- partial "inline/terms/render.html" (dict "terms" $terms "class" $class "showCount" $showTermsCount "taxonomy" $taxonomy "taxonomyFrom" $taxonomyFrom) }}
+    {{- end -}}
   {{- end -}}
 
   {{- if and site (eq $taxonomyFrom "site") -}}
