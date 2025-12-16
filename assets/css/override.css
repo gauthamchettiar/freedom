@@ -18,3 +18,27 @@
  *     --primary-color: #custom-color;
  *   }
  */
+
+/* Reduce space between list items and code blocks */
+li > .box,
+li .box {
+  margin-block-start: var(--spacing-xs) !important;
+  margin-block-end: var(--spacing-xs) !important;
+  margin-top: var(--spacing-xs) !important;
+  margin-bottom: var(--spacing-xs) !important;
+}
+
+li > .box:first-child,
+li .box:first-child {
+  margin-block-start: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Also target the highlight/pre elements directly */
+li .highlight,
+li pre {
+  margin-block-start: var(--spacing-xs) !important;
+  margin-block-end: var(--spacing-xs) !important;
+  margin-top: var(--spacing-xs) !important;
+  margin-bottom: var(--spacing-xs) !important;
+}

@@ -313,3 +313,16 @@ details.blockquote-alert[open] .alert-content {
     color: color-mix(in srgb, var(--text-color) 60%, transparent);
     margin-top: var(--spacing-xxs);
 }
+
+/* Table alignment based on box alignment */
+.box-align-left .table-figure figcaption {
+    text-align: left;
+}
+
+.box-align-center .table-figure figcaption {
+    text-align: center;
+}
+
+.box-align-right .table-figure figcaption {
+    text-align: right;
+}
