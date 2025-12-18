@@ -33,7 +33,7 @@
 {{- $postListStyle := .postListStyle | default (partial "utils/config.html" (dict "key" (print $key "Style") "default" (.listStyle | default "none"))) -}}
 {{- $postListDateFormat := (partial "utils/config.html" (dict "key" (print $key "DateFormat") "default" (.dateFormat | default ":date_medium"))) -}}
 {{- $postListSortBy := .sortBy | default (partial "utils/config.html" (dict "key" (print $key "SortBy") "default" "date")) -}}
-{{- $postListSortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "asc")) -}}
+{{- $postListSortOrder := .sortOrder | default (partial "utils/config.html" (dict "key" (print $key "SortOrder") "default" "desc")) -}}
 {{- $postListPaginate := .paginate | default (partial "utils/config.html" (dict "key" (print $key "Paginate") "default" true)) -}}
 {{- $postListPageSize := .pageSize | default (partial "utils/config.html" (dict "key" (print $key "PageSize") "default" 10)) -}}
 
