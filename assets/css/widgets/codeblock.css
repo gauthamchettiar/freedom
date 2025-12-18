@@ -4,7 +4,7 @@
 }
 
 .codeblock:has(.codeblock-lang) .highlight pre {
-  padding-top: var(--spacing-xxl);
+  padding-top: 2.8rem;
 }
 
 .codeblock-lang {
