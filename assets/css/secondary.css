@@ -49,7 +49,7 @@ a:has(.main-title) {
 .heading-anchor {
     color: color-mix(in srgb, var(--text-color) 40%, transparent);
     text-decoration: underline;
-    font-size: 0.85em;
+    font-size: 0.85rem;
     opacity: 0;
     transition: opacity 0.2s ease;
     font-weight: normal;
@@ -101,7 +101,7 @@ h6:hover .heading-anchor {
 
 /* Alert-style blockquotes */
 .blockquote-alert {
-    margin: var(--spacing-md) 0;
+    margin: var(--spacing-xxs) 0;
     padding: var(--spacing-sm) var(--spacing-md);
     border-left: 4px solid;
     font-style: normal;
@@ -111,7 +111,7 @@ h6:hover .heading-anchor {
     margin: 0;
     padding-bottom: var(--spacing-sm);
     font-weight: 600;
-    font-size: 1em;
+    font-size: 1rem;
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
@@ -127,8 +127,7 @@ h6:hover .heading-anchor {
 }
 
 /* Ensure code blocks inside alerts have consistent font size */
-.blockquote-alert pre,
-.blockquote-alert code {
+.blockquote-alert pre code {
     font-size: 1rem;
 }
 
