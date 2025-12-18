@@ -178,7 +178,8 @@ Renders a menu for the given menu ID.
       {{- $menuPath := .URL | strings.TrimSuffix "/" }}
       {{- $currentSection := printf "/%s" page.Section }}
       {{- $currentType := printf "/%s" page.Type }}
-      {{- if or (eq $menuPath $currentSection) (eq $menuPath $currentType) }}
+      {{- $currentPermalink := page.RelPermalink | strings.TrimSuffix "/" }}
+      {{- if or (eq $menuPath $currentSection) (eq $menuPath $currentType) (eq $menuPath $currentPermalink) }}
         {{- $isActive = true }}
       {{- end }}
     {{- end }}
