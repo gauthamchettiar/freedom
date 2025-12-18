@@ -326,3 +326,11 @@ details.blockquote-alert[open] .alert-content {
 .box-align-right .table-figure figcaption {
     text-align: right;
 }
+
+/* FOOTNOTES */
+.footnotes {
+    margin-top: var(--spacing-lg);
+}
+.footnote-ref {
+    padding-left: var(--spacing-xxs);
+}
