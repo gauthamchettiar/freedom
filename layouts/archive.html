@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}" dir="ltr">
+{{ partial "head.html" . }}
+<body class="kind-archive type-archive">
+  {{ partial "header.html" . }}
+  <main>
+    <h1 class="title page-title">Archive</h1>
+
+    {{- /* Get all regular pages from blog and code sections */ -}}
+    {{- $pages := where .Site.RegularPages "Section" "in" (slice "blog" "code") -}}
+    
+    {{- /* Group pages by year */ -}}
+    {{- $pagesByYear := dict -}}
+    {{- range $pages -}}
+      {{- $year := .Date.Format "2006" -}}
+      {{- $yearPages := index $pagesByYear $year | default slice -}}
+      {{- $yearPages = $yearPages | append . -}}
+      {{- $pagesByYear = merge $pagesByYear (dict $year $yearPages) -}}
+    {{- end -}}
+    
+    {{- /* Get sorted years in descending order */ -}}
+    {{- $years := slice -}}
+    {{- range $year, $_ := $pagesByYear -}}
+      {{- $years = $years | append $year -}}
+    {{- end -}}
+    {{- $years = sort $years "value" "desc" -}}
+    
+    {{- /* Display posts grouped by year */ -}}
+    {{- range $years -}}
+      {{- $year := . -}}
+      {{- $yearPages := index $pagesByYear $year -}}
+      {{- /* Sort pages by date descending within each year */ -}}
+      {{- $yearPages = sort $yearPages "Date" "desc" -}}
+      
+      <div class="archive-year-section">
+        <h2 class="archive-year-title">{{ $year }}</h2>
+        {{ partial "widgets/posts/list.html" (dict "page" $ "site" $.Site "pageList" $yearPages "sortOrder" "desc" "paginate" false) }}
+      </div>
+    {{- end -}}
+  </main>
+  {{ partial "footer.html" . }}
+</body>
+</html>
