@@ -121,6 +121,13 @@ a:visited {
   transition: color 0.3s ease;
 }
 
+/* Long link handling - prevent overflow */
+a.long-link {
+  word-break: break-all;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
 p {
   margin-block-start: var(--spacing-md);
   margin-block-end: var(--spacing-xs);

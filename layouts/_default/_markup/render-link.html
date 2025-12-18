@@ -20,10 +20,18 @@
 {{- $newTab := and (partial "utils/config.html" (dict "key" "openExternalLinkInNewTab" "default" true)) $isExternal -}}
 {{- $showIndicator := and (partial "utils/config.html" (dict "key" "showExternalLinkIndicator" "default" true)) $isExternal -}}
 
+{{- /* Truncate long link text to prevent overflow */ -}}
+{{- $linkText := .Text -}}
+{{- $isLongLink := false -}}
+{{- if and (gt (len $linkText) 50) (not (findRE `\s` $linkText)) -}}
+  {{- $isLongLink = true -}}
+{{- end -}}
+
 <a href="{{ .Destination | safeURL }}"
   {{- with .Title }} title="{{ . }}"{{ end -}}
   {{- if $isExternal }} rel="external"{{ end -}}
   {{- if $newTab }} target="_blank"{{ end -}}
+  {{- if $isLongLink }} class="long-link"{{ end -}}
 >
   {{- with .Text }}{{ . }}{{ end -}}
   {{- if $showIndicator -}}
