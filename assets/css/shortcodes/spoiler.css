@@ -1,0 +1,20 @@
+.spoiler-shortcode{display:block;position:relative;margin:0.5rem 0}
+.spoiler-shortcode__toggle{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.spoiler-shortcode__label{display:inline-block;cursor:pointer;position:relative}
+/* Keep inner content unmodified; overlay provides obfuscation */
+.spoiler-shortcode__content{transition:opacity .18s ease}
+/* Overlay uses the current font color to obscure the text. While the overlay
+	is active (checkbox NOT checked) the content text is made transparent so
+	it is fully hidden underneath the overlay. When checked, overlay is hidden
+	and text returns to normal. */
+.spoiler-shortcode__overlay{position:absolute;inset:0;display:block;background:currentColor;opacity:1;z-index:2}
+
+/* Hide text while overlay is active */
+.spoiler-shortcode__toggle:not(:checked) + .spoiler-shortcode__label .spoiler-shortcode__content{color:transparent}
+/* Allow clicks to pass through to the label/checkbox so the toggle works */
+.spoiler-shortcode__label .spoiler-shortcode__overlay{pointer-events:none}
+/* When checked, hide the overlay to reveal content */
+.spoiler-shortcode__toggle:checked + .spoiler-shortcode__label .spoiler-shortcode__overlay{opacity:0}
+
+/* Allow the spoiler to be full-width block if the inner content is block-level */
+.spoiler-shortcode__label > * {display:block}

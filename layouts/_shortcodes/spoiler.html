@@ -1,0 +1,23 @@
+{{/*
+  Spoiler shortcode
+  Usage:
+    {{< spoiler >}}Secret content (markdown allowed){{< /spoiler >}}
+
+  This implements a CSS-only click-to-reveal spoiler using a hidden
+  checkbox toggle. The CSS is included inline so the shortcode works
+  without modifying your theme files.
+*/}}
+{{ $id := printf "spoiler-%s" (md5 (plainify .Inner)) }}
+{{/* Load spoiler CSS from theme assets: assets/css/shortcodes/spoiler.css */}}
+{{ with resources.Get "css/shortcodes/spoiler.css" }}
+  {{ $css := . | resources.Minify | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+{{ end }}
+
+<div class="spoiler-shortcode">
+  <input id="{{ $id }}" class="spoiler-shortcode__toggle" type="checkbox" />
+  <label class="spoiler-shortcode__label" for="{{ $id }}">
+    <div class="spoiler-shortcode__content">{{ .Inner | markdownify }}</div>
+    <div class="spoiler-shortcode__overlay"></div>
+  </label>
+</div>
