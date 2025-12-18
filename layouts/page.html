@@ -7,7 +7,6 @@
   {{ $author := partial "widgets/meta/author.html" (dict "page" . "site" .Site) }}
 
   {{ partial "layouts/flex.html" (dict "items" (slice $time $readTime $author) "class" "page-meta-row" "align" "center" "gap" "sm" "wrap" true "separator" "·") }}
-  {{ partial "widgets/terms.html" (dict "taxonomy" "tags" "page" . "site" .Site "taxonomyFrom" "page") }}
   {{ partial "layouts/blank.html" (dict "size" "lg") }}
 
   {{ $toc := partial "widgets/meta/toc.html" (dict "page" . "site" .Site ) }}
@@ -17,6 +16,8 @@
   {{ end }}
   {{ partial "content/wrapper.html" .Content }}
   
+  {{ partial "layouts/blank.html" (dict "size" "md") }}
+  {{ partial "widgets/terms.html" (dict "taxonomy" "tags" "page" . "site" .Site "taxonomyFrom" "page") }}
   {{ partial "widgets/navigation.html" (dict "page" . "site" .Site) }}
 
 {{ end }}
