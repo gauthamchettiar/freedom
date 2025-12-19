@@ -1,3 +1,5 @@
+> Please note, 80% of this theme was developed using generative AI. While I have tried to test it to my best knowledge. It can have mistakes, make sure to flag any issues you find. 
+
 Freedom is a minimal, flexible Hugo theme built on a component-based architecture. It focuses on simplicity while providing powerful customization with minimal changes required to layout files.
 
 ## Key Features
