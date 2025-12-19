@@ -1,24 +1,7 @@
 {{ define "main" }}
   {{ partial "content/wrapper.html" .Content }}
   
-  {{ $showRecentPosts := (partial "utils/config.html" (dict "key" (print "showRecentPosts") "default" true)) }}
-  
-  {{ if $showRecentPosts }}
-    {{- $recentPosts := where site.RegularPages "Type" "ne" "page" | first 5 -}}
-    {{- if $recentPosts -}}
-      <section class="recent-posts">
-        <h2>Recent Posts</h2>
-        {{ partial "widgets/posts/list.html" (dict "page" . "site" .Site "pageList" $recentPosts "paginate" false "sortOrder" "desc") }}
-        {{- $totalPosts := len (where site.RegularPages "Type" "ne" "page") -}}
-        {{- if gt $totalPosts 5 -}}
-          {{ partial "layouts/blank.html" (dict "size" "sm") }}
-          <div class="archive-link-wrapper">
-            <a href="/archive/" class="archive-link">more →</a>
-          </div>
-        {{- end -}}
-      </section>
-    {{- end -}}
-  {{ end }}
+  {{ partial "widgets/recent-posts.html" (dict "page" . "site" .Site) }}
   {{ partial "layouts/blank.html" (dict "size" "lg") }}
   {{ partial "widgets/terms.html" (dict "taxonomy" "tags" "page" . "site" .Site "taxonomyFrom" "site") }}
 {{ end }}

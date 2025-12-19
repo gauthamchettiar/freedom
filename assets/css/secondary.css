@@ -333,3 +333,16 @@ details.blockquote-alert[open] .alert-content {
 .footnote-ref {
     padding-left: var(--spacing-xxs);
 }
+
+
+.archive-link {
+    text-decoration: none;
+}
+
+.archive-link:hover {
+    text-decoration: underline;
+}
+
+.archive-link:visited {
+    color: var(--link-color);
+}
