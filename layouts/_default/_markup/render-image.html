@@ -1,6 +1,7 @@
 {{- $width := .Attributes.width | default "compact" -}}
 {{- $process := .Attributes.process | default "" -}}
 {{- $align := .Attributes.align | default "" -}}
+{{- $border := .Attributes.border | default "" -}}
 
 {{- /* Build context for image resolver */ -}}
 {{- $ctx := dict "url" (.Destination | safeURL) "process" $process -}}
@@ -18,4 +19,4 @@
   %s
 </figure>` $url $altText $caption -}}
 
-{{ partial "layouts/box.html" (dict "content" $imageContent "width" $width "align" $align) }}
+{{ partial "layouts/box.html" (dict "content" $imageContent "width" $width "align" $align "border" $border) }}

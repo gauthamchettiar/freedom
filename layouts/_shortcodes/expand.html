@@ -50,5 +50,5 @@
 {{- /* Get inner content */ -}}
 {{- $content := .Inner | .Page.RenderString -}}
 
-{{- /* Call the expand partial */ -}}
-{{ partial "expand.html" (dict "title" $title "content" $content "open" $open "class" $class) }}
+{{- /* Call the expand widget partial */ -}}
+{{ partial "widgets/expand.html" (dict "title" $title "content" $content "open" $open "class" $class) }}

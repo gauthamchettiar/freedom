@@ -1,0 +1,20 @@
+/* Theme-aware image shortcode */
+.theme-image-figure {
+    position: relative;
+}
+
+.theme-image-figure .theme-image-light,
+.theme-image-figure .theme-image-dark {
+    display: none;
+}
+
+/* Show light image in light mode */
+:root[data-theme="light"] .theme-image-light,
+:root:not([data-theme]) .theme-image-light {
+    display: block;
+}
+
+/* Show dark image in dark mode */
+:root[data-theme="dark"] .theme-image-dark {
+    display: block;
+}

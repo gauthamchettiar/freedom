@@ -1,0 +1,17 @@
+{{- /*
+  Blank Line / Spacer Shortcode
+  
+  Creates vertical spacing with configurable height.
+  
+  Parameters:
+    - size (optional): Spacing size - "xs", "sm", "md" (default), "lg", "xl", "xxl"
+  
+  Usage:
+    {{< blank >}}
+    {{< blank size="lg" >}}
+    {{< blank size="xl" >}}
+*/ -}}
+
+{{- $size := .Get "size" | default "md" -}}
+
+{{ partial "layouts/blank.html" (dict "size" $size) }}

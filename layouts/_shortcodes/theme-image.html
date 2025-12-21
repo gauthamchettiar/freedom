@@ -1,0 +1,52 @@
+{{- /*
+  Theme-aware Image Shortcode
+  
+  Displays different images for light and dark theme modes.
+  
+  Parameters:
+    - light (required): Path to the image for light mode
+    - dark (required): Path to the image for dark mode
+    - alt (optional): Alt text for accessibility
+    - caption (optional): Image caption
+    - width (optional): Box width - "compact" (default), "full", "wide"
+    - align (optional): Box alignment - "left", "center", "right"
+    - border (optional): Add border - true/false (default: false)
+  
+  Example:
+    {{< theme-image light="/images/diagram-light.png" dark="/images/diagram-dark.png" alt="System diagram" caption="Architecture overview" >}}
+    {{< theme-image light="/images/screenshot-light.jpg" dark="/images/screenshot-dark.jpg" width="full" align="center" border="true" >}}
+*/ -}}
+
+{{- $lightSrc := .Get "light" -}}
+{{- $darkSrc := .Get "dark" -}}
+{{- $alt := .Get "alt" | default "" -}}
+{{- $caption := .Get "caption" | default "" -}}
+{{- $width := .Get "width" | default "compact" -}}
+{{- $align := .Get "align" | default "" -}}
+{{- $border := .Get "border" | default false -}}
+
+{{- if and $lightSrc $darkSrc -}}
+  {{- /* Resolve image URLs */ -}}
+  {{- $lightURL := partial "utils/resolve-image.html" (dict "url" ($lightSrc | safeURL) "process" "") -}}
+  {{- $darkURL := partial "utils/resolve-image.html" (dict "url" ($darkSrc | safeURL) "process" "") -}}
+  
+  {{- /* Build caption if provided */ -}}
+  {{- $captionHTML := "" -}}
+  {{- with $caption -}}
+    {{- $captionHTML = printf `<figcaption>%s</figcaption>` . -}}
+  {{- end -}}
+  
+  {{- /* Build alt attribute */ -}}
+  {{- $altAttr := cond $alt (printf ` alt="%s"` $alt) "" -}}
+  
+  {{- /* Build image content with theme-aware classes */ -}}
+  {{- $imageContent := printf `<figure class="image-figure theme-image-figure">
+  <img src="%s"%s class="theme-image-light">
+  <img src="%s"%s class="theme-image-dark">
+  %s
+</figure>` $lightURL $altAttr $darkURL $altAttr $captionHTML -}}
+
+  {{- partial "layouts/box.html" (dict "content" $imageContent "width" $width "align" $align "border" $border) -}}
+{{- else -}}
+  {{- warnf "theme-image shortcode requires both 'light' and 'dark' parameters" -}}
+{{- end -}}

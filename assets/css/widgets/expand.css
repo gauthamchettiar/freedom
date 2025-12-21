@@ -53,6 +53,7 @@
 
 .expand[open] .expand-content {
   border-top-color: var(--text-color);
+  padding: var(--spacing-md);
 }
 
 .expand-content > *:first-child {
@@ -84,4 +85,15 @@
 
 .expand.borderless .expand-content {
   border-top: none;
+}
+
+/* Remove top/bottom margin for page TOC */
+.expand.page-toc {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.expand.page-toc[open] .expand-content {
+  padding-top: 0;
+  padding-bottom: 0;
 }

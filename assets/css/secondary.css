@@ -296,6 +296,14 @@ details.blockquote-alert[open] .alert-content {
    ============================================ */
 
 /* Image figures */
+.image-figure {
+    margin: 0;
+}
+
+.image-figure img {
+    display: block;
+}
+
 .image-figure figcaption {
     text-align: center;
     color: color-mix(in srgb, var(--text-color) 60%, transparent);

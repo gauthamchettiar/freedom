@@ -32,6 +32,11 @@
   {{- $layoutFiles = $layoutFiles | append . }}
 {{- end }}
 
+{{- $shortcodeFiles := slice }}
+{{- range (resources.Match "css/shortcodes/*.css") }}
+  {{- $shortcodeFiles = $shortcodeFiles | append . }}
+{{- end }}
+
 {{- /* Load theme-scoped chroma syntax highlighting styles */ -}}
 {{- $chromaStyles := partial "utils/load-chroma.html" . -}}
 {{- $chromaLight := index $chromaStyles 0 -}}
@@ -39,7 +44,7 @@
 
 {{- $overrideFile := resources.Get "css/override.css" -}}
 
-{{- $cssFiles := slice $themeFile $themeOverrides $mainFile $secondaryFile | append $widgetFiles | append $layoutFiles | append $chromaLight | append $chromaDark | append $overrideFile -}}
+{{- $cssFiles := slice $themeFile $themeOverrides $mainFile $secondaryFile | append $widgetFiles | append $layoutFiles | append $shortcodeFiles | append $chromaLight | append $chromaDark | append $overrideFile -}}
 {{- $cssBundle := $cssFiles | resources.Concat "css/bundle.css" -}}
 
 {{- with $cssBundle }}

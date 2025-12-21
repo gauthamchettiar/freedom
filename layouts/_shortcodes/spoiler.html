@@ -8,11 +8,6 @@
   without modifying your theme files.
 */}}
 {{ $id := printf "spoiler-%s" (md5 (plainify .Inner)) }}
-{{/* Load spoiler CSS from theme assets: assets/css/shortcodes/spoiler.css */}}
-{{ with resources.Get "css/shortcodes/spoiler.css" }}
-  {{ $css := . | resources.Minify | resources.Fingerprint }}
-  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
-{{ end }}
 
 <div class="spoiler-shortcode">
   <input id="{{ $id }}" class="spoiler-shortcode__toggle" type="checkbox" />
