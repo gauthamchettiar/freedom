@@ -1,0 +1,6 @@
+{{ define "main" }}
+  {{ partial "content/wrapper.html" .Content }}
+  {{ partial "widgets/page-title.html" (dict "title" (.Type | title) ) }}
+  {{ partial "widgets/terms.html" (dict "pages" (site.GetPage (printf "/%s" .Type)).Pages)}}
+  {{ partial "widgets/posts/page.html" (dict "pages" .Pages "title" "") }}
+{{ end }}

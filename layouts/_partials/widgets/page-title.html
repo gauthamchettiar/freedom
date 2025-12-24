@@ -1,0 +1,14 @@
+{{ $class := .class }}
+{{ $title := .title | default page.Title }}
+{{ $isLinked := .isLinked | default false }}
+
+{{ if ne .title "" }}
+    <h2 class="fr-page-title {{ $class }}">
+        {{ if $isLinked }}
+            <a href="{{ .RelPermalink }}">{{ $title }}</a>
+        {{ else }}
+            {{ $title }}
+        {{ end }}
+    </h2>    
+{{ end }}
+

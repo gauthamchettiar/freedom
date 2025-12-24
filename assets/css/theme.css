@@ -1,0 +1,33 @@
+/* Theme colors */
+:root {
+    /* Light theme (default) */
+    --color-bg: #fcfcfc;
+    --color-text: #222222;
+    --color-link: #0000ee;
+    --color-link-visited: #551a8b;
+
+    /* Dark theme palette */
+    --dark-color-bg: #001f2c;
+    --dark-color-text: #cad6e2;
+    --dark-color-link: #6b9eff;
+    --dark-color-link-visited: #b392ff;
+
+    /* Font families */
+    --font-body: 'Verdana';
+    --font-header: 'Tahoma';
+    --font-code: 'Monospace';
+
+    /* Spacing */
+    --spacing-xxs: 0.125rem;
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 2.5rem;
+
+    /* Layout */
+    --page-width: 768px;
+    --line-height: 1.5;
+}
+

@@ -1,0 +1,11 @@
+{{ $class := .class }}
+{{ $listType := .listType }}
+{{ $limit := .limit }}
+{{ $paginate := .paginate }}
+{{ $pages := .pages | default page.RegularPages }}
+{{ $title := cond (ne .title "") (.title | default page.Title) "" }}
+
+<section class="fr-posts-container page {{ $class -}}">
+    {{ partial "widgets/page-title.html" (dict "title" $title) }}
+    {{ partial "widgets/posts/base.html" (dict "pages" $pages "listType" $listType "limit" $limit) }}
+</section>

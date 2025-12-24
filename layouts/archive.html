@@ -1,0 +1,5 @@
+{{ define "main" }}
+  {{ partial "widgets/page-title.html" }}
+  {{ partial "content/wrapper.html" .Content }}
+  {{ partial "widgets/posts/archive.html" (dict "paginate" false "limit" -1) }}
+{{ end }}

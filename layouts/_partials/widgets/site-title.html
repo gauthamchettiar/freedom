@@ -1,0 +1,13 @@
+{{ $class := .class }}
+{{ $title := .title | default site.Title }}
+{{ $isLinked := .isLinked | default true }}
+
+{{ if ne .title "" }}
+    <h1 class="fr-site-title {{ $class }}">
+        {{ if $isLinked }}
+            <a href="{{ "/" | relLangURL }}">{{ $title }}</a>
+        {{ else }}
+            {{ $title }}
+        {{ end }}
+    </h1>
+{{ end }}

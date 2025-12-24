@@ -1,0 +1,38 @@
+{{- $themeFile := resources.Get "css/theme.css" -}}
+{{- $mainFile := resources.Get "css/main.css" -}}
+
+{{- $layoutFiles := slice }}
+{{- range (resources.Match "css/layouts/*.css") }}
+  {{- $layoutFiles = $layoutFiles | append . }}
+{{- end }}
+{{- range (resources.Match "css/layouts/**/*.css") }}
+  {{- $layoutFiles = $layoutFiles | append . }}
+{{- end }}
+
+{{- $widgetFiles := slice }}
+{{- range (resources.Match "css/widgets/*.css") }}
+  {{- $widgetFiles = $widgetFiles | append . }}
+{{- end }}
+{{- range (resources.Match "css/widgets/**/*.css") }}
+  {{- $widgetFiles = $widgetFiles | append . }}
+{{- end }}
+
+{{- $cssFiles := slice $themeFile $mainFile }}
+{{- if gt (len $widgetFiles) 0 }}
+  {{- $cssFiles = $cssFiles | append $widgetFiles }}
+{{- end }}
+{{- if gt (len $layoutFiles) 0 }}
+  {{- $cssFiles = $cssFiles | append $layoutFiles }}
+{{- end }}
+
+{{- $cssBundle := $cssFiles | resources.Concat "css/bundle.css" -}}
+
+{{- with $cssBundle }}
+  {{- if hugo.IsDevelopment }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{- else }}
+    {{- with . | minify | fingerprint }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+    {{- end }}
+  {{- end }}
+{{- end }}

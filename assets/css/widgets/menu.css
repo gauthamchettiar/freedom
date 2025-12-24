@@ -1,0 +1,14 @@
+ul.fr-menu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    column-gap: var(--spacing-md);
+}
+
+ul.fr-menu .active {
+    font-weight: bold;
+    text-decoration: underline;
+}

@@ -1,0 +1,19 @@
+ul.fr-terms {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    column-gap: var(--spacing-md);
+}
+
+.fr-kind-term ul.fr-terms,
+.fr-kind-taxonomy ul.fr-terms {
+    margin: var(--spacing-sm) 0;
+}
+
+.fr-terms .active {
+    font-weight: bold;
+    text-decoration: underline;
+}

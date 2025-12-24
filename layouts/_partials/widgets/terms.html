@@ -1,0 +1,13 @@
+{{ $class := .class }}
+{{ $pages := .pages }}
+{{ $prepend := .prepend | default "#" }}
+
+{{ with $pages }}
+    <ul class="fr-terms {{ $class }}">
+        {{ range $pages }}
+            <li><a class="{{ if eq .LinkTitle page.LinkTitle }}active{{ end }}" href="{{ .RelPermalink }}">{{ $prepend }}{{ .LinkTitle }}</a></li>
+        {{ end }}
+    </ul>
+{{ else }}
+    <span>{{ i18n "no_tags_found" }}</span>
+{{ end }}

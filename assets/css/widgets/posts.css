@@ -1,0 +1,68 @@
+/* CSS for _partials/widgets/posts/base.html */
+.fr-posts ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* CSS for Pagination at _partials/widgets/posts/base.html */
+.fr-posts .pagination ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    column-gap: var(--spacing-md);
+}
+
+.fr-posts .pagination-item-current {
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--color-link);
+}
+
+.fr-posts .pagination-prev span,
+.fr-posts .pagination-next span {
+    opacity: 0.5;
+}
+
+
+/* CSS for _partials/widgets/posts/style/simple.html */
+.fr-posts-simple .link {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Align items vertically */
+    padding: var(--spacing-xxs) var(--spacing-sm); /* Vertical and horizontal padding */
+    margin: 0 calc(-1 * var(--spacing-sm)); /* Required for link hover background to have padding  */
+    transition: background-color 0.3s ease;
+    gap: var(--spacing-sm);
+}
+
+.fr-posts-simple .date {
+    color: var(--color-text);
+    white-space: nowrap;  /* Prevent date text from wrapping */
+}
+
+.fr-posts-simple .dots {
+    flex-grow: 1; /* Takes up remaining space */
+    border-bottom: 1px dotted var(--color-text);
+}
+
+.fr-posts-simple .title {
+    overflow: hidden; /* Clips the overflowing text */
+    text-overflow: ellipsis; /* Adds the ellipsis (...) */
+    white-space: nowrap; /* Prevents text from wrapping to the next line */
+}
+
+.fr-posts-simple .link:hover {
+    background-color: color-mix(in srgb, var(--color-text) 8%, transparent);
+    text-decoration: none;
+}
+
+.fr-posts-simple .link:hover .title {
+    text-decoration: underline;
+}
+
+.fr-posts-simple .list {
+    margin: var(--spacing-sm) 0;
+}

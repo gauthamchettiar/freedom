@@ -1,0 +1,15 @@
+{{ $class := .class }}
+{{ $listType := .listType }}
+{{ $limit := .limit }}
+{{ $paginate := .paginate }}
+{{ $pages := .pages | default site.RegularPages }}
+{{ $title := cond (ne .title "") (.title | default page.Title) "" }}
+
+{{- range ($pages.GroupByDate "2006") -}}
+    {{- $pages := .Pages -}}
+    {{- $pages_count := len $pages -}}
+    {{ if and (gt .Key 1) (gt $pages_count 0) }}
+      <h4>{{ .Key }}</h4>
+      {{ partial "widgets/posts/base.html" (dict "pages" $pages "listType" $listType "paginate" $paginate "limit" $limit) }}
+    {{ end }}
+  {{ end }}

@@ -1,0 +1,12 @@
+h1.fr-site-title{
+    margin: calc(var(--spacing-lg) + var(--spacing-md)) 0 0 0;
+}
+
+h2.fr-page-title{
+    margin: 0;
+}
+
+h1.fr-site-title a, h2.fr-page-title a {
+    color: inherit;
+    text-decoration: none;
+}

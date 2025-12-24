@@ -1,0 +1,11 @@
+{{/* 
+  - Removes disabled attribute from checkbox inputs
+      A hack to fix hugo rendering of disabled checkboxes from markdown to HTML
+  Usage:
+    {{ partial "content/wrapper.html" .Content }}
+*/}}
+
+{{ $content := . }}
+{{ $content = replace $content `<input disabled="" type="checkbox"` `<input type="checkbox"` }}
+{{ $content = replace $content `<input checked="" disabled="" type="checkbox"` `<input checked type="checkbox"` }}
+{{ $content | safeHTML }}
