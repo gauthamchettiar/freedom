@@ -1,10 +1,14 @@
 {{ define "main" }}
-  {{ partial "widgets/page-title.html" }}
+  <section class="page-header">
+    {{ partial "widgets/page-title.html" }}
+    {{ partial "widgets/meta/date.html" }} · {{ partial "widgets/meta/author.html" }}
+  </section>
 
-  {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
-  {{ $dateHuman := .Date | time.Format ":date_long" }}
-  <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
-
-  {{ partial "content/wrapper.html" .Content }}
-  {{ partial "widgets/terms.html" (dict "pages" ( .GetTerms "tags" ) ) }}
+  <section class="page-content">
+    {{ partial "content/wrapper.html" .Content }}
+  </section>
+  
+  <section class="page-footer">
+    {{ partial "widgets/terms.html" (dict "pages" ( .GetTerms "tags" ) ) }}
+  </section>
 {{ end }}

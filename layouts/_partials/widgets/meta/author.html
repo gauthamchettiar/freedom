@@ -1,0 +1,19 @@
+{{- /*
+  Author Metadata Component
+  
+  Displays the page author with an icon. Falls back to site author if page author not set.
+  
+  Parameters:
+    - None (uses page context)
+  
+  Configuration:
+    - page.Params.author: Per-page author override
+    - site.Params.author: Site-wide default author
+  
+  Dependencies:
+    - widgets/icon.html (for user icon)
+  
+  Usage:
+    {{ partial "widgets/meta/author.html" . }}
+*/ -}}
+{{ partial "widgets/icon.html" (dict "name" "user" "style" "regular") }} {{ page.Params.author | default site.Params.author }}
