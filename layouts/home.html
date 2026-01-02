@@ -1,4 +1,5 @@
 {{ define "main" }}
   {{ partial "content/wrapper.html" .Content }}
+  {{ partial "widgets/page-title.html" (dict "title" (i18n "recent_posts")) }}
   {{ partial "widgets/posts/recents.html" }}
 {{ end }}

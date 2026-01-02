@@ -1,4 +1,5 @@
 {{ define "main" }}
     {{ partial "content/wrapper.html" .Content }}
+    {{ partial "widgets/page-title.html" }}
     {{ partial "widgets/posts/page.html" (dict "pages" .Pages "listType" "simple")  }}
 {{ end }}
