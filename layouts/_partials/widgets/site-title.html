@@ -1,3 +1,17 @@
+{{- /*
+  Site Title Component
+  
+  Displays the site title, optionally as a link to the home page.
+  
+  Parameters:
+    - class (optional): Additional CSS classes to add
+    - title (optional): Custom title text (default: site.Title)
+    - isLinked (optional): Whether to make title a link to home (default: true)
+  
+  Usage:
+    {{ partialCached "widgets/site-title.html" . }}
+    {{ partial "widgets/site-title.html" (dict "title" "Custom Title" "isLinked" false) }}
+*/ -}}
 {{ $class := .class }}
 {{ $title := .title | default site.Title }}
 {{ $isLinked := .isLinked | default true }}

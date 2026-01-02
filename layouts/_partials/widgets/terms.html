@@ -1,3 +1,17 @@
+{{- /*
+  Terms List Component
+  
+  Displays a list of taxonomy terms (e.g., tags, categories) as links.
+  
+  Parameters:
+    - pages (required): Collection of term pages to display
+    - class (optional): Additional CSS classes
+    - prepend (optional): Text to prepend to each term (default: "#")
+  
+  Usage:
+    {{ partial "widgets/terms.html" (dict "pages" (.GetTerms "tags")) }}
+    {{ partial "widgets/terms.html" (dict "pages" .Pages "prepend" "@") }}
+*/ -}}
 {{ $class := .class }}
 {{ $pages := .pages }}
 {{ $prepend := .prepend | default "#" }}
