@@ -1,5 +1,15 @@
+{{/*
+  Archive Layout
+  
+  Used for both site-wide (/archive) and section-level (/section/archive) archives.
+  The archive widget auto-detects the scope based on parent page.
+  
+  Content files:
+    - Site-wide: content/archive/_index.md (layout: archive)
+    - Section:   content/posts/archive/_index.md (layout: archive)
+*/}}
 {{ define "main" }}
-  {{ partial "widgets/page-title.html" }}
-  {{ partial "content/wrapper.html" .Content }}
-  {{ partial "widgets/posts/archive.html" (dict "paginate" false "limit" -1) }}
+    {{ partial "widgets/page-title.html" }}
+    {{ partial "content/wrapper.html" .Content }}
+    {{ partial "widgets/posts/archive.html" }}
 {{ end }}

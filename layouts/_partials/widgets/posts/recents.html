@@ -1,12 +1,12 @@
 {{ $class := .class }}
 {{ $listType := .listType }}
-{{ $limit := .limit }}
-{{ $pages := .pages | default site.RegularPages }}
+{{ $limit := .limit | default 5}}
 {{ $paginate := .paginate | default false }}
 {{ $title := .title | default (i18n "recent_posts") }}
 
 <section class="fr-posts-container recents {{ $class -}}">
     {{ partial "widgets/page-title.html" (dict "title" $title) }}
-    {{ partial "widgets/posts/base.html" (dict "pages" $pages "listType" $listType "paginate" $paginate "limit" $limit) }}
-    <a href="/archive"> {{ i18n "more" }} > </a>
+    {{ partial "widgets/posts/base.html" (dict "pages" site.RegularPages "listType" $listType "paginate" $paginate "limit" $limit) }}
+
+    <a class="more" href="/archive"> {{ i18n "more" }} &gt; </a>
 </section>

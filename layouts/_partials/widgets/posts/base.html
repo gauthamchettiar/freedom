@@ -1,19 +1,19 @@
 {{/* widgets/posts/base.html */}}
 
 {{/* Incoming params */}}
-{{ $class    := .class }}
-{{ $pages    := .pages }}
-{{ $listType := .listType | default "simple" }}
-{{ $limit    := .limit    | default 10 }}
-{{ $paginate := .paginate | default true }}
+{{ $class      := .class }}
+{{ $pages      := .pages }}
+{{ $listType   := .listType | default "simple" }}
+{{ $limit      := .limit    | default 10 }}
+{{ $paginate   := .paginate | default true }}
 {{ $showHidden := .showHidden | default false }}
 
-{{/* Validate list type */}}
+{{/* Validate listType */}}
 {{ if not (in (slice "simple" "card") $listType) }}
     {{ errorf "Invalid listType: %s. Accepted values are ('simple', 'card')." $listType }}
 {{ end }}
 
-{{/* Filter out hidden pages */}}
+{{/* Filter hidden posts unless showHidden is true */}}
 {{ if not $showHidden }}
     {{ $pages = where $pages "Params.hidden" "ne" true }}
 {{ end }}
