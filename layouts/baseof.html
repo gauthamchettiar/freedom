@@ -5,14 +5,14 @@
 </head>
 <body class="{{ with .Kind }}fr-kind-{{ . | urlize }} {{ end }}{{ with .Section }}fr-section-{{ . | urlize }} {{ end }}{{ with .Type }}fr-type-{{ . | urlize }} {{ end }}{{ with .Layout }}fr-layout-{{ . | urlize }}{{ end }}" >
   <header>
-    {{ partial "header.html" . }}
+    {{ partialCached "header.html" . }}
   </header>
   <main>
     {{ block "main" . }}{{ end }}
   </main>
   
   <footer>
-    {{ partial "footer.html" . }}
+    {{ partialCached "footer.html" . }}
   </footer>
 </body>
 </html>
