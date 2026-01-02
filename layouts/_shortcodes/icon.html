@@ -1,0 +1,6 @@
+{{- $name := .Get "name"  -}}
+{{- $style := .Get "style" -}}
+{{- $class := .Get "class" -}}
+{{- $ariaLabel := .Get "ariaLabel" -}}
+
+{{- partial "widgets/icon.html" (dict "name" $name "style" $style "class" $class "ariaLabel" $ariaLabel) -}}
