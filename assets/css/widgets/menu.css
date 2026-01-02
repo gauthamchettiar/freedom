@@ -8,7 +8,7 @@ ul.fr-menu {
     column-gap: var(--spacing-md);
 }
 
-ul.fr-menu .active {
+ul.fr-menu .active, ul.fr-menu .ancestor {
     font-weight: bold;
     text-decoration: underline;
 }
