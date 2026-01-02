@@ -13,9 +13,9 @@
     --dark-color-link-visited: #b392ff;
 
     /* Font families */
-    --font-body: 'Verdana';
-    --font-header: 'Tahoma';
-    --font-code: 'Monospace';
+    --font-body:  'Verdana', 'Arial';
+    --font-header: 'Verdana', 'Arial';
+    --font-code: 'Menlo', 'Consolas', 'Monospace';
 
     /* Spacing */
     --spacing-xxs: 0.125rem;
