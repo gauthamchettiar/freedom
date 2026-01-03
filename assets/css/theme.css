@@ -4,13 +4,11 @@
     --color-bg: #fcfcfc;
     --color-text: #222222;
     --color-link: #0000ee;
-    --color-link-visited: #551a8b;
 
     /* Dark theme palette */
     --dark-color-bg: #001f2c;
     --dark-color-text: #cad6e2;
     --dark-color-link: #6b9eff;
-    --dark-color-link-visited: #b392ff;
 
     /* Font families */
     --font-body:  'Verdana', 'Arial';
@@ -29,5 +27,13 @@
     /* Layout */
     --page-width: 768px;
     --line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-bg: var(--dark-color-bg);
+        --color-text: var(--dark-color-text);
+        --color-link: var(--dark-color-link);
+    }
 }
 

@@ -10,7 +10,7 @@ ul.fr-terms {
 
 .fr-kind-term ul.fr-terms,
 .fr-kind-taxonomy ul.fr-terms {
-    margin: var(--spacing-sm) 0;
+    margin: var(--spacing-sm) 0 var(--spacing-md) 0;
 }
 
 .fr-terms .active {

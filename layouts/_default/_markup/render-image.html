@@ -1,0 +1,10 @@
+{{- $altText := cond .PlainText (printf ` alt="%s"` .PlainText) "" -}}
+
+{{- $imagePath := partial "utils/resolve-image-path.html" (dict "url" (.Destination | safeURL)) -}}
+
+<figure class="image-figure">
+  <img src="{{ $imagePath }}"{{ $altText }}>
+  {{- with .Title -}}
+  <figcaption>{{ . }}</figcaption>
+  {{- end -}}
+</figure>

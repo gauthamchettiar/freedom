@@ -1,0 +1,14 @@
+{{- $lang := .Type -}}
+{{- if $lang -}}
+<div class="codeblock">
+  <div class="codeblock-header chroma p">
+    <span class="codeblock-lang">{{ $lang }}</span>
+    <span class="copy-button" aria-label="Copy code">
+      {{ partial "widgets/icon.html" (dict "name" "copy" "style" "regular" "class" "copy-icon") }}
+    </span>
+  </div>
+  {{ highlight .Inner $lang "" }}
+</div>
+{{- else -}}
+<pre><code>{{- .Inner -}}</code></pre>
+{{- end -}}
