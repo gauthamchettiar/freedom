@@ -1,0 +1,17 @@
+{{ $page := . }}
+
+{{ with $page }}
+    {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+    {{ $dateHuman := .Date | time.Format "Jan 2, 2006" }}
+    <li>
+        <a href="{{ .RelPermalink }}" class="card">
+            <article>
+                <h3 class="card-title">{{ .LinkTitle }}</h3>
+                <time class="card-date" datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+                {{ with .Summary }}
+                    <p class="card-summary">{{ . }}</p>
+                {{ end }}
+            </article>
+        </a>
+    </li>
+{{ end }}
