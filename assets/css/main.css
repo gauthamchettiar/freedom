@@ -71,6 +71,26 @@ h6 {
   line-height: 1.4;
 }
 
+.heading-anchor {
+    color: color-mix(in srgb, var(--color-text) 40%, transparent);
+    font-family: var(--font-header);
+    text-decoration: none;
+    font-size: 0.85em;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    font-weight: normal;
+    margin-left: var(--spacing-xs)
+}
+
+h1:hover .heading-anchor,
+h2:hover .heading-anchor,
+h3:hover .heading-anchor,
+h4:hover .heading-anchor,
+h5:hover .heading-anchor,
+h6:hover .heading-anchor {
+    opacity: 1;
+}
+
 /* Code blocks & inline code */
 pre code {
   padding: 0 0;
@@ -122,11 +142,6 @@ ol ol, ul ul, ol ul, ul ol {
 }
 
 /* Footnotes */
-sup a.footnote-ref, p a.footnote-backref {
-  background-color: color-mix(in srgb, var(--color-link) 15%, transparent);
-  padding: 0 var(--spacing-xs);
-}
-
 div.footnotes hr {
   display: none;
 }
@@ -177,11 +192,43 @@ table tbody td {
 }
 
 /* Input */
+ul:has(input[type="checkbox"]) {
+  padding-left: 0;
+}
+
+ul li:has(input[type="checkbox"]) {
+  list-style: none;
+  padding-left: 0;
+}
+
 ul li input[type="checkbox"] {
-  accent-color: var(--color-text);
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1em;
+  height: 1em;
+  border: 1px solid var(--color-text);
+  background-color: var(--color-bg);
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
   pointer-events: none;
   cursor: default;
   user-select: none;
+}
+
+ul li input[type="checkbox"]:checked {
+  background-color: var(--color-text);
+}
+
+ul li input[type="checkbox"]:checked::after {
+  content: '✓';
+  color: var(--color-bg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.8em;
+  line-height: 1;
 }
 
 /* Horizontal Rule */
@@ -233,7 +280,6 @@ hr {
   margin: 0;
   border: 1px solid var(--color-text);
   border-top: none;
-  padding: var(--spacing-sm);
   overflow-x: auto;
 }
 
