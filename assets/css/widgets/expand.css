@@ -1,0 +1,59 @@
+/* Expand/Collapse Component */
+.fr-expand {
+  margin: var(--spacing-md) 0;
+}
+
+.fr-expand-summary {
+  background-color: color-mix(in srgb, var(--color-text) 10%, transparent);
+  border: 1px solid var(--color-text);
+  cursor: pointer;
+  font-weight: 600;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  user-select: none;
+}
+
+.fr-expand-summary::-webkit-details-marker {
+  display: none;
+}
+
+.fr-expand-summary::marker {
+  content: none;
+}
+
+.fr-expand-summary::before {
+  content: '▶';
+  display: inline-block;
+  margin-right: var(--spacing-sm);
+  transition: transform 0.2s;
+}
+
+.fr-expand[open] .fr-expand-summary::before {
+  transform: rotate(90deg);
+}
+
+.fr-expand-summary:hover {
+  background-color: color-mix(in srgb, var(--color-text) 15%, transparent);
+}
+
+.fr-expand-content {
+  border: 1px solid var(--color-text);
+  border-top: none;
+  padding: var(--spacing-md);
+}
+
+.fr-expand-content > *:first-child {
+  margin-top: 0;
+}
+
+.fr-expand-content > *:last-child {
+  margin-bottom: 0;
+}
+
+/* TOC */
+.fr-expand-content nav#TableOfContents ul{
+  margin: 0;
+}
+
+.fr-expand-content nav#TableOfContents ul ul {
+  padding-left: var(--spacing-md);
+}

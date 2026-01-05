@@ -1,0 +1,23 @@
+{{- $icons := dict
+  "caution" "triangle-exclamation"
+  "important" "star"
+  "note" "circle-info"
+  "tip" "lightbulb"
+  "warning" "circle-exclamation"
+-}}
+
+{{- if eq .Type "alert" -}}
+<div class="fr-alert fr-alert-{{ .AlertType }}">
+  <div class="fr-alert-header">
+    {{- partial "widgets/icon.html" (dict "name" (index $icons .AlertType)) -}}
+    <span class="fr-alert-title">{{ or .AlertTitle (title .AlertType) }}</span>
+  </div>
+  <div class="fr-alert-content">
+    {{- .Text -}}
+  </div>
+</div>
+{{- else -}}
+<blockquote>
+  {{- .Text -}}
+</blockquote>
+{{- end -}}

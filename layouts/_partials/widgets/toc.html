@@ -1,0 +1,11 @@
+{{- $page := . -}}
+{{- $title := "Table of Contents" -}}
+
+{{- if reflect.IsMap . -}}
+  {{- $page = .page | default . -}}
+  {{- $title = .title | default "Table of Contents" -}}
+{{- end -}}
+
+{{- if $page.TableOfContents -}}
+{{ partial "widgets/expand.html" (dict "title" $title "content" $page.TableOfContents "isHTML" true) }}
+{{- end -}}

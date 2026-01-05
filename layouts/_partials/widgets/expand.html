@@ -1,0 +1,12 @@
+{{- $title := .title | default "Details" -}}
+{{- $isHTML := .isHTML | default false -}}
+<details class="fr-expand">
+    <summary class="fr-expand-summary">{{ $title }}</summary>
+    <div class="fr-expand-content">
+        {{- if $isHTML -}}
+            {{ .content | safeHTML }}
+        {{- else -}}
+            {{ .content | markdownify }}
+        {{- end -}}
+    </div>
+</details>

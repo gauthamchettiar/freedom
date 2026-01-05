@@ -8,7 +8,7 @@
             <article>
                 <h3 class="card-title">{{ .LinkTitle }}</h3>
                 <time class="card-date" datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
-                {{ with .Summary }}
+                {{ with .Summary | plainify }}
                     <p class="card-summary">{{ . }}</p>
                 {{ end }}
             </article>

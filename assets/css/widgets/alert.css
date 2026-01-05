@@ -1,0 +1,42 @@
+/* Alert blockquotes */
+.fr-alert {
+  margin: var(--spacing-md) 0;
+}
+
+.fr-alert-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background-color: color-mix(in srgb, var(--color-text) 10%, transparent);
+  border: 1px solid var(--color-text);
+  font-weight: 600;
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.fr-alert-header .icon {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+.fr-alert-title {
+  flex: 1;
+}
+
+.fr-alert-content {
+  border: 1px solid var(--color-text);
+  border-top: none;
+  padding: var(--spacing-md);
+}
+
+.fr-alert-content > *:first-child {
+  margin-top: 0;
+}
+
+.fr-alert-content > *:last-child {
+  margin-bottom: 0;
+}
+
+.fr-alert a {
+  color: var(--color-link);
+}

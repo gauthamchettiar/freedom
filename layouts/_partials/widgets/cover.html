@@ -1,0 +1,14 @@
+{{- with .Params.cover -}}
+<div class="fr-cover-image">
+  {{- $imageUrl := "" -}}
+  {{- if reflect.IsMap . -}}
+    {{- $imageUrl = partial "utils/resolve-image-path.html" (dict "page" $ "url" .image) -}}
+  {{- else -}}
+    {{- $imageUrl = partial "utils/resolve-image-path.html" (dict "page" $ "url" .) -}}
+  {{- end -}}
+  
+  {{- with $imageUrl -}}
+    <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy">
+  {{- end -}}
+</div>
+{{- end -}}

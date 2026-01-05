@@ -23,4 +23,8 @@ markup:
           enable: true
   highlight:
     noClasses: false
+  tableOfContents:
+    startLevel: 2
+    endLevel: 6
+    ordered: false
   

@@ -83,7 +83,7 @@
 }
 
 .fr-posts-card .card {
-    border: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-text) 50%, transparent);
     padding: var(--spacing-md);
     display: block;
     width: 100%;
@@ -93,9 +93,8 @@
 }
 
 .fr-posts-card .card:hover {
-    border-color: var(--color-text);
-    transform: translate(-4px, -4px);
-    box-shadow: 4px 4px 0 var(--color-text);
+    transform: translate(-5px, -5px);
+    box-shadow: 5px 5px 0 var(--color-text);
     text-decoration: none;
 }
 

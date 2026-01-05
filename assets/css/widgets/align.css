@@ -1,0 +1,21 @@
+/* Align widget */
+.fr-align {
+  display: flex;
+  margin: var(--spacing-md) 0;
+}
+
+.fr-align-left {
+  justify-content: flex-start;
+}
+
+.fr-align-center {
+  justify-content: center;
+}
+
+.fr-align-right {
+  justify-content: flex-end;
+}
+
+.fr-align > * {
+  max-width: 100%;
+}

@@ -1,0 +1,5 @@
+{{- $align := .align | default "center" -}}
+{{- $content := .content -}}
+<div class="fr-align fr-align-{{ $align }}">
+  {{- $content | safeHTML -}}
+</div>

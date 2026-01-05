@@ -9,6 +9,25 @@ body {
   max-width: var(--page-width);
 }
 
+.fr-wide {
+  margin-left: calc(-1 * var(--spacing-md));
+  margin-right: calc(-1 * var(--spacing-md));
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.fr-full > * {
+  width: 100%;
+}
+
+.page-meta {
+  margin-top: var(--spacing-xs);
+}
+
 /* Header & Footer */
 header {
   margin: var(--spacing-md) 0 var(--spacing-lg) 0;
@@ -31,7 +50,7 @@ a:hover {
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-header);
-  margin-top: var(--spacing-md);
+  margin-top: var(--spacing-lg);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -71,6 +90,10 @@ h6 {
   line-height: 1.4;
 }
 
+/* Collapse margin when a heading directly follows another heading */
+:is(h1,h2,h3,h4,h5,h6) + :is(h1,h2,h3,h4,h5,h6) {
+  margin-top: var(--spacing-sm);
+}
 .heading-anchor {
     color: color-mix(in srgb, var(--color-text) 40%, transparent);
     font-family: var(--font-header);
