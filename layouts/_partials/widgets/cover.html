@@ -1,14 +1,16 @@
 {{- with .Params.cover -}}
 <div class="fr-cover-image">
-  {{- $imageUrl := "" -}}
-  {{- if reflect.IsMap . -}}
-    {{- $imageUrl = partial "utils/resolve-image-path.html" (dict "page" $ "url" .image) -}}
-  {{- else -}}
-    {{- $imageUrl = partial "utils/resolve-image-path.html" (dict "page" $ "url" .) -}}
-  {{- end -}}
+  {{- $altText := $.Params.coverAlt | default $.Title -}}
+  {{- $caption := $.Params.coverCaption -}}
+  {{- $imageUrl := partial "utils/resolve-image-path.html" (dict "page" $ "url" .) -}}
   
   {{- with $imageUrl -}}
-    <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy">
+    <figure class="image-figure">
+      <img src="{{ . }}" alt="{{ $altText }}" loading="lazy">
+      {{- with $caption -}}
+      <figcaption>{{ . }}</figcaption>
+      {{- end -}}
+    </figure>
   {{- end -}}
 </div>
 {{- end -}}

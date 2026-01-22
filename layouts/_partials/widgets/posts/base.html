@@ -49,7 +49,7 @@
                 {{/* Prev */}}
                 {{ if $paginator.HasPrev }}
                     <li class="pagination-prev">
-                        <a href="{{ $paginator.Prev.URL }}">{{ $prevText }}</a>
+                        <a href="{{ $paginator.Prev.RelPermalink }}">{{ $prevText }}</a>
                     </li>
                 {{ else }}
                     <li class="pagination-prev">
@@ -59,15 +59,15 @@
 
                 {{/* Page numbers */}}
                 {{ range $paginator.Pagers }}
-                    <li class="pagination-item_{{ .PageNumber }} {{ if eq . $paginator }} pagination-item-current {{ else }} pagination-item {{ end }}">
-                        <a href="{{ .URL }}">{{ .PageNumber }}</a>
+                    <li class="pagination-item-{{ .PageNumber }} {{ if eq . $paginator }} pagination-item-current {{ else }} pagination-item {{ end }}">
+                        <a href="{{ .RelPermalink }}">{{ .PageNumber }}</a>
                     </li>
                 {{ end }}
 
                 {{/* Next */}}
                 {{ if $paginator.HasNext }}
                     <li class="pagination-next">
-                        <a href="{{ $paginator.Next.URL }}">{{ $nextText }}</a>
+                        <a href="{{ $paginator.Next.RelPermalink }}">{{ $nextText }}</a>
                     </li>
                 {{ else }}
                     <li class="pagination-next">

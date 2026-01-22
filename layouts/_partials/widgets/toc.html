@@ -6,6 +6,6 @@
   {{- $title = .title | default "Table of Contents" -}}
 {{- end -}}
 
-{{- if $page.TableOfContents -}}
+{{- if and $page.TableOfContents (strings.Contains $page.TableOfContents "<li>") -}}
 {{ partial "widgets/expand.html" (dict "title" $title "content" $page.TableOfContents "isHTML" true) }}
 {{- end -}}

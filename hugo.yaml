@@ -1,4 +1,3 @@
-baseURL: https://example.org/
 languageCode: en-US
 
 module:
@@ -21,10 +20,21 @@ markup:
           enable: true
         superscript: 
           enable: true
+    parser:
+      attribute:
+        block: true
   highlight:
     noClasses: false
   tableOfContents:
     startLevel: 2
     endLevel: 6
     ordered: false
-  
+
+privacy:
+  x:
+    disable: false
+    enableDNT: false
+    simple: true
+  instagram:
+    disable: false
+    simple: true

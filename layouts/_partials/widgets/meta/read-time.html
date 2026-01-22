@@ -1,0 +1,17 @@
+{{- /*
+  Read Time + Word Count Metadata Component
+
+  Displays estimated reading time and word count with a clock icon.
+
+  Usage:
+    {{ partial "widgets/meta/read-time.html" . }}
+*/ -}}
+
+{{- $minutes := page.ReadingTime -}}
+{{- $words := page.WordCount -}}
+{{- $minsLabel := cond (eq $minutes 1) "Min" "Mins" -}}
+
+<span class="fr-meta readtime">
+  {{ partial "widgets/icon.html" (dict "name" "clock" "style" "regular") }}
+  <span class="readtime-text">Est. {{ $minutes }} {{ $minsLabel }} ( {{ $words }} Words )</span>
+</span>

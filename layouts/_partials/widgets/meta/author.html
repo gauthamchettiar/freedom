@@ -16,4 +16,7 @@
   Usage:
     {{ partial "widgets/meta/author.html" . }}
 */ -}}
-{{ partial "widgets/icon.html" (dict "name" "user" "style" "regular") }} {{ page.Params.author | default site.Params.author }}
+<span class="fr-meta author">
+  {{ partial "widgets/icon.html" (dict "name" "user" "style" "regular") }} 
+  <span class="author-text">{{ page.Params.author | default site.Params.author }}</span>
+</span>

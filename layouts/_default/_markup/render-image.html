@@ -3,7 +3,7 @@
 {{- $imagePath := partial "utils/resolve-image-path.html" (dict "url" (.Destination | safeURL)) -}}
 
 <figure class="image-figure">
-  <img src="{{ $imagePath }}"{{ $altText }}>
+  <img src="{{ $imagePath }}" alt="{{ $altText }}" loading="lazy">
   {{- with .Title -}}
   <figcaption>{{ . }}</figcaption>
   {{- end -}}

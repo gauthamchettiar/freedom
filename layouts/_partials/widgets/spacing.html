@@ -1,3 +1,7 @@
 {{- $size := .size | default "md" -}}
 {{- $type := .type | default "vertical" -}}
+{{- if eq $type "horizontal" -}}
+<span class="fr-spacing fr-spacing-{{ $size }} fr-spacing-{{ $type }}"></span>
+{{- else -}}
 <div class="fr-spacing fr-spacing-{{ $size }} fr-spacing-{{ $type }}"></div>
+{{- end -}}

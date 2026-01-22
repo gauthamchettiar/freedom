@@ -6,15 +6,7 @@
 }
 
 /* CSS for Pagination at _partials/widgets/posts/base.html */
-.fr-posts .pagination ul {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    column-gap: var(--spacing-md);
-}
+/* Pagination inherits from fr-list-flex base styles */
 
 .fr-posts .pagination-item-current {
     font-weight: bold;

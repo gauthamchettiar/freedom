@@ -14,4 +14,18 @@
 */ -}}
 {{ $dateMachine := page.Date | time.Format "2006-01-02T15:04:05-07:00" }}
 {{ $dateHuman := page.Date | time.Format "02 Jan 2006" }}
-{{ partial "widgets/icon.html" (dict "name" "calendar" "style" "regular") }} <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+
+{{/* Show last modified date if it differs from the published date */}}
+{{ $showLastMod := ne page.Lastmod page.Date }}
+
+<span class="fr-meta date">
+  {{ partial "widgets/icon.html" (dict "name" "calendar" "style" "regular") }} 
+  <span class="date-text">
+    <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+    {{ if $showLastMod }}
+      {{ $lastMachine := page.Lastmod | time.Format "2006-01-02T15:04:05-07:00" }}
+      {{ $lastHuman := page.Lastmod | time.Format "02 Jan 2006" }}
+      <span class="last-mod"> (last mod. <time datetime="{{ $lastMachine }}">{{ $lastHuman }}</time>)</span>
+    {{ end }}
+  </span>
+</span>

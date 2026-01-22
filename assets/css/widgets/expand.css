@@ -12,11 +12,9 @@
   user-select: none;
 }
 
-.fr-expand-summary::-webkit-details-marker {
-  display: none;
-}
-
+.fr-expand-summary::-webkit-details-marker,
 .fr-expand-summary::marker {
+  display: none;
   content: none;
 }
 
@@ -35,6 +33,7 @@
   background-color: color-mix(in srgb, var(--color-text) 15%, transparent);
 }
 
+/* Content inherits common bordered content styles */
 .fr-expand-content {
   border: 1px solid var(--color-text);
   border-top: none;
@@ -49,8 +48,8 @@
   margin-bottom: 0;
 }
 
-/* TOC */
-.fr-expand-content nav#TableOfContents ul{
+/* TOC specific styles */
+.fr-expand-content nav#TableOfContents ul {
   margin: 0;
 }
 

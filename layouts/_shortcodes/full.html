@@ -1,1 +1,1 @@
-{{ partial "widgets/full.html" (.Inner | markdownify) }}
+{{ partial "widgets/full.html" (.Page.RenderString .Inner) }}

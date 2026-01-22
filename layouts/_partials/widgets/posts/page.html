@@ -2,7 +2,7 @@
 {{ $listType := .listType }}
 {{ $limit := .limit }}
 {{ $paginate := .paginate }}
-{{ $pages := .pages | default page.RegularPages }}
+{{ $pages := sort (.pages | default page.RegularPages) "Weight" "asc" }}
 {{ $title := cond (ne .title "") (.title | default page.Title) "" }}
 
 <section class="fr-posts-container page {{ $class -}}">

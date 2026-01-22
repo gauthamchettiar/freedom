@@ -1,9 +1,7 @@
 {{ define "main" }}
   <section class="page-header">
     {{ partial "widgets/page-title.html" }}
-    <div class="page-meta">
-      {{ partial "widgets/meta/date.html" }} · {{ partial "widgets/meta/author.html" }}
-    </div>
+    {{ partial "widgets/meta.html"}}
     {{ partial "widgets/cover.html" . }}
     {{ partial "widgets/toc.html" . }}
   </section>

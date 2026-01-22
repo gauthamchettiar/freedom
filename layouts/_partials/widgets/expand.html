@@ -1,6 +1,7 @@
 {{- $title := .title | default "Details" -}}
 {{- $isHTML := .isHTML | default false -}}
-<details class="fr-expand">
+{{- $open := .open | default false -}}
+<details class="fr-expand"{{ if $open }} open{{ end }}>
     <summary class="fr-expand-summary">{{ $title }}</summary>
     <div class="fr-expand-content">
         {{- if $isHTML -}}
