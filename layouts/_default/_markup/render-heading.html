@@ -1,4 +1,4 @@
 <h{{ .Level }} id="{{ .Anchor }}"{{- with .Attributes.class }} class="{{ . }}"{{- end }}>
   {{ .Text | safeHTML -}}
-  <a class="heading-anchor" href="#{{ .Anchor }}" aria-label="Link to this section">#</a>
+  <a class="heading-anchor" href="#{{ .Anchor }}" aria-label="{{ i18n "aria_heading_anchor" }}">#</a>
 </h{{ .Level }}>

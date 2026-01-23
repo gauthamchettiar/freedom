@@ -12,7 +12,7 @@ Renders a menu for the given menu ID.
 {{- $page := .page | default page }}
 
 {{- with index site.Menus $menuID }}
-  <nav>
+  <nav aria-label="{{ i18n "aria_main_navigation" }}">
     <ul class="fr-menu {{ $class }}">
       {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
     </ul>

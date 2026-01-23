@@ -9,9 +9,9 @@
 
 {{- $minutes := page.ReadingTime -}}
 {{- $words := page.WordCount -}}
-{{- $minsLabel := cond (eq $minutes 1) "Min" "Mins" -}}
+{{- $minsLabel := cond (eq $minutes 1) (i18n "minute") (i18n "minutes") -}}
 
 <span class="fr-meta readtime">
   {{ partial "widgets/icon.html" (dict "name" "clock" "style" "regular") }}
-  <span class="readtime-text">Est. {{ $minutes }} {{ $minsLabel }} ( {{ $words }} Words )</span>
+  <span class="readtime-text">{{ i18n "estimated" }} {{ $minutes }} {{ $minsLabel }} ( {{ $words }} {{ i18n "words" }} )</span>
 </span>

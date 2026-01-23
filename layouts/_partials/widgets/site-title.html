@@ -19,7 +19,7 @@
 {{ if ne .title "" }}
     <h1 class="fr-site-title {{ $class }}">
         {{ if $isLinked }}
-            <a href="{{ "/" | relLangURL }}">{{ $title }}</a>
+            <a href="{{ "/" | relLangURL }}" aria-label="{{ i18n "aria_home_link" }}">{{ $title }}</a>
         {{ else }}
             {{ $title }}
         {{ end }}

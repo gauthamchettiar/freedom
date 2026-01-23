@@ -4,14 +4,14 @@
   {{ partial "head.html" . }}
 </head>
 <body class="{{ with .Kind }}fr-kind-{{ . | urlize }} {{ end }}{{ with .Section }}fr-section-{{ . | urlize }} {{ end }}{{ with .Type }}fr-type-{{ . | urlize }} {{ end }}{{ with .Layout }}fr-layout-{{ . | urlize }}{{ end }}" >
-  <header>
+  <header aria-label="{{ i18n "aria_site_header" }}">
     {{ partial "header.html" . }}
   </header>
-  <main>
+  <main aria-label="{{ i18n "aria_main_content" }}">
     {{ block "main" . }}{{ end }}
   </main>
   
-  <footer>
+  <footer aria-label="{{ i18n "aria_site_footer" }}">
     {{ partialCached "footer.html" . }}
   </footer>
 </body>

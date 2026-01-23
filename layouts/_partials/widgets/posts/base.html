@@ -42,36 +42,40 @@
     
     {{/* Pagination navigation */}}
     {{ if and $paginator (gt $paginator.TotalPages 1) }}
-        <nav class="pagination" aria-label="Pagination">
+        <nav class="pagination" aria-label="{{ i18n "aria_pagination" }}">
             {{ $prevText := printf "< %s" (i18n "nav_prev") }}
             {{ $nextText := printf "%s >" (i18n "nav_next") }}
             <ul>
                 {{/* Prev */}}
                 {{ if $paginator.HasPrev }}
                     <li class="pagination-prev">
-                        <a href="{{ $paginator.Prev.RelPermalink }}">{{ $prevText }}</a>
+                        <a href="{{ $paginator.Prev.RelPermalink }}" aria-label="{{ i18n "aria_previous_page" }}">{{ $prevText }}</a>
                     </li>
                 {{ else }}
                     <li class="pagination-prev">
-                        <span>{{ $prevText }}</span>
+                        <span aria-disabled="true">{{ $prevText }}</span>
                     </li>
                 {{ end }}
 
                 {{/* Page numbers */}}
                 {{ range $paginator.Pagers }}
                     <li class="pagination-item-{{ .PageNumber }} {{ if eq . $paginator }} pagination-item-current {{ else }} pagination-item {{ end }}">
-                        <a href="{{ .RelPermalink }}">{{ .PageNumber }}</a>
+                        {{ if eq . $paginator }}
+                            <a href="{{ .RelPermalink }}" aria-label="{{ i18n "aria_current_page" .PageNumber }}" aria-current="page">{{ .PageNumber }}</a>
+                        {{ else }}
+                            <a href="{{ .RelPermalink }}" aria-label="{{ i18n "aria_page_number" .PageNumber }}">{{ .PageNumber }}</a>
+                        {{ end }}
                     </li>
                 {{ end }}
 
                 {{/* Next */}}
                 {{ if $paginator.HasNext }}
                     <li class="pagination-next">
-                        <a href="{{ $paginator.Next.RelPermalink }}">{{ $nextText }}</a>
+                        <a href="{{ $paginator.Next.RelPermalink }}" aria-label="{{ i18n "aria_next_page" }}">{{ $nextText }}</a>
                     </li>
                 {{ else }}
                     <li class="pagination-next">
-                        <span>{{ $nextText }}</span>
+                        <span aria-disabled="true">{{ $nextText }}</span>
                     </li>
                 {{ end }}
 

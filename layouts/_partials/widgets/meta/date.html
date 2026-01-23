@@ -25,7 +25,7 @@
     {{ if $showLastMod }}
       {{ $lastMachine := page.Lastmod | time.Format "2006-01-02T15:04:05-07:00" }}
       {{ $lastHuman := page.Lastmod | time.Format "02 Jan 2006" }}
-      <span class="last-mod"> (last mod. <time datetime="{{ $lastMachine }}">{{ $lastHuman }}</time>)</span>
+      <span class="last-mod"> ({{ i18n "last_modified" }} <time datetime="{{ $lastMachine }}">{{ $lastHuman }}</time>)</span>
     {{ end }}
   </span>
 </span>

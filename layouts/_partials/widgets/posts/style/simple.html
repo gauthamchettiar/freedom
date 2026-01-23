@@ -5,7 +5,7 @@
     {{ $dateHuman := .Date | time.Format "Jan 2, 2006" }}
     <li>
         <article>
-            <a class="link" href="{{ .RelPermalink }}">
+            <a class="link" href="{{ .RelPermalink }}" aria-label="{{ i18n "aria_read_post" .LinkTitle }}">
                 <span class="title">{{ .LinkTitle }}</span>
                 <span class="dots"></span>
                 <time class="date" datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>

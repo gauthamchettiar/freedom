@@ -1,9 +1,9 @@
 {{- $page := . -}}
-{{- $title := "Table of Contents" -}}
+{{- $title := i18n "table_of_contents" -}}
 
 {{- if reflect.IsMap . -}}
   {{- $page = .page | default . -}}
-  {{- $title = .title | default "Table of Contents" -}}
+  {{- $title = .title | default (i18n "table_of_contents") -}}
 {{- end -}}
 
 {{- if and $page.TableOfContents (strings.Contains $page.TableOfContents "<li>") -}}

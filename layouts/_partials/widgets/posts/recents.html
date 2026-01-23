@@ -6,5 +6,5 @@
 <section class="fr-posts-container recents {{ $class -}}">
     {{ partial "widgets/posts/base.html" (dict "pages" site.RegularPages "listType" $listType "paginate" $paginate "limit" $limit) }}
 
-    <a class="more" href="{{ "archive" | relURL }}"> {{ i18n "more" }} &gt; </a>
+    <a class="more" href="{{ "archive" | relURL }}" aria-label="{{ i18n "aria_view_all_posts" }}"> {{ i18n "more" }} &gt; </a>
 </section>

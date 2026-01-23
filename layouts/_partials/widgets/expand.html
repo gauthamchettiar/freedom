@@ -1,7 +1,7 @@
-{{- $title := .title | default "Details" -}}
+{{- $title := .title | default (i18n "details") -}}
 {{- $isHTML := .isHTML | default false -}}
 {{- $open := .open | default false -}}
-<details class="fr-expand"{{ if $open }} open{{ end }}>
+<details class="fr-expand"{{ if $open }} open{{ end }} aria-label="{{ i18n "aria_table_of_contents" }}">
     <summary class="fr-expand-summary">{{ $title }}</summary>
     <div class="fr-expand-content">
         {{- if $isHTML -}}
