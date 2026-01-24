@@ -1,0 +1,21 @@
+.fr-breadcrumb {
+  margin: var(--spacing-sm) 0;
+  /* font-size: 0.9rem; */
+}
+
+.fr-breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: var(--spacing-xs);
+}
+
+.fr-breadcrumb .separator {
+  color: color-mix(in srgb, var(--color-text) 75%, transparent);
+}
+
+.fr-breadcrumb li[aria-current="page"] {
+  color: color-mix(in srgb, var(--color-text) 75%, transparent);
+}

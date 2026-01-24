@@ -1,0 +1,17 @@
+{{ $showCurrentPage := .showCurrentPage | default true }}
+{{ if ne page.Kind "home" }}
+<nav class="fr-breadcrumb" aria-label="breadcrumb">
+  <ol>
+    {{ range page.Ancestors.Reverse }}
+      {{ if ne .Kind "home" }}
+        <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+        <li class="separator">›</li>
+      {{ end }}
+    {{ end }}
+    {{ if $showCurrentPage }}
+      <li aria-current="page">{{ page.LinkTitle }}</li>
+      <li class="separator">›</li>
+    {{ end }}
+  </ol>
+</nav>
+{{ end }}

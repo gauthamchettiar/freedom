@@ -1,5 +1,0 @@
-/* Menu inherits from fr-list-flex base styles */
-ul.fr-menu .active, ul.fr-menu .ancestor {
-    font-weight: bold;
-    text-decoration: underline;
-}
