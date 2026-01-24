@@ -1,0 +1,11 @@
+{{- $_hugo_config := `{ "version": 1 }` }}
+{{- partial "widgets/badge.html" (dict
+  "page"      .Page
+  "color"     (.Get "color")
+  "textColor" (.Get "textColor")
+  "content"   .Inner
+  "icon"      (.Get "icon")
+  "iconStyle" (.Get "iconStyle")
+  "style"     (.Get "style")
+  "title"     (.Get "title")
+) }}

@@ -4,11 +4,35 @@
     --color-bg: #fcfcfc;
     --color-text: #222222;
     --color-link: #0000ee;
+    --color-accent: #3498db;
+
+    /* Heading colors */
+    --color-h1: #1a1a1a;
+    --color-h2: #2c3e50;
+    --color-h3: #34495e;
+    --color-h4: #546e7a;
+    --color-h5: #607d8b;
+    --color-h6: #78909c;
+
+    /* Element Colours */
+    --color-mark: var(--color-accent);
 
     /* Dark theme palette */
     --dark-color-bg: #001f2c;
     --dark-color-text: #cad6e2;
     --dark-color-link: #6b9eff;
+    --dark-color-accent: #5dade2;
+
+    /* Dark heading colors */
+    --dark-color-h1: #e8f4f8;
+    --dark-color-h2: #b3d9f2;
+    --dark-color-h3: #8ec5e8;
+    --dark-color-h4: #6db1de;
+    --dark-color-h5: #5a9dd1;
+    --dark-color-h6: #4a89c4;
+
+    /* Dark element colors */
+    --dark-color-mark: var(--dark-color-accent);
 
     /* Font families */
     --font-body:  'Verdana', 'Arial';
@@ -34,6 +58,14 @@
         --color-bg: var(--dark-color-bg);
         --color-text: var(--dark-color-text);
         --color-link: var(--dark-color-link);
+        --color-accent: var(--dark-color-accent);
+        --color-h1: var(--dark-color-h1);
+        --color-h2: var(--dark-color-h2);
+        --color-h3: var(--dark-color-h3);
+        --color-h4: var(--dark-color-h4);
+        --color-h5: var(--dark-color-h5);
+        --color-h6: var(--dark-color-h6);
+        --color-mark: var(--dark-color-mark);
     }
 }
 

@@ -1,23 +1,26 @@
-{{- $icons := dict
-  "caution" "triangle-exclamation"
-  "important" "star"
-  "note" "circle-info"
-  "tip" "lightbulb"
-  "warning" "circle-exclamation"
--}}
+{{- $alertStyles := partial "utils/alert-styles.html" }}
+{{- $alertConfig := index $alertStyles .AlertType }}
+
+{{- /* Allow custom override via attributes */ -}}
+{{- $color := or .Attributes.color (and $alertConfig $alertConfig.color) }}
+{{- $textColor := or .Attributes.textColor (and $alertConfig $alertConfig.textColor) }}
+{{- $icon := or .Attributes.icon (and $alertConfig $alertConfig.icon) }}
+{{- $iconStyle := or .Attributes.iconStyle (and $alertConfig $alertConfig.iconStyle) "solid" }}
 
 {{- if eq .Type "alert" -}}
 <div class="fr-alert fr-alert-{{ .AlertType }}">
-  <div class="fr-alert-header">
-    {{- partial "widgets/icon.html" (dict "name" (index $icons .AlertType)) -}}
-    <span class="fr-alert-title">{{ or .AlertTitle (title .AlertType) }}</span>
+  <div class="fr-alert-header"{{- if or $color $textColor }} style="{{- with $color }}background-color: {{ . }};{{ end }}{{- with $textColor }}color: {{ . }};{{ end }}"{{- end }}>
+    {{- if $icon }}
+      {{- partial "widgets/icon.html" (dict "name" $icon "style" $iconStyle) -}}
+    {{- end -}}
+    <span class="fr-alert-title">{{ or .AlertTitle (and $alertConfig $alertConfig.title) (title .AlertType) }}</span>
   </div>
-  <div class="fr-alert-content">
+  <div class="fr-alert-content"{{- if or $color $textColor }} style="{{- with $color }}background-color: color-mix(in srgb, {{ . }} 25%, transparent);{{ end }}"{{- end }}>
     {{- .Text -}}
   </div>
 </div>
 {{- else -}}
-<blockquote>
+<blockquote{{- with .Attributes.color }} style="border-left-color: {{ . }}; background-color: color-mix(in srgb, {{ . }} 25%, transparent);"{{- end }}>
   <i>{{- .Text -}}</i>
 </blockquote>
 {{- end -}}

@@ -4,7 +4,7 @@
 }
 
 .fr-expand-summary {
-  background-color: color-mix(in srgb, var(--color-text) 10%, transparent);
+  background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
   border: 1px solid var(--color-text);
   cursor: pointer;
   font-weight: 600;
@@ -30,7 +30,7 @@
 }
 
 .fr-expand-summary:hover {
-  background-color: color-mix(in srgb, var(--color-text) 15%, transparent);
+  background-color: color-mix(in srgb, var(--color-accent) 25%, transparent);
 }
 
 /* Content inherits common bordered content styles */

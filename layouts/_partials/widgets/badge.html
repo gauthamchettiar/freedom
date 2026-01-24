@@ -1,0 +1,43 @@
+{{- $page := .page }}
+{{- if and (not $page) .context }}
+  {{- $page = .context }}
+{{- end }}
+{{- $content := .content }}
+
+{{- $style := .style | default "" }}
+{{- $color := .color | default "" }}
+{{- $textColor := .textColor | default "" }}
+{{- $icon := .icon | default "" }}
+{{- $iconStyle := .iconStyle | default "solid" }}
+{{- $title := .title | default "" }}
+
+{{- /* Get alert styles from utility function */}}
+{{- $badgeStyles := partial "utils/alert-styles.html" }}
+
+{{- with $style }}
+  {{- $styleConfig := index $badgeStyles . }}
+  {{- if $styleConfig }}
+    {{- if not $color }}{{ $color = $styleConfig.color }}{{ end }}
+    {{- if not $textColor }}{{ $textColor = $styleConfig.textColor }}{{ end }}
+    {{- if not $icon }}{{ $icon = $styleConfig.icon }}{{ end }}
+    {{- if not $iconStyle }}{{ $iconStyle = $styleConfig.iconStyle }}{{ end }}
+    {{- if not $title }}{{ $title = $styleConfig.title }}{{ end }}
+  {{- end }}
+{{- end }}
+
+{{- /* Clear if explicitly set to space */}}
+{{- if eq $title " " }}{{ $title = "" }}{{ end }}
+{{- if eq $icon " " }}{{ $icon = "" }}{{ end }}
+
+{{/* Render the badge */}}
+{{- with $page -}}
+<span class="badge">
+  {{- if or $icon $title -}}
+  <span class="badge-title">
+    {{- if $icon }}{{ partial "widgets/icon.html" (dict "name" $icon "style" $iconStyle) }}{{ end -}}
+    {{- if $title }}{{ $title | .RenderString }}{{ end -}}
+  </span>
+  {{- end -}}
+  <span class="badge-content"{{- if or $color $textColor }} style="{{- with $color }}background-color: {{ . }};{{ end }}{{- with $textColor }}color: {{ . }};{{ end }}"{{- end }}>{{ $content | safeHTML }}</span>
+</span>
+{{- end }}
