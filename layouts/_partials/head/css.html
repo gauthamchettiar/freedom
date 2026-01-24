@@ -2,6 +2,7 @@
 {{- $chromaLightRaw := resources.Get "css/chroma/light.css" -}}
 {{- $chromaDarkRaw := resources.Get "css/chroma/dark.css" -}}
 {{- $mainFile := resources.Get "css/main.css" -}}
+{{- $overrideFile := resources.Get "css/override.css" -}}
 
 {{- $chromaLight := resources.FromString "css/chroma-light-wrapped.css" (printf "@media (prefers-color-scheme: light) {\n%s\n}" $chromaLightRaw.Content) -}}
 {{- $chromaDark := resources.FromString "css/chroma-dark-wrapped.css" (printf "@media (prefers-color-scheme: dark) {\n%s\n}" $chromaDarkRaw.Content) -}}
@@ -29,6 +30,8 @@
 {{- if gt (len $layoutFiles) 0 }}
   {{- $cssFiles = $cssFiles | append $layoutFiles }}
 {{- end }}
+
+{{- $cssFiles = $cssFiles | append $overrideFile -}}
 
 {{- $cssBundle := $cssFiles | resources.Concat "css/bundle.css" -}}
 
