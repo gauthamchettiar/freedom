@@ -6,6 +6,7 @@
 {{- $chromaLight := resources.FromString "css/chroma-light-wrapped.css" (printf "@media (prefers-color-scheme: light) {\n%s\n}" $chromaLightRaw.Content) -}}
 {{- $chromaDark := resources.FromString "css/chroma-dark-wrapped.css" (printf "@media (prefers-color-scheme: dark) {\n%s\n}" $chromaDarkRaw.Content) -}}
 
+{{- /* Collect widget CSS files */ -}}
 {{- $widgetFiles := slice }}
 {{- range (resources.Match "css/widgets/*.css") }}
   {{- $widgetFiles = $widgetFiles | append . }}
@@ -14,9 +15,19 @@
   {{- $widgetFiles = $widgetFiles | append . }}
 {{- end }}
 
+{{- /* Collect layout CSS files */ -}}
+{{- $layoutFiles := slice }}
+{{- range (resources.Match "css/layouts/*.css") }}
+  {{- $layoutFiles = $layoutFiles | append . }}
+{{- end }}
+
+{{- /* Combine all CSS files */ -}}
 {{- $cssFiles := slice $themeFile $chromaLight $chromaDark $mainFile }}
 {{- if gt (len $widgetFiles) 0 }}
   {{- $cssFiles = $cssFiles | append $widgetFiles }}
+{{- end }}
+{{- if gt (len $layoutFiles) 0 }}
+  {{- $cssFiles = $cssFiles | append $layoutFiles }}
 {{- end }}
 
 {{- $cssBundle := $cssFiles | resources.Concat "css/bundle.css" -}}
