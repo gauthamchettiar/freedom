@@ -1,0 +1,5 @@
+{{ define "main" }}
+    {{ partial "widgets/breadcrumb.html" }}
+    {{ partial "content/wrapper.html" .Content }}
+    {{ partial "widgets/posts/page.html" (dict "pages" .Pages "listType" "card")  }}
+{{ end }}
