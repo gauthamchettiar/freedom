@@ -1,0 +1,12 @@
+{{- $u := urls.Parse .Destination -}}
+{{- $isExternal := $u.IsAbs -}}
+
+<a href="{{ .Destination | safeURL }}"
+  {{- with .Title }} title="{{ . }}"{{ end -}}
+  {{- if $isExternal }} rel="external" target="_blank"{{ end -}}
+>
+  {{- with .Text }}{{ . }}{{ end -}}
+  {{- if $isExternal -}}
+    <span class="external-link-indicator" aria-label="Opens in new tab">{{ partial "widgets/icon.html" (dict "name" "external-link") }}</span>
+  {{- end -}}
+</a>
