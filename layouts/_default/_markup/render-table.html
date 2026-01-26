@@ -1,14 +1,13 @@
 {{ $header := or (.Attributes.header) "row" }}
 {{ $caption := .Attributes.caption }}
+{{ $captionAlign := .Attributes.captionalign | default "left" }}
+{{ $captionClass := printf "caption %s" $captionAlign }}
 
 {{ $hasRowHeader := or (eq $header "row") (eq $header "row-column") }}
 {{ $hasColHeader := or (eq $header "column") (eq $header "row-column") }}
 
-<div class="fr-table-wrapper">
+<figure>
   <table>
-    {{- with $caption }}
-    <caption>{{ . }}</caption>
-    {{- end }}
     {{- if $hasRowHeader }}
     <thead>
       {{- range .THead }}
@@ -63,4 +62,7 @@
       {{- end }}
     </tbody>
   </table>
-</div>
+  {{- with $caption }}
+  <figcaption class="{{ $captionClass }}">{{ . }}</figcaption>
+  {{- end }}
+</figure>

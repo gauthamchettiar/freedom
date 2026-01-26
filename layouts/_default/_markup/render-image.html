@@ -6,6 +6,10 @@
 {{- $height := .Attributes.height | default "" -}}
 {{- $process := .Attributes.process | default "" -}}
 
+{{- /* Get captionAlign attribute (left, center, right) */ -}}
+{{- $captionAlign := .Attributes.captionalign | default "left" -}}
+{{- $captionClass := printf "caption %s" $captionAlign -}}
+
 {{- /* Build process command from width/height */ -}}
 {{- $process := "" -}}
 {{- if or $width $height -}}
@@ -18,6 +22,6 @@
 <figure class="image-figure">
   <img src="{{ $imagePath }}" alt="{{ $altText }}"{{- with $width }} width="{{ . }}"{{- end }}{{- with $height }} height="{{ . }}"{{- end }} loading="lazy">
   {{- with .Title -}}
-  <figcaption>{{ . }}</figcaption>
+  <figcaption class="{{ $captionClass }}">{{ . }}</figcaption>
   {{- end -}}
 </figure>

@@ -209,22 +209,52 @@ figure img {
 }
 
 figure figcaption {
+  display: flex;
   color: color-mix(in srgb, var(--color-text) 75%, transparent);
 }
 
+/* Image caption alignment classes */
+figcaption.caption.left {
+  text-align: left;
+  justify-content: flex-start;
+}
+figcaption.caption.center {
+  text-align: center;
+  justify-content: center;
+}
+figcaption.caption.right {
+  text-align: right;
+  justify-content: flex-end;
+}
+
 /* Tables */
+figure:has(> table) {
+  width: fit-content;
+  margin: var(--spacing-md) 0;
+}
+
 table {
   border-collapse: collapse;
   width: auto;
 }
 
-table caption {
-  caption-side: bottom;
+figure:has(> table) figcaption {
   padding: var(--spacing-xs) 0;
   color: color-mix(in srgb, var(--color-text) 75%, transparent);
   font-size: 0.9em;
   text-align: left;
   font-style: italic;
+}
+
+/* Table caption alignment classes */
+figure:has(> table) figcaption.caption.left {
+  text-align: left;
+}
+figure:has(> table) figcaption.caption.center {
+  text-align: center;
+}
+figure:has(> table) figcaption.caption.right {
+  text-align: right;
 }
 
 table thead th,
