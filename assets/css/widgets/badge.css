@@ -4,15 +4,15 @@
   vertical-align: middle;
   font-size: 0.875rem;
   border: 1px solid var(--color-text);
-  line-height: 1.8;
+  line-height: 1.4;
   margin: 0.25em 0;
 }
 
 .badge-title {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-xs) var(--spacing-sm);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xxs) var(--spacing-sm);
   font-weight: 600;
   border-right: 1px solid var(--color-text);
   color: var(--color-bg);
@@ -20,6 +20,6 @@
 }
 
 .badge-content {
-  padding: var(--spacing-xs) var(--spacing-sm);
+  padding: var(--spacing-xxs) var(--spacing-sm);
 }
 
