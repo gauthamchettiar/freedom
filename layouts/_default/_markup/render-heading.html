@@ -1,4 +1,5 @@
+{{ $anchorIcon := partial "widgets/icon.html" (dict "name" "link" "style" "solid" "class" "heading-anchor-icon") }}
 <h{{ .Level }} id="{{ .Anchor }}"{{- with .Attributes.class }} class="{{ . }}"{{- end }}>
   {{ .Text | safeHTML -}}
-  <a class="heading-anchor" href="#{{ .Anchor }}" aria-label="{{ i18n "aria_heading_anchor" }}">#</a>
+  <a class="heading-anchor" href="#{{ .Anchor }}" aria-label="{{ i18n "aria_heading_anchor" }}">{{ $anchorIcon }}</a>
 </h{{ .Level }}>

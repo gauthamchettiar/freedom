@@ -101,13 +101,18 @@ h6 {
 
 .heading-anchor {
     color: color-mix(in srgb, var(--color-text) 40%, transparent);
-    font-family: var(--font-header);
     text-decoration: none;
-    font-size: 0.85em;
     opacity: 0;
     transition: opacity 0.2s ease;
-    font-weight: normal;
-    margin-left: var(--spacing-xs)
+    margin-left: var(--spacing-sm);
+    display: inline-flex;
+    align-items: center;
+    vertical-align:baseline;
+}
+
+.heading-anchor .icon {
+    width: 0.7em;
+    height: 0.7em;
 }
 
 :is(h1,h2,h3,h4,h5,h6):hover .heading-anchor {
@@ -147,6 +152,20 @@ dl {
 dt {
   font-weight: 600;
   margin-top: var(--spacing-sm);
+}
+
+.dt-anchor {
+  color: color-mix(in srgb, var(--color-text) 40%, transparent);
+  text-decoration: none;
+  font-size: 0.85em;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-weight: normal;
+  margin-left: var(--spacing-sm);
+}
+
+dt:hover .dt-anchor {
+  opacity: 1;
 }
 
 dd {
@@ -258,12 +277,12 @@ ul li input[type="checkbox"]:checked {
 
 ul li input[type="checkbox"]:checked::after {
   content: '✓';
+  font-weight: 400;
   color: var(--color-bg);
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 0.8em;
+  transform: translate(-50%, -52%);
   line-height: 1;
 }
 

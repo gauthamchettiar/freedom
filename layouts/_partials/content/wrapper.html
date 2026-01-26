@@ -1,11 +1,28 @@
 {{/* 
   - Removes disabled attribute from checkbox inputs
       A hack to fix hugo rendering of disabled checkboxes from markdown to HTML
+  - Adds automatic IDs to definition list terms (<dt> elements)
+      Allows anchor linking to definition terms similar to headings
   Usage:
     {{ partial "content/wrapper.html" .Content }}
 */}}
 
 {{ $content := . }}
+
+{{/* Fix checkbox inputs */}}
 {{ $content = replace $content `<input disabled="" type="checkbox"` `<input type="checkbox"` }}
 {{ $content = replace $content `<input checked="" disabled="" type="checkbox"` `<input checked type="checkbox"` }}
+
+{{/* Pre-generate the anchor icon */}}
+{{ $anchorIcon := partial "widgets/icon.html" (dict "name" "link" "style" "solid" "class" "dt-anchor-icon") }}
+
+{{/* Add IDs to definition list terms */}}
+{{ $dtPattern := `<dt>([^<]+)</dt>` }}
+{{ range findRE $dtPattern $content }}
+  {{ $termText := replaceRE `<dt>([^<]+)</dt>` `$1` . }}
+  {{ $termId := $termText | plainify | urlize }}
+  {{ $newDt := printf `<dt id="%s">%s<a class="dt-anchor" href="#%s" aria-label="Link to %s">%s</a></dt>` $termId $termText $termId $termText $anchorIcon }}
+  {{ $content = replace $content . $newDt 1 }}
+{{ end }}
+
 {{ $content | safeHTML }}
