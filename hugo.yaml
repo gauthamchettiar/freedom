@@ -23,6 +23,7 @@ markup:
     parser:
       attribute:
         block: true
+      wrapStandAloneImageWithinParagraph: false
   highlight:
     noClasses: false
   tableOfContents:

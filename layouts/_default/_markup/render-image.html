@@ -1,9 +1,22 @@
-{{- $altText := cond .PlainText (printf ` alt="%s"` .PlainText) "" -}}
+{{- /* Use plain text as alt; empty string if missing */ -}}
+{{- $altText := .PlainText | default "" -}}
 
-{{- $imagePath := partial "utils/resolve-image-path.html" (dict "url" (.Destination | safeURL)) -}}
+{{- /* Get width and height attributes */ -}}
+{{- $width := .Attributes.width | default "" -}}
+{{- $height := .Attributes.height | default "" -}}
+{{- $process := .Attributes.process | default "" -}}
+
+{{- /* Build process command from width/height */ -}}
+{{- $process := "" -}}
+{{- if or $width $height -}}
+  {{- $process = printf "resize %sx%s %s" $width $height $process -}}
+{{- end -}}
+
+{{- /* Resolve image path, passing page and process command */ -}}
+{{- $imagePath := partial "utils/resolve-image-path.html" (dict "page" .Page "url" (.Destination | safeURL) "process" $process) -}}
 
 <figure class="image-figure">
-  <img src="{{ $imagePath }}" alt="{{ $altText }}" loading="lazy">
+  <img src="{{ $imagePath }}" alt="{{ $altText }}"{{- with $width }} width="{{ . }}"{{- end }}{{- with $height }} height="{{ . }}"{{- end }} loading="lazy">
   {{- with .Title -}}
   <figcaption>{{ . }}</figcaption>
   {{- end -}}
