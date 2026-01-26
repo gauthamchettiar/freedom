@@ -10,12 +10,18 @@
   font-weight: 600;
   padding: var(--spacing-xs) var(--spacing-sm);
   user-select: none;
+  list-style: none;
 }
 
 .fr-expand-summary::-webkit-details-marker,
 .fr-expand-summary::marker {
   display: none;
   content: none;
+}
+
+/* Safari-specific fix */
+.fr-expand-summary::-webkit-details-marker {
+  display: none !important;
 }
 
 .fr-expand-summary::before {
